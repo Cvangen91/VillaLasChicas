@@ -1,0 +1,47 @@
+VillaLasChicas mappestruktur
+
+/ (rot)
+  eslint.config.js           # ESLint-config for projectkvalitet
+  index.html               # HTML-templatet som laster React-app
+  package.json             # avhengigheter og npm-skript
+  README.md                # dokumentasjon og brukerveiledning
+  vite.config.js           # Vite-byggekonfigurasjon
+  public/                  # statiske filer som favicon og bilder
+
+  src/                     # applikasjonskildekode
+    App.css                # globale stilregler for App
+    App.jsx                # hovedkomponent og ruteplassering
+    index.css              # basale CSS-innstillinger
+    main.jsx               # ReactDOM.render og app-oppstart
+    assets/                # bilder og statiske assets (kommer)
+
+    components/            # gjenbrukbare UI-komponenter
+      layout/
+        Footer.jsx         # sidebunn-komponent
+        Navbar.jsx         # toppnavigasjon
+        PageLayout.jsx     # layout-wrapper for sider
+
+      sections/
+        Booking.jsx        # bookingsseksjon på hjemmesiden
+        Calendar.jsx       # kalender-/dato-visning
+        Hero.jsx           # hero-banner på forsiden
+        ImageGallery.jsx   # bilderotasjon-galleri
+        Info.jsx           # informasjonsseksjon
+
+      ui/
+        Button.jsx         # tilpasset knappkomponent
+
+    data/                  # statiske data/innhold
+      siteContent.jsx      # tekst og innhold for sider
+
+    locales/               # oversettelsesfiler
+      en.js               # engelsk tekst
+      no.js               # norsk tekst
+
+    pages/                 # sidekomponenter for ruter
+      About.jsx           # Om oss-side
+      Contact.jsx         # kontaktside
+      Home.jsx            # startsiden
+
+    routes/
+      AppRoutes.jsx       # React Router-din rute-definisjon
