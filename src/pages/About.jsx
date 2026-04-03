@@ -7,8 +7,29 @@ function About({ texts, setLanguage, language }) {
       setLanguage={setLanguage}
       language={language}
     >
-      <h1>{texts.about.title}</h1>
-      <p>{texts.about.text}</p>
+      <section style={{ backgroundColor: '#F2F2F2', padding: '4rem 1.5rem' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          <h1 style={{ fontSize: 'clamp(2.2rem, 4vw, 3rem)', marginBottom: '1.5rem' }}>
+            {texts.about.title}
+          </h1>
+
+          <div
+            style={{
+              backgroundColor: '#D9AFA0',
+              padding: '2rem',
+              borderRadius: '16px',
+              boxShadow: '0 12px 28px rgba(0, 0, 0, 0.08)',
+            }}
+          >
+            <p style={{ fontSize: '1.1rem', lineHeight: 1.8, marginTop: 0 }}>
+              {texts.about.text1}
+            </p>
+            <p style={{ fontSize: '1.1rem', lineHeight: 1.8, marginBottom: 0 }}>
+              {texts.about.text2}
+            </p>
+          </div>
+        </div>
+      </section>
     </PageLayout>
   )
 }

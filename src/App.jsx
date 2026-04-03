@@ -5,7 +5,7 @@ import en from './locales/en'
 import './App.css'
 
 function App() {
-  const [language, setLanguage] = useState('en')
+  const [language, setLanguage] = useState('no')
 
   const texts = language === 'no' ? no : en
 
