@@ -1,47 +1,65 @@
-VillaLasChicas mappestruktur
+VillaLasChicas – oppdatert mappestruktur
 
 / (rot)
-  eslint.config.js           # ESLint-config for projectkvalitet
-  index.html               # HTML-templatet som laster React-app
-  package.json             # avhengigheter og npm-skript
-  README.md                # dokumentasjon og brukerveiledning
-  vite.config.js           # Vite-byggekonfigurasjon
-  public/                  # statiske filer som favicon og bilder
+  ENDRINGER_OG_TILTAK.txt   # oppsummering av endringer som er gjort i prosjektet
+  eslint.config.js          # ESLint-konfigurasjon
+  index.html                # HTML-templaten som laster React-appen
+  mappestruktur.txt         # denne oversikten
+  package.json              # avhengigheter og npm-skript
+  package-lock.json         # låst versjon av npm-avhengigheter
+  README.md                 # prosjektinfo og brukerveiledning
+  vite.config.js            # Vite-byggekonfigurasjon
 
-  src/                     # applikasjonskildekode
-    App.css                # globale stilregler for App
-    App.jsx                # hovedkomponent og ruteplassering
-    index.css              # basale CSS-innstillinger
-    main.jsx               # ReactDOM.render og app-oppstart
-    assets/                # bilder og statiske assets (kommer)
+  public/                   # statiske filer tilgjengelige direkte i appen
+    villa-logo.svg          # logo brukt i header og på forsiden
+    vite.svg                # standard Vite-ikon
 
-    components/            # gjenbrukbare UI-komponenter
+  src/                      # applikasjonskildekode
+    App.css                 # app-spesifikke basisstiler
+    App.jsx                 # hovedkomponent som håndterer språkvalg og sender tekster videre
+    index.css               # globale variabler, farger og grunnstiler
+    main.jsx                # oppstart av React + BrowserRouter
+
+    assets/                 # lokale assets i src
+      react.svg             # standard React-ikon
+
+    components/             # gjenbrukbare komponenter
       layout/
-        Footer.jsx         # sidebunn-komponent
-        Navbar.jsx         # toppnavigasjon
-        PageLayout.jsx     # layout-wrapper for sider
+        Footer.jsx          # footer / sidebunn
+        Navbar.jsx          # toppnavigasjon med språkvalg
+        PageLayout.jsx      # felles sideoppsett for alle sider
 
-      sections/
-        Booking.jsx        # bookingsseksjon på hjemmesiden
-        Calendar.jsx       # kalender-/dato-visning
-        Hero.jsx           # hero-banner på forsiden
-        ImageGallery.jsx   # bilderotasjon-galleri
-        Info.jsx           # informasjonsseksjon
+      sections/             # eldre seksjonskomponenter fra tidligere oppsett
+        Booking.jsx
+        Calendar.jsx
+        Hero.jsx
+        ImageGallery.jsx
+        Info.jsx
 
       ui/
-        Button.jsx         # tilpasset knappkomponent
+        Button.jsx          # gjenbrukbar knappkomponent
 
-    data/                  # statiske data/innhold
-      siteContent.jsx      # tekst og innhold for sider
+    data/
+      siteContent.jsx       # eldre innholdsfil / statisk innhold
 
-    locales/               # oversettelsesfiler
-      en.js               # engelsk tekst
-      no.js               # norsk tekst
+    locales/                # oversettelser
+      en.js                 # engelsk tekstinnhold
+      no.js                 # norsk tekstinnhold
 
-    pages/                 # sidekomponenter for ruter
-      About.jsx           # Om oss-side
-      Contact.jsx         # kontaktside
-      Home.jsx            # startsiden
+    pages/                  # sidefiler og side-spesifikke stiler
+      Home.jsx              # startsiden
+      Home.css              # styling kun for startsiden
+      About.jsx             # Om villaen-siden
+      About.css             # styling kun for Om villaen
+      Contact.jsx           # kontaktsiden
+      Contact.css           # styling kun for Kontakt
+      pages.css             # felles basisstiler som deles av sidene
 
     routes/
-      AppRoutes.jsx       # React Router-din rute-definisjon
+      AppRoutes.jsx         # ruter for Home, About og Contact
+
+Notater:
+- `index.css` brukes til globale designvariabler og grunnstil.
+- `Home.css`, `About.css` og `Contact.css` er egne filer for side-spesifikke effekter.
+- `pages.css` beholdes som en liten delt base for generell side-layout.
+- `components/sections/` og `data/siteContent.jsx` er eldre struktur som kan ryddes videre senere ved behov.

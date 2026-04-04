@@ -1,9 +1,22 @@
 :root {
+  --color-navy: #2F3640;
+  --color-sky: #8AB5BF;
+  --color-teal: #45858C;
+  --color-peach: #D9AFA0;
+  --color-light: #F2F2F2;
+
+  --color-sky-soft: #BFD8DF;
+  --color-sand-light: #F7F4EF;
+  --color-text-soft: #5B6670;
+
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-card: 0 16px 36px rgba(0, 0, 0, 0.06);
+
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #2F3640;
-  background-color: #F2F2F2;
+  color: var(--color-navy);
+  background-color: var(--color-light);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -22,7 +35,8 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #F2F2F2;
+  background-color: var(--color-light);
+  color: var(--color-navy);
 }
 
 a {

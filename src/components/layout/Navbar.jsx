@@ -46,13 +46,25 @@ function Navbar({ texts, setLanguage, language }) {
         <Link
           to="/"
           style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem',
             fontSize: '1.4rem',
             fontWeight: '700',
             color: '#8AB5BF',
             textDecoration: 'none',
           }}
         >
-          Villa Las Chicas
+          <img
+            src="/villa-logo.svg"
+            alt="Villa Las Chicas logo"
+            style={{
+              height: '42px',
+              width: 'auto',
+              display: 'block',
+              filter: 'brightness(1.02)',
+            }}
+          />
         </Link>
 
         <div
