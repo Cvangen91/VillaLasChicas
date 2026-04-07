@@ -12,7 +12,7 @@ const app = express();
 const PORT = 4000;
 
 app.use(cors({
-  origin: 'http://localhost:5174',
+  origin: 'http://localhost:5173',
 }));
 
 const AIRBNB_ICAL_URL = process.env.AIRBNB_ICAL_URL;
