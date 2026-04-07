@@ -1,13 +1,13 @@
 // src/components/Button.jsx
 
-function Button() {
+function Button({ text = "Klikk meg" }) {
   function handleClick() {
     alert('Du klikket på knappen!');
   }
 
   return (
     <button onClick={handleClick}>
-      Klikk meg
+      {text}
     </button>
   );
 }

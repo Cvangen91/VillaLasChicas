@@ -11,7 +11,9 @@ function App() {
       <h2> Velkommen til Villa Las Chicas!</h2>
 
       <p>Test av React-komponent med knapp:</p>
-      <Button />
+      <Button text={"Klikk deg"} />
+      <Button text={"Klikk"} />
+      <Button text={"Klikk hei"} />
       <p>Under ser du et enkelt eksempel på et API-kall:</p>
 
       <ApiExample />
