@@ -13,6 +13,14 @@ const en = {
     title: 'About the villa',
     text: 'Information about the house, the area, and the amenities will go here.',
   },
+  calendar: {
+    title: 'Calendar',
+    loading: 'Loading calendar...',
+    empty: 'No bookings or blocked dates found.',
+    from: 'From:',
+    to: 'To:',
+    errorPrefix: 'Error: ',
+  },
   contact: {
     title: 'Contact',
     text: 'Contact information will go here.',

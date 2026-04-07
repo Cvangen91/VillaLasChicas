@@ -14,17 +14,12 @@ function App() {
   
 
   return (
-    <div>
       <AppRoutes
       language={language}
       setLanguage={setLanguage}
       texts={texts}
     />
-      <div>
     
-        <CalendarEvents />
-      </div>
-    </div>
   )
 }
 

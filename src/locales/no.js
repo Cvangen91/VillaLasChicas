@@ -13,6 +13,15 @@ const no = {
     title: 'Om villaen',
     text: 'Her kommer informasjon om huset, området og fasilitetene.',
   },
+  calendar: {
+      title: 'Kalender',
+      loading: 'Laster kalender...',
+      empty: 'Ingen bookinger eller blokkerte datoer funnet.',
+      from: 'Fra:',
+      to: 'Til:',
+      errorPrefix: 'Feil: ',
+    },
+
   contact: {
     title: 'Kontakt',
     text: 'Her kommer kontaktinformasjon.',

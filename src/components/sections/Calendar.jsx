@@ -1,7 +1,7 @@
 // src/components/CalendarEvents.jsx
 import { useEffect, useState } from 'react';
 
-function CalendarEvents() {
+function CalendarEvents({ texts}) {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,7 +14,7 @@ function CalendarEvents() {
 
         const res = await fetch('http://localhost:4000/api/calendar');
         if (!res.ok) {
-          throw new Error('Feil ved henting av kalender');
+          throw new Error(texts.calendar.errorPrefix +'Feil ved henting av kalender');
         }
 
         const data = await res.json();
@@ -30,28 +30,28 @@ function CalendarEvents() {
   }, []);
 
   if (loading) {
-    return <div className="App">Laster kalender...</div>;
+    return <div className="App">{texts.calendar.loading}</div>;
   }
 
   if (error) {
-    return <div className="App">Feil: {error}</div>;
+    return <div className="App">{texts.calendar.errorPrefix}{error}</div>;
   }
 
   if (!events.length) {
-    return <div className="App">Ingen bookinger eller blokkerte datoer funnet.</div>;
+    return <div className="App">{texts.calendar.empty}</div>;
   }
 
   return (
     <div className="App">
-      <h2>Kalender</h2>
+      <h2>{texts.calendar.title}</h2>
       <ul>
         {events.map((event) => (
           <li key={event.id}>
             <strong>{event.summary}</strong>
             <br />
-            Fra: {new Date(event.start).toLocaleDateString()}
+            {texts.calendar.from} {new Date(event.start).toLocaleDateString()}
             <br />
-            Til: {new Date(event.end).toLocaleDateString()}
+            {texts.calendar.to} {new Date(event.end).toLocaleDateString()}
           </li>
         ))}
       </ul>
