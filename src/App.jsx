@@ -1,4 +1,6 @@
-// src/App.jsx
+import AppRoutes from './routes/AppRoutes'
+import no from './locales/no'
+import en from './locales/en'
 import { useEffect, useState } from 'react';
 import './App.css';
 
@@ -6,6 +8,9 @@ function App() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [language, setLanguage] = useState('en')
+
+  const texts = language === 'no' ? no : en
 
   useEffect(() => {
     async function fetchCalendar() {
@@ -39,22 +44,20 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <h1>Kalender</h1>
-      {events.length === 0 && <p>Ingen events funnet.</p>}
-      <ul>
-        {events.map((event) => (
-          <li key={event.id}>
-            <strong>{event.summary}</strong>
-            <br />
-            Fra: {new Date(event.start).toLocaleDateString()}
-            <br />
-            Til: {new Date(event.end).toLocaleDateString()}
-          </li>
-        ))}
-      </ul>
+    <div>
+      <AppRoutes
+      language={language}
+      setLanguage={setLanguage}
+      texts={texts}
+    />
+      <div>
+        <h1>Villa Las Chicas</h1>
+      </div>
     </div>
-  );
+  )
 }
+
+
+
 
 export default App;
