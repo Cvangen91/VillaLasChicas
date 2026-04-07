@@ -20,6 +20,7 @@ const en = {
     from: 'From:',
     to: 'To:',
     errorPrefix: 'Error: ',
+    booked: 'Booked',
   },
   contact: {
     title: 'Contact',

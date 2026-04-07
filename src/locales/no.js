@@ -20,6 +20,7 @@ const no = {
       from: 'Fra:',
       to: 'Til:',
       errorPrefix: 'Feil: ',
+      booked: 'Opptatt', // brukes som fallback-tittel på event
     },
 
   contact: {
