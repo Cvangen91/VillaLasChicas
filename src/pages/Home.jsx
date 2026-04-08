@@ -86,7 +86,7 @@ function Home({ texts, setLanguage, language }) {
             <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
               <path
                 d="M0,78 C160,118 300,18 470,42 C700,74 840,122 1200,58 L1200,120 L0,120 Z"
-                fill="#F1F4F3"
+                fill="#F7F6F3"
               />
             </svg>
           </div>

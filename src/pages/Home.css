@@ -115,7 +115,7 @@
 }
 
 .home-features-section {
-  background: linear-gradient(180deg, #fbfcfb 0%, #f7f9f8 45%, #f2f5f4 100%);
+  background: linear-gradient(180deg, #fbfcfb 0%, #f7f9f8 45%, #f3f4f2 100%);
   position: relative;
   padding-bottom: 6.5rem;
   overflow: hidden;
@@ -167,6 +167,7 @@
   background: #ffffff;
   padding-top: 4.75rem;
   padding-bottom: 5rem;
+  margin-top: 0;
 }
 
 .home-booking-card {
