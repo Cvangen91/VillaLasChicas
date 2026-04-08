@@ -122,6 +122,23 @@
   font-weight: 700;
   color: var(--color-navy);
   list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.page-faq-summary::after {
+  content: '';
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  background: url('../../bilder/arrowdown.png') center / contain no-repeat;
+  opacity: 0.85;
+}
+
+.page-faq-item[open] .page-faq-summary::after {
+  background-image: url('../../bilder/arrowup.png');
 }
 
 .page-faq-summary::-webkit-details-marker {

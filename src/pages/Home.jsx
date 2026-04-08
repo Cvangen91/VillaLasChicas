@@ -51,17 +51,7 @@ function Home({ texts, setLanguage, language }) {
               className="home-hero-logo"
             />
 
-            <h1 className="home-hero-title">{texts.home.heroTitle}</h1>
-
             <p className="home-hero-subtitle">{texts.home.heroSubtitle}</p>
-
-            <div className="home-hero-tags">
-              {(texts.home.heroTags ?? []).map((tag) => (
-                <span key={tag} className="home-hero-tag">
-                  {tag}
-                </span>
-              ))}
-            </div>
           </div>
 
           <div className="home-hero-wave">
@@ -96,7 +86,7 @@ function Home({ texts, setLanguage, language }) {
             <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
               <path
                 d="M0,78 C160,118 300,18 470,42 C700,74 840,122 1200,58 L1200,120 L0,120 Z"
-                fill="#9FBFC7"
+                fill="#F1F4F3"
               />
             </svg>
           </div>

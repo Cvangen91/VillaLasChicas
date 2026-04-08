@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import villaLogoMain from '../../../bilder/Villalogomain.png'
+import villaLogo from '../../../bilder/villalogo.png'
+import arrowDown from '../../../bilder/arrowdown.png'
+import arrowUp from '../../../bilder/arrowup.png'
+import norwayFlag from '../../../bilder/Norgeflagg.png'
+import englishFlag from '../../../bilder/england.png'
+import spainFlag from '../../../bilder/spainflag.png'
 
 function Navbar({ texts, setLanguage, language }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -22,6 +27,22 @@ function Navbar({ texts, setLanguage, language }) {
     textDecoration: 'none',
     fontSize: '1.05rem',
     padding: '0.3rem 0',
+  }
+
+  const languageArrow = isLangDropdownOpen ? arrowUp : arrowDown
+  const languageOptions = {
+    no: { label: 'Norsk', flag: norwayFlag },
+    en: { label: 'English', flag: englishFlag },
+    es: { label: 'Español', flag: spainFlag },
+  }
+  const activeLanguage = languageOptions[language] ?? languageOptions.en
+  const flagStyle = {
+    width: '22px',
+    height: '16px',
+    objectFit: 'cover',
+    borderRadius: '2px',
+    display: 'inline-block',
+    verticalAlign: 'middle',
   }
 
   return (
@@ -58,10 +79,10 @@ function Navbar({ texts, setLanguage, language }) {
           }}
         >
           <img
-            src={villaLogoMain}
+            src={villaLogo}
             alt="Villa Las Chicas logo"
             style={{
-              height: '58px',
+              height: '24px',
               width: 'auto',
               display: 'block',
               filter: 'brightness(1.02)',
@@ -94,12 +115,28 @@ function Navbar({ texts, setLanguage, language }) {
                 backgroundColor: '#45858C',
                 color: '#F2F2F2',
                 border: 'none',
-                padding: '0.55rem 0.9rem',
+                padding: '0.75rem 1.15rem',
                 borderRadius: '999px',
                 cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.65rem',
+                fontSize: '1.1rem',
+                fontWeight: '600',
               }}
             >
-              {language.toUpperCase()} ▼
+              <img src={activeLanguage.flag} alt="" style={flagStyle} />
+              <span>{activeLanguage.label}</span>
+              <img
+                src={languageArrow}
+                alt=""
+                style={{
+                  width: '12px',
+                  height: '12px',
+                  objectFit: 'contain',
+                  filter: 'brightness(0) invert(1)',
+                }}
+              />
             </button>
 
             {isLangDropdownOpen && (
@@ -131,7 +168,10 @@ function Navbar({ texts, setLanguage, language }) {
                     cursor: 'pointer',
                   }}
                 >
-                  Norsk
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <img src={languageOptions.no.flag} alt="" style={flagStyle} />
+                    <span>{languageOptions.no.label}</span>
+                  </span>
                 </button>
                 <button
                   onClick={() => {
@@ -148,7 +188,10 @@ function Navbar({ texts, setLanguage, language }) {
                     cursor: 'pointer',
                   }}
                 >
-                  English
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <img src={languageOptions.en.flag} alt="" style={flagStyle} />
+                    <span>{languageOptions.en.label}</span>
+                  </span>
                 </button>
                 <button
                   onClick={() => {
@@ -165,7 +208,10 @@ function Navbar({ texts, setLanguage, language }) {
                     cursor: 'pointer',
                   }}
                 >
-                  Español
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <img src={languageOptions.es.flag} alt="" style={flagStyle} />
+                    <span>{languageOptions.es.label}</span>
+                  </span>
                 </button>
               </div>
             )}
@@ -227,7 +273,10 @@ function Navbar({ texts, setLanguage, language }) {
                 padding: '0.65rem 0.9rem',
               }}
             >
-              Norsk
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                <img src={languageOptions.no.flag} alt="" style={flagStyle} />
+                <span>{languageOptions.no.label}</span>
+              </span>
             </button>
             <button
               onClick={() => {
@@ -243,7 +292,10 @@ function Navbar({ texts, setLanguage, language }) {
                 padding: '0.65rem 0.9rem',
               }}
             >
-              English
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                <img src={languageOptions.en.flag} alt="" style={flagStyle} />
+                <span>{languageOptions.en.label}</span>
+              </span>
             </button>
             <button
               onClick={() => {
@@ -259,7 +311,10 @@ function Navbar({ texts, setLanguage, language }) {
                 padding: '0.65rem 0.9rem',
               }}
             >
-              Español
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                <img src={languageOptions.es.flag} alt="" style={flagStyle} />
+                <span>{languageOptions.es.label}</span>
+              </span>
             </button>
           </div>
         </div>
