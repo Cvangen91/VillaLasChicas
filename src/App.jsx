@@ -2,12 +2,14 @@ import { useState } from 'react'
 import AppRoutes from './routes/AppRoutes'
 import no from './locales/no'
 import en from './locales/en'
+import es from './locales/es'
 import './App.css'
 
 function App() {
-  const [language, setLanguage] = useState('no')
+  const [language, setLanguage] = useState('en')
 
-  const texts = language === 'no' ? no : en
+  const locales = { no, en, es }
+  const texts = locales[language] ?? en
 
   return (
     <AppRoutes

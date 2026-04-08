@@ -1,11 +1,8 @@
-import { useState } from 'react'
 import PageLayout from '../components/layout/PageLayout'
+import ImageGallery from '../components/sections/ImageGallery'
 import './Home.css'
 
 function Home({ texts, setLanguage, language }) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const gallerySlides = [0, 1, 2, 3]
-
   const featureCards = [
     {
       title: texts.home.feature1Title,
@@ -23,14 +20,6 @@ function Home({ texts, setLanguage, language }) {
 
   const scrollToContent = () => {
     document.getElementById('villa-highlights')?.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % gallerySlides.length)
-  }
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + gallerySlides.length) % gallerySlides.length)
   }
 
   return (
@@ -101,55 +90,11 @@ function Home({ texts, setLanguage, language }) {
           </div>
         </section>
 
-        <section className="home-section home-gallery-section">
-          <div className="home-gallery-wrap">
-            <h2 className="home-section-title home-gallery-title">{texts.home.galleryTitle}</h2>
-
-            <div className="home-gallery-frame">
-              <div className="home-gallery-image" />
-
-              <button
-                className="home-gallery-nav home-gallery-nav--prev"
-                onClick={prevImage}
-                aria-label="Forrige bilde"
-              >
-                ‹
-              </button>
-
-              <button
-                className="home-gallery-nav home-gallery-nav--next"
-                onClick={nextImage}
-                aria-label="Neste bilde"
-              >
-                ›
-              </button>
-
-              <div className="home-gallery-dots">
-                {gallerySlides.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentImageIndex(index)}
-                    aria-label={`Vis galleri ${index + 1}`}
-                    className={`home-gallery-dot ${currentImageIndex === index ? 'is-active' : ''}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="home-gallery-wave-bottom" aria-hidden="true">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-              <path
-                d="M0,72 C160,18 320,118 520,82 C760,40 930,22 1200,68 L1200,120 L0,120 Z"
-                fill="#FFF8F3"
-              />
-            </svg>
-          </div>
-        </section>
+        <ImageGallery texts={texts.home} />
 
         <section className="home-section home-booking-section">
           <div className="home-booking-card">
-            <p className="home-booking-eyebrow">Booking</p>
+            <p className="home-booking-eyebrow">{texts.home.bookingEyebrow}</p>
             <h2>{texts.home.bookingTitle}</h2>
             <p>{texts.home.bookingText}</p>
 

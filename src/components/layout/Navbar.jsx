@@ -147,6 +147,23 @@ function Navbar({ texts, setLanguage, language }) {
                 >
                   English
                 </button>
+                <button
+                  onClick={() => {
+                    setLanguage('es')
+                    setIsLangDropdownOpen(false)
+                  }}
+                  style={{
+                    width: '100%',
+                    border: 'none',
+                    padding: '0.7rem 1rem',
+                    textAlign: 'left',
+                    backgroundColor: language === 'es' ? '#45858C' : 'transparent',
+                    color: '#F2F2F2',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Español
+                </button>
               </div>
             )}
           </div>
@@ -191,7 +208,7 @@ function Navbar({ texts, setLanguage, language }) {
             {texts.nav.contact}
           </Link>
 
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             <button
               onClick={() => {
                 setLanguage('no')
@@ -223,6 +240,22 @@ function Navbar({ texts, setLanguage, language }) {
               }}
             >
               English
+            </button>
+            <button
+              onClick={() => {
+                setLanguage('es')
+                setIsMenuOpen(false)
+              }}
+              style={{
+                flex: 1,
+                border: 'none',
+                borderRadius: '8px',
+                backgroundColor: language === 'es' ? '#45858C' : '#3a424d',
+                color: '#F2F2F2',
+                padding: '0.65rem 0.9rem',
+              }}
+            >
+              Español
             </button>
           </div>
         </div>

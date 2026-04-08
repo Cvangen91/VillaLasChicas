@@ -1,0 +1,115 @@
+.image-gallery-section {
+  background: linear-gradient(180deg, #9fbfc7 0%, #9fbfc7 18%, #bfd6db 38%, #e7efed 66%, #f8f4ee 100%);
+  position: relative;
+  padding: 4.5rem 1.5rem 5.5rem;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.image-gallery-wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.image-gallery-title {
+  text-align: center;
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0 0 2.5rem;
+  color: #305a63;
+}
+
+.image-gallery-frame {
+  max-width: 760px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.image-gallery-image {
+  height: 360px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, #e8f0f1 100%);
+  border: 1px solid rgba(47, 54, 64, 0.12);
+  box-shadow: 0 16px 32px rgba(18, 29, 36, 0.12);
+}
+
+.image-gallery-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(47, 54, 64, 0.08);
+  background-color: rgba(255, 255, 255, 0.92);
+  color: var(--color-navy);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.image-gallery-nav:hover {
+  background-color: var(--color-light);
+  color: var(--color-teal);
+}
+
+.image-gallery-nav--prev {
+  left: 1rem;
+}
+
+.image-gallery-nav--next {
+  right: 1rem;
+}
+
+.image-gallery-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.2rem;
+}
+
+.image-gallery-dot {
+  width: 10px;
+  height: 10px;
+  border: none;
+  border-radius: 999px;
+  background-color: #b7c3c7;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.image-gallery-dot.is-active {
+  width: 28px;
+  background-color: var(--color-teal);
+}
+
+.image-gallery-wave-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  line-height: 0;
+  pointer-events: none;
+}
+
+.image-gallery-wave-bottom svg {
+  width: 100%;
+  height: 96px;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .image-gallery-section {
+    padding: 3.5rem 1rem 4.75rem;
+  }
+
+  .image-gallery-image {
+    height: 260px;
+  }
+
+  .image-gallery-nav {
+    width: 42px;
+    height: 42px;
+  }
+}
