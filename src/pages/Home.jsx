@@ -1,5 +1,6 @@
 import PageLayout from '../components/layout/PageLayout'
 import ImageGallery from '../components/sections/ImageGallery'
+import villaLogoMain from '../../bilder/Villalogomain.png'
 import './Home.css'
 
 function Home({ texts, setLanguage, language }) {
@@ -30,11 +31,22 @@ function Home({ texts, setLanguage, language }) {
     >
       <div className="home-page">
         <section className="home-hero">
+          <div className="home-hero-video-wrap" aria-hidden="true">
+            <iframe
+              className="home-hero-video"
+              src="https://www.youtube.com/embed/AUY3gvKTbxc?autoplay=1&mute=1&controls=0&loop=1&playlist=AUY3gvKTbxc&playsinline=1&rel=0&modestbranding=1"
+              title="Villa Las Chicas hero video"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              referrerPolicy="strict-origin-when-cross-origin"
+              tabIndex="-1"
+            />
+          </div>
+
           <div className="home-hero-overlay" />
 
           <div className="home-hero-content">
             <img
-              src="/villa-logo.svg"
+              src={villaLogoMain}
               alt="Villa Las Chicas logo"
               className="home-hero-logo"
             />

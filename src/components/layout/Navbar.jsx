@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import villaLogoMain from '../../../bilder/Villalogomain.png'
 
 function Navbar({ texts, setLanguage, language }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -9,14 +10,15 @@ function Navbar({ texts, setLanguage, language }) {
   const isActive = (path) => location.pathname === path
 
   const getLinkStyle = (active) => ({
-    color: active ? '#8AB5BF' : '#F2F2F2',
+    color: active ? '#8AB5BF' : '#1F2933',
     textDecoration: 'none',
     fontWeight: active ? '700' : '500',
-    transition: 'color 0.2s ease',
+    textShadow: active ? '0 0 14px rgba(138, 181, 191, 0.5)' : 'none',
+    transition: 'color 0.2s ease, text-shadow 0.2s ease',
   })
 
   const mobileLinkStyle = {
-    color: '#F2F2F2',
+    color: '#1F2933',
     textDecoration: 'none',
     fontSize: '1.05rem',
     padding: '0.3rem 0',
@@ -25,12 +27,12 @@ function Navbar({ texts, setLanguage, language }) {
   return (
     <nav
       style={{
-        backgroundColor: '#2F3640',
+        backgroundColor: '#FFFFFF',
         padding: '1rem 1.5rem',
         position: 'sticky',
         top: 0,
         zIndex: 1000,
-        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.12)',
+        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.08)',
       }}
     >
       <div
@@ -56,10 +58,10 @@ function Navbar({ texts, setLanguage, language }) {
           }}
         >
           <img
-            src="/villa-logo.svg"
+            src={villaLogoMain}
             alt="Villa Las Chicas logo"
             style={{
-              height: '42px',
+              height: '58px',
               width: 'auto',
               display: 'block',
               filter: 'brightness(1.02)',
@@ -106,11 +108,12 @@ function Navbar({ texts, setLanguage, language }) {
                   position: 'absolute',
                   top: 'calc(100% + 0.5rem)',
                   right: 0,
-                  backgroundColor: '#2F3640',
+                  backgroundColor: '#FFFFFF',
                   borderRadius: '8px',
                   minWidth: '110px',
                   overflow: 'hidden',
-                  boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)',
+                  boxShadow: '0 8px 20px rgba(0, 0, 0, 0.12)',
+                  border: '1px solid rgba(47, 54, 64, 0.08)',
                 }}
               >
                 <button
@@ -124,7 +127,7 @@ function Navbar({ texts, setLanguage, language }) {
                     padding: '0.7rem 1rem',
                     textAlign: 'left',
                     backgroundColor: language === 'no' ? '#45858C' : 'transparent',
-                    color: '#F2F2F2',
+                    color: language === 'no' ? '#F2F2F2' : '#1F2933',
                     cursor: 'pointer',
                   }}
                 >
@@ -141,7 +144,7 @@ function Navbar({ texts, setLanguage, language }) {
                     padding: '0.7rem 1rem',
                     textAlign: 'left',
                     backgroundColor: language === 'en' ? '#45858C' : 'transparent',
-                    color: '#F2F2F2',
+                    color: language === 'en' ? '#F2F2F2' : '#1F2933',
                     cursor: 'pointer',
                   }}
                 >
@@ -158,7 +161,7 @@ function Navbar({ texts, setLanguage, language }) {
                     padding: '0.7rem 1rem',
                     textAlign: 'left',
                     backgroundColor: language === 'es' ? '#45858C' : 'transparent',
-                    color: '#F2F2F2',
+                    color: language === 'es' ? '#F2F2F2' : '#1F2933',
                     cursor: 'pointer',
                   }}
                 >
@@ -196,6 +199,7 @@ function Navbar({ texts, setLanguage, language }) {
             gap: '0.8rem',
             borderTop: '1px solid #45858C',
             paddingTop: '1rem',
+            backgroundColor: '#FFFFFF',
           }}
         >
           <Link to="/" style={mobileLinkStyle} onClick={() => setIsMenuOpen(false)}>
@@ -218,8 +222,8 @@ function Navbar({ texts, setLanguage, language }) {
                 flex: 1,
                 border: 'none',
                 borderRadius: '8px',
-                backgroundColor: language === 'no' ? '#45858C' : '#3a424d',
-                color: '#F2F2F2',
+                backgroundColor: language === 'no' ? '#45858C' : '#EEF3F5',
+                color: language === 'no' ? '#F2F2F2' : '#1F2933',
                 padding: '0.65rem 0.9rem',
               }}
             >
@@ -234,8 +238,8 @@ function Navbar({ texts, setLanguage, language }) {
                 flex: 1,
                 border: 'none',
                 borderRadius: '8px',
-                backgroundColor: language === 'en' ? '#45858C' : '#3a424d',
-                color: '#F2F2F2',
+                backgroundColor: language === 'en' ? '#45858C' : '#EEF3F5',
+                color: language === 'en' ? '#F2F2F2' : '#1F2933',
                 padding: '0.65rem 0.9rem',
               }}
             >
@@ -250,8 +254,8 @@ function Navbar({ texts, setLanguage, language }) {
                 flex: 1,
                 border: 'none',
                 borderRadius: '8px',
-                backgroundColor: language === 'es' ? '#45858C' : '#3a424d',
-                color: '#F2F2F2',
+                backgroundColor: language === 'es' ? '#45858C' : '#EEF3F5',
+                color: language === 'es' ? '#F2F2F2' : '#1F2933',
                 padding: '0.65rem 0.9rem',
               }}
             >

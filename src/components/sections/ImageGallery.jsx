@@ -1,9 +1,13 @@
 import { useState } from 'react'
+import fullViewImage from '../../../bilder/Fullview.jpg'
+import poolImage from '../../../bilder/Basseng.jpg'
+import balconyImage from '../../../bilder/Balkong.jpg'
+import diningImage from '../../../bilder/Spisestue.jpg'
 import './ImageGallery.css'
 
 function ImageGallery({ texts }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const gallerySlides = [0, 1, 2, 3]
+  const gallerySlides = [fullViewImage, poolImage, balconyImage, diningImage]
 
   const title = texts?.galleryTitle ?? 'Gallery'
   const previousLabel = texts?.galleryPrev ?? 'Previous image'
@@ -24,7 +28,11 @@ function ImageGallery({ texts }) {
         <h2 className="image-gallery-title">{title}</h2>
 
         <div className="image-gallery-frame">
-          <div className="image-gallery-image" />
+          <img
+            src={gallerySlides[currentImageIndex]}
+            alt={`${title} ${currentImageIndex + 1}`}
+            className="image-gallery-image"
+          />
 
           <button
             className="image-gallery-nav image-gallery-nav--prev"

@@ -18,24 +18,44 @@
 }
 
 .home-hero {
-  background: linear-gradient(135deg, #2f4452 0%, #3d6470 20%, #5a8f99 46%, #b9d3d8 76%, #f6f1ea 100%);
-  min-height: calc(100vh - 88px);
+  background-color: #101820;
+  min-height: calc(100vh + 4rem);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 2rem 1.5rem 5rem;
+  padding: 3rem 1.5rem 7rem;
   position: relative;
   overflow: hidden;
+}
+
+.home-hero-video-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.home-hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 114vw;
+  height: 64vw;
+  min-width: 210vh;
+  min-height: 114vh;
+  transform: translate(-50%, -50%) scale(1.06);
+  transform-origin: center;
+  border: 0;
+  pointer-events: none;
+  filter: brightness(0.7) saturate(0.82);
 }
 
 .home-hero-overlay {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at top right, rgba(255, 255, 255, 0.22), transparent 30%),
-    radial-gradient(circle at left center, rgba(69, 133, 140, 0.26), transparent 44%),
-    linear-gradient(180deg, rgba(24, 38, 48, 0.18) 0%, rgba(24, 38, 48, 0.04) 45%, transparent 100%);
+    linear-gradient(180deg, rgba(0, 0, 0, 0.66) 0%, rgba(0, 0, 0, 0.5) 42%, rgba(0, 0, 0, 0.7) 100%),
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.05), transparent 28%);
 }
 
 .home-hero-content {
@@ -57,6 +77,7 @@
   font-size: clamp(2.5rem, 5vw, 4.25rem);
   margin: 0 0 1rem;
   color: #f8fbfb;
+  font-weight: 400;
   text-shadow: 0 8px 24px rgba(16, 24, 31, 0.18);
 }
 
@@ -224,6 +245,18 @@
 
   .home-features-wave svg {
     height: 72px;
+  }
+
+  .home-hero {
+    min-height: calc(100vh + 2rem);
+    padding: 2.5rem 1rem 6rem;
+  }
+
+  .home-hero-video {
+    width: 165vw;
+    height: 92vw;
+    min-width: 0;
+    min-height: 0;
   }
 
   .home-floating-book-btn {
