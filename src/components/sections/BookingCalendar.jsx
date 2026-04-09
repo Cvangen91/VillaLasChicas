@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import './BookingCalendar.css';
 
 function BookingCalendar({ texts }) {
   const [events, setEvents] = useState([]);
@@ -57,7 +58,7 @@ function BookingCalendar({ texts }) {
   }
 
   return (
-    <div>
+    <div className="booking-calendar">
       <h2>{texts.calendar.title}</h2>
       <FullCalendar
         plugins={[dayGridPlugin]}
