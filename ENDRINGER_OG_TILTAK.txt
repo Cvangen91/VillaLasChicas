@@ -1,0 +1,76 @@
+Villa Las Chicas – oversikt over endringer og tillegg
+Dato: 04.04.2026
+
+Hva som ble beholdt fra hovedprosjektet
+- package.json
+- package-lock.json
+- vite.config.js
+- public/
+- eksisterende Vite/React-oppsett
+
+Hva som ble flyttet inn / oppdatert
+1. Layout og navigasjon
+- `src/components/layout/Navbar.jsx`
+  - ny desktop/mobilmeny
+  - språkvelger
+  - aktiv lenkestil
+- `src/components/layout/Footer.jsx`
+  - ny footer med farger og tekst
+- `src/components/layout/PageLayout.jsx`
+  - ryddig sideoppsett med navbar, innhold og footer
+
+2. Sider
+- `src/pages/Home.jsx`
+  - ny hero-seksjon
+  - knapp for "Bestill nå"
+  - seksjon med fordeler/features
+  - galleriområde
+  - CTA-seksjon nederst
+- `src/pages/About.jsx`
+  - ny innholdsseksjon med oppdatert tekst og styling
+- `src/pages/Contact.jsx`
+  - ny kontaktside med bedre presentasjon og styling
+
+3. Tekster og språk
+- `src/locales/no.js`
+- `src/locales/en.js`
+  - flere tekster lagt til for hjemside, om-side og kontaktside
+  - norsk og engelsk språkstøtte beholdt
+
+4. Styling
+- `src/index.css`
+  - ryddet opp i global styling
+  - la inn fargepalett og bedre baseoppsett
+- `src/App.css`
+  - fjernet standard Vite-demo-styling
+
+5. App-oppsett
+- `src/App.jsx`
+  - standardspråk satt til norsk (`no`)
+
+Ekstra tillegg etter første migrering
+- "Bestill nå"-knappen med hover-effekt ble lagt tilbake
+- pilknapper (`‹` og `›`) for å bla i galleriområdet ble lagt til igjen
+- tekst ble justert til "Bestill nå" / "Book now"
+
+Hva som bevisst IKKE ble flyttet
+- node_modules fra wireframe-prosjektet
+- package.json fra wireframe-prosjektet
+- vite-konfigurasjon fra wireframe-prosjektet
+- alt som kunne skape versjonskonflikter mellom React/Vite-oppsett
+
+Hvorfor dette ble gjort slik
+- for å unngå kollisjoner mellom React/Vite-versjoner
+- for å holde `VillaLasChicas` som ett ryddig hovedprosjekt
+- for å bruke `importerher` som designreferanse, ikke som teknisk base
+
+Kontroller som ble kjørt
+- `npm run build` → bestått
+- `npm run lint` → bestått
+- editor/type-feil → ingen feil funnet
+
+Mulige neste steg
+- legge inn ekte bilder i galleriet
+- lage bedre kontaktskjema
+- rydde bort ubrukte filer/komponenter
+- finjustere mobilvisning og hover-effekter ytterligere

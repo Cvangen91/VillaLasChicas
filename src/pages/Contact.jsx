@@ -1,4 +1,6 @@
 import PageLayout from '../components/layout/PageLayout'
+import './pages.css'
+import './Contact.css'
 
 function Contact({ texts, setLanguage, language }) {
   return (
@@ -7,8 +9,18 @@ function Contact({ texts, setLanguage, language }) {
       setLanguage={setLanguage}
       language={language}
     >
-      <h1>{texts.contact.title}</h1>
-      <p>{texts.contact.text}</p>
+      <div className="page-shell">
+        <section className="page-section page-section--bottom">
+          <div className="page-wide">
+            <h1 className="page-title">{texts.contact.title}</h1>
+
+            <div className="page-card contact-card">
+              <p>{texts.contact.text1}</p>
+              <p>{texts.contact.text2}</p>
+            </div>
+          </div>
+        </section>
+      </div>
     </PageLayout>
   )
 }

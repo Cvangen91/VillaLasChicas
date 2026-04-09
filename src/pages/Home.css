@@ -1,0 +1,244 @@
+.home-page {
+  background: linear-gradient(180deg, #fdfcf9 0%, #f7f6f3 100%);
+}
+
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home-section {
+  padding: 4.5rem 1.5rem;
+}
+
+.home-section-title {
+  text-align: center;
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0 0 2.5rem;
+}
+
+.home-hero {
+  background-color: #101820;
+  min-height: calc(100vh + 4rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1.5rem 7rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-hero-video-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.home-hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 114vw;
+  height: 64vw;
+  min-width: 210vh;
+  min-height: 114vh;
+  transform: translate(-50%, -50%) scale(1.06);
+  transform-origin: center;
+  border: 0;
+  pointer-events: none;
+  filter: brightness(0.7) saturate(0.82);
+}
+
+.home-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.66) 0%, rgba(0, 0, 0, 0.5) 42%, rgba(0, 0, 0, 0.7) 100%),
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.05), transparent 28%);
+}
+
+.home-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+}
+
+.home-hero-logo {
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  display: block;
+  margin: 0 auto 1.25rem;
+  filter: drop-shadow(0 16px 30px rgba(14, 24, 31, 0.24));
+}
+
+.home-hero-subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  line-height: 1.7;
+  margin: 0 auto;
+  color: rgba(248, 251, 251, 0.92);
+}
+
+.home-hero-wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  line-height: 0;
+}
+
+.home-hero-wave svg {
+  width: 100%;
+  height: 80px;
+}
+
+.home-floating-book-btn {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  background-color: var(--color-navy);
+  color: var(--color-sky);
+  border: none;
+  padding: 1rem 1.4rem;
+  border-radius: 999px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.25s ease;
+}
+
+.home-floating-book-btn:hover {
+  transform: scale(1.08);
+  background-color: var(--color-teal);
+  color: var(--color-light);
+}
+
+.home-features-section {
+  background: linear-gradient(180deg, #fbfcfb 0%, #f7f9f8 45%, #f3f4f2 100%);
+  position: relative;
+  padding-bottom: 6.5rem;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.home-features-wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  line-height: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.home-features-wave svg {
+  width: 100%;
+  height: 96px;
+  display: block;
+}
+
+.home-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.home-feature-card {
+  background: linear-gradient(180deg, #ffffff 0%, #fbfcfc 100%);
+  color: var(--color-navy);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(47, 54, 64, 0.08);
+}
+
+.home-feature-card h3 {
+  margin-top: 0;
+  font-size: 1.35rem;
+}
+
+.home-feature-card p {
+  margin-bottom: 0;
+  line-height: 1.7;
+}
+
+.home-booking-section {
+  background: #ffffff;
+  padding-top: 4.75rem;
+  padding-bottom: 5rem;
+  margin-top: 0;
+}
+
+.home-booking-card {
+  max-width: 1050px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(217, 175, 160, 0.16);
+  text-align: center;
+}
+
+.home-booking-eyebrow {
+  margin: 0 0 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18rem;
+  color: var(--color-teal);
+  font-weight: 700;
+}
+
+.home-booking-card h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0 0 1rem;
+  color: var(--color-navy);
+}
+
+.home-booking-card p {
+  font-size: 1.08rem;
+  line-height: 1.8;
+  color: var(--color-text-soft);
+  max-width: 760px;
+  margin: 0 auto 1.5rem;
+}
+
+.home-booking-placeholder {
+  border: 2px dashed #cbbe9c;
+  border-radius: 18px;
+  padding: 1.4rem;
+  background-color: #fbf9f5;
+  color: var(--color-navy);
+}
+
+@media (max-width: 768px) {
+  .home-section {
+    padding: 3.5rem 1rem;
+  }
+
+  .home-features-section {
+    padding-bottom: 5rem;
+  }
+
+  .home-features-wave svg {
+    height: 72px;
+  }
+
+  .home-hero {
+    min-height: calc(100vh + 2rem);
+    padding: 2.5rem 1rem 6rem;
+  }
+
+  .home-hero-video {
+    width: 165vw;
+    height: 92vw;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .home-floating-book-btn {
+    right: 1rem;
+    bottom: 1rem;
+    padding: 0.85rem 1.1rem;
+  }
+}
