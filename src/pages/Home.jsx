@@ -102,7 +102,7 @@ function Home({ texts, setLanguage, language }) {
             <h2>{texts.home.bookingTitle}</h2>
             <p>{texts.home.bookingText}</p>
             <div className="home-booking-calendar">
-              <BookingCalendar texts={texts} />
+              <BookingCalendar texts={texts} language={language}  />
             </div>
           </div>
         </section>

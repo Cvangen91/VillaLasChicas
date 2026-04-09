@@ -2,9 +2,12 @@
 import { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import nbLocale from '@fullcalendar/core/locales/nb'; // norsk bokmål
+import enLocale from '@fullcalendar/core/locales/en-gb'; // engelsk (UK)
+import esLocale from '@fullcalendar/core/locales/es'; // spansk
 import './BookingCalendar.css';
 
-function BookingCalendar({ texts }) {
+function BookingCalendar({ texts, language }) {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -65,6 +68,14 @@ function BookingCalendar({ texts }) {
         initialView="dayGridMonth"
         events={events}
         height="auto"
+        locales={[nbLocale, enLocale, esLocale]}
+        locale={
+          language === 'no'
+            ? 'nb'
+          : language === 'es'
+            ? 'es'
+            : 'en-gb'  // fallback for 'en' eller alt annet
+       }
       />
     </div>
   );
