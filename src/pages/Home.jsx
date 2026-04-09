@@ -1,5 +1,5 @@
 import PageLayout from '../components/layout/PageLayout'
-import CalendarEvents from '../components/sections/Calendar'
+import CalendarEvents from '../components/sections/CalendarEvents'
 import BookingCalendar from '../components/sections/BookingCalendar'
 
 
@@ -12,7 +12,6 @@ function Home({ texts, setLanguage, language }) {
     >
       <h1>{texts.home.title}</h1>
       <p>{texts.home.subtitle}</p>
-       <CalendarEvents texts={texts} />
        <BookingCalendar texts={texts} />
     </PageLayout>
   )

@@ -23,10 +23,13 @@ function BookingCalendar({ texts }) {
 
         // Konverter backend-events til FullCalendar-format
         const fcEvents = (data.events || []).map((event) => ({
-          title: event.summary || texts.calendar.booked, // tekst som vises i kalenderen
+          title: texts.calendar.booked, // tekst som vises i kalenderen
           start: event.start, // FullCalendar takler Date-objekt eller ISO-streng
           end: event.end,
           allDay: true,       // vi antar bookinger gjelder hele dagen
+          extendedProps: {
+            source: event.source,
+          },
         }));
 
         setEvents(fcEvents);
@@ -39,7 +42,7 @@ function BookingCalendar({ texts }) {
 
     fetchCalendar();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // vi kjører bare én gang ved mount
+  }, [texts]); // Kjør på nytt ved endring av språk 
 
   if (loading) {
     return <div>{texts.calendar.loading}</div>;
