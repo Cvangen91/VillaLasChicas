@@ -2,7 +2,6 @@ import PageLayout from '../components/layout/PageLayout'
 import ImageGallery from '../components/sections/ImageGallery'
 import villaLogoMain from '../../bilder/Villalogomain.png'
 import './Home.css'
-import CalendarEvents from '../components/sections/CalendarEvents'
 import BookingCalendar from '../components/sections/BookingCalendar'
 
 
@@ -102,8 +101,9 @@ function Home({ texts, setLanguage, language }) {
             <p className="home-booking-eyebrow">{texts.home.bookingEyebrow}</p>
             <h2>{texts.home.bookingTitle}</h2>
             <p>{texts.home.bookingText}</p>
-
-            <div className="home-booking-placeholder">{texts.home.bookingPlaceholder}</div>
+            <div className="home-booking-calendar">
+              <BookingCalendar texts={texts} />
+            </div>
           </div>
         </section>
       </div>
