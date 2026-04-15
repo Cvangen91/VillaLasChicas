@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import fullViewImage from '../../../bilder/Fullview.jpg'
 import poolImage from '../../../bilder/Basseng.jpg'
 import balconyImage from '../../../bilder/Balkong.jpg'
@@ -9,6 +9,7 @@ import './ImageGallery.css'
 
 function ImageGallery({ texts }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const touchStartX = useRef(null)
   const gallerySlides = [fullViewImage, poolImage, balconyImage, diningImage]
 
   const title = texts?.galleryTitle ?? 'Gallery'
@@ -26,13 +27,42 @@ function ImageGallery({ texts }) {
     setCurrentImageIndex((prev) => (prev - 1 + gallerySlides.length) % gallerySlides.length)
   }
 
+  const handleTouchStart = (event) => {
+    touchStartX.current = event.changedTouches[0]?.clientX ?? null
+  }
+
+  const handleTouchEnd = (event) => {
+    if (touchStartX.current === null) return
+
+    const touchEndX = event.changedTouches[0]?.clientX
+    if (typeof touchEndX !== 'number') {
+      touchStartX.current = null
+      return
+    }
+
+    const deltaX = touchEndX - touchStartX.current
+    const swipeThreshold = 40
+
+    if (deltaX <= -swipeThreshold) {
+      nextImage()
+    } else if (deltaX >= swipeThreshold) {
+      prevImage()
+    }
+
+    touchStartX.current = null
+  }
+
   return (
     <section className="image-gallery-section">
       <div className="image-gallery-wrap">
         <h2 className="image-gallery-title">{title}</h2>
 
         <div className="image-gallery-frame">
-          <div className="image-gallery-stage">
+          <div
+            className="image-gallery-stage"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             <div className="image-gallery-preview image-gallery-preview--side" aria-hidden="true">
               <img
                 src={gallerySlides[previousIndex]}

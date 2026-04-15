@@ -39,11 +39,9 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 114vw;
-  height: 64vw;
-  min-width: 210vh;
-  min-height: 114vh;
-  transform: translate(-50%, -50%) scale(1.06);
+  width: max(100vw, 177.78vh);
+  height: max(100vh, 56.25vw);
+  transform: translate(-50%, -50%) scale(1.25);
   transform-origin: center;
   border: 0;
   pointer-events: none;
@@ -105,13 +103,19 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   z-index: 1000;
-  transition: all 0.25s ease;
+  transition: opacity 0.45s ease, transform 0.45s ease, background-color 0.25s ease, color 0.25s ease;
 }
 
 .home-floating-book-btn:hover {
   transform: scale(1.08);
   background-color: var(--color-teal);
   color: var(--color-light);
+}
+
+.home-floating-book-btn.is-hidden {
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  pointer-events: none;
 }
 
 .home-features-section {
@@ -230,10 +234,9 @@
   }
 
   .home-hero-video {
-    width: 165vw;
-    height: 92vw;
-    min-width: 0;
-    min-height: 0;
+    width: max(100vw, 190vh);
+    height: max(100vh, 56.25vw);
+    transform: translate(-50%, -50%) scale(1.14);
   }
 
   .home-floating-book-btn {
