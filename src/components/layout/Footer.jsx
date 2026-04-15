@@ -1,34 +1,30 @@
+import villaLogoNoText from '../../../bilder/Villalogonulltekst.png'
+import './Footer.css'
+
 function Footer() {
   return (
-    <footer
-      style={{
-        backgroundColor: '#FFFFFF',
-        color: '#1F2933',
-        padding: '2rem 1.5rem',
-        borderTop: '4px solid #45858C',
-        boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.05)',
-      }}
-    >
-      <div
-        style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          display: 'flex',
-          justifyContent: 'space-between',
-          gap: '1rem',
-          flexWrap: 'wrap',
-        }}
-      >
-        <div>
-          <strong style={{ color: '#8AB5BF' }}>Villa Las Chicas</strong>
-          <p style={{ margin: '0.5rem 0 0', opacity: 0.82 }}>
-            Ferie, ro og gode opplevelser i Fuengirola.
-          </p>
+    <footer className="footer-root">
+      <div className="footer-container">
+        <div className="footer-brand">
+          <img src={villaLogoNoText} alt="Villa Las Chicas logo" className="footer-logo" />
+          <p className="footer-copyright">© 2026 Villa Las Chicas</p>
         </div>
 
-        <p style={{ margin: 0, alignSelf: 'end', opacity: 0.72 }}>
-          © {new Date().getFullYear()} Villa Las Chicas
-        </p>
+        <div className="footer-contact">
+          <p className="footer-title">Kontakt</p>
+          <p className="footer-line">E-post: kontakt@villalaschicas.no</p>
+          <p className="footer-line">Telefon: +47 99 99 99 99</p>
+          <p className="footer-line footer-line-soft">Fuengirola, Malaga</p>
+        </div>
+
+        <div className="footer-links-group">
+          <p className="footer-title">Lenker</p>
+          <div className="footer-links">
+            <a href="#!" className="footer-link">Hjem (lenke)</a>
+            <a href="#!" className="footer-link">Om villaen (lenke)</a>
+            <a href="#!" className="footer-link">Facebook (lenke)</a>
+          </div>
+        </div>
       </div>
     </footer>
   )

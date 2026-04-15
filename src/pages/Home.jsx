@@ -1,9 +1,13 @@
+import { useEffect, useRef, useState } from 'react'
 import PageLayout from '../components/layout/PageLayout'
 import ImageGallery from '../components/sections/ImageGallery'
 import villaLogoMain from '../../bilder/Villalogomain.png'
 import './Home.css'
 
 function Home({ texts, setLanguage, language }) {
+  const [isBookingVisible, setIsBookingVisible] = useState(false)
+  const bookingSectionRef = useRef(null)
+
   const featureCards = [
     {
       title: texts.home.feature1Title,
@@ -20,8 +24,26 @@ function Home({ texts, setLanguage, language }) {
   ]
 
   const scrollToContent = () => {
-    document.getElementById('villa-highlights')?.scrollIntoView({ behavior: 'smooth' })
+    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
   }
+
+  useEffect(() => {
+    const section = bookingSectionRef.current
+    if (!section) return undefined
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsBookingVisible(entry.isIntersecting)
+      },
+      {
+        threshold: 0.18,
+      }
+    )
+
+    observer.observe(section)
+
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <PageLayout
@@ -64,7 +86,10 @@ function Home({ texts, setLanguage, language }) {
           </div>
         </section>
 
-        <button className="home-floating-book-btn" onClick={scrollToContent}>
+        <button
+          className={`home-floating-book-btn ${isBookingVisible ? 'is-hidden' : ''}`}
+          onClick={scrollToContent}
+        >
           {texts.home.bookNow}
         </button>
 
@@ -94,7 +119,7 @@ function Home({ texts, setLanguage, language }) {
 
         <ImageGallery texts={texts.home} />
 
-        <section className="home-section home-booking-section">
+        <section ref={bookingSectionRef} className="home-section home-booking-section">
           <div className="home-booking-card">
             <p className="home-booking-eyebrow">{texts.home.bookingEyebrow}</p>
             <h2>{texts.home.bookingTitle}</h2>
