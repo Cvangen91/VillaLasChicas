@@ -120,7 +120,7 @@
 }
 
 .home-features-section {
-  background: linear-gradient(180deg, #fbfcfb 0%, #f7f9f8 45%, #f3f4f2 100%);
+  background: linear-gradient(180deg, #fbfcfb 0%, #f7f9f8 40%, #eef2ef 100%);
   position: relative;
   padding-bottom: 6.5rem;
   overflow: hidden;
@@ -141,6 +141,7 @@
   width: 100%;
   height: 96px;
   display: block;
+  filter: drop-shadow(0 -6px 10px rgba(47, 54, 64, 0.04));
 }
 
 .home-features-grid {

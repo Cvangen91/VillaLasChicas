@@ -123,9 +123,6 @@ function Home({ texts, setLanguage, language }) {
 
         <section ref={bookingSectionRef} className="home-section home-booking-section">
           <div className="home-booking-card">
-            <p className="home-booking-eyebrow">{texts.home.bookingEyebrow}</p>
-            <h2>{texts.home.bookingTitle}</h2>
-            <p>{texts.home.bookingText}</p>
             <div className="home-booking-calendar">
               <BookingCalendar texts={texts} language={language}  />
             </div>

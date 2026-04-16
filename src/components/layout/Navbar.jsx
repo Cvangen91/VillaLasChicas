@@ -11,12 +11,14 @@ function Navbar({ texts, setLanguage, language }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false)
   const [navRevealProgress, setNavRevealProgress] = useState(0)
+  const [frozenRevealProgress, setFrozenRevealProgress] = useState(null)
   const navRef = useRef(null)
   const location = useLocation()
 
   useEffect(() => {
     setIsMenuOpen(false)
     setIsLangDropdownOpen(false)
+    setFrozenRevealProgress(null)
   }, [location.pathname])
 
   useEffect(() => {
@@ -41,8 +43,8 @@ function Navbar({ texts, setLanguage, language }) {
       const navHeight = navRef.current?.offsetHeight ?? (window.innerWidth <= 768 ? 76 : 88)
       const fallbackWaveHeight = window.innerWidth <= 768 ? 68 : 80
       const waveHeight = waveSection?.offsetHeight || fallbackWaveHeight
-      const revealStart = Math.max(heroTop + heroHeight - waveHeight - navHeight, 0)
-      const revealDistance = Math.max(waveHeight + 28, 96)
+      const revealStart = Math.max(heroTop + heroHeight - waveHeight - navHeight + 18, 0)
+      const revealDistance = Math.max(waveHeight + 22, 92)
       const revealEnd = revealStart + revealDistance
       const rawProgress = Math.min(
         Math.max((window.scrollY - revealStart) / (revealEnd - revealStart), 0),
@@ -77,23 +79,27 @@ function Navbar({ texts, setLanguage, language }) {
 
   const isActive = (path) => location.pathname === path
   const isHomePage = location.pathname === '/'
+  const isMobileMenuExpanded = isMenuOpen
   const isMenuExpanded = isMenuOpen || isLangDropdownOpen
-  const visualReveal = !isHomePage ? 1 : navRevealProgress
+  const effectiveReveal = isLangDropdownOpen && frozenRevealProgress !== null
+    ? frozenRevealProgress
+    : navRevealProgress
+  const visualReveal = !isHomePage ? 1 : effectiveReveal
   const visualEase = Math.pow(visualReveal, 1.35)
-  const overlayStrength = isHomePage && !isMenuExpanded ? 1 - visualEase : 0
+  const overlayStrength = isHomePage && !isMobileMenuExpanded ? 1 - visualEase : 0
   const mixChannel = (from, to, amount) => Math.round(from + (to - from) * amount)
   const blendColor = (from, to, amount) => {
     const clamped = Math.min(Math.max(amount, 0), 1)
     return `rgb(${mixChannel(from[0], to[0], clamped)}, ${mixChannel(from[1], to[1], clamped)}, ${mixChannel(from[2], to[2], clamped)})`
   }
-  const navTextColor = isMenuExpanded
+  const navTextColor = isMobileMenuExpanded
     ? '#1F2933'
     : blendColor([248, 251, 251], [31, 41, 51], visualEase)
   const activeLinkColor = blendColor([168, 214, 221], [69, 133, 140], Math.min(0.12 + visualEase * 0.88, 1))
   const menuButtonColor = blendColor([248, 251, 251], [138, 181, 191], Math.min(visualEase * 1.05, 1))
   const languageButtonOpacity = isMenuExpanded ? 1 : 0.7 + visualEase * 0.26
   const languageButtonBorderOpacity = isMenuExpanded ? 0 : overlayStrength * 0.24
-  const logoBadgeOpacity = isHomePage && !isMenuExpanded ? overlayStrength * 0.18 : 0
+  const logoBadgeOpacity = isHomePage ? overlayStrength * 0.18 : 0
 
   const getLinkStyle = (active) => ({
     color: active ? activeLinkColor : navTextColor,
@@ -134,7 +140,7 @@ function Navbar({ texts, setLanguage, language }) {
     <nav
       ref={navRef}
       style={{
-        backgroundColor: isMenuExpanded
+        backgroundColor: isMobileMenuExpanded
           ? 'rgba(252, 253, 252, 0.98)'
           : `rgba(255, 255, 255, ${visualEase * 0.96})`,
         padding: '1rem 1.5rem',
@@ -144,13 +150,13 @@ function Navbar({ texts, setLanguage, language }) {
         right: 0,
         width: '100%',
         zIndex: 1100,
-        boxShadow: isMenuExpanded
+        boxShadow: isMobileMenuExpanded
           ? '0 8px 24px rgba(0, 0, 0, 0.10)'
           : `0 2px 18px rgba(0, 0, 0, ${visualEase * 0.08})`,
-        borderBottom: isMenuExpanded
+        borderBottom: isMobileMenuExpanded
           ? '1px solid rgba(47, 54, 64, 0.08)'
           : `1px solid rgba(47, 54, 64, ${visualEase * 0.08})`,
-        backdropFilter: `blur(${visualEase * 10}px)`,
+        backdropFilter: isMobileMenuExpanded ? 'blur(10px)' : `blur(${visualEase * 10}px)`,
       }}
     >
       <div
@@ -214,7 +220,11 @@ function Navbar({ texts, setLanguage, language }) {
 
           <div style={{ position: 'relative' }}>
             <button
-              onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+              onClick={() => {
+                const nextIsOpen = !isLangDropdownOpen
+                setIsLangDropdownOpen(nextIsOpen)
+                setFrozenRevealProgress(nextIsOpen ? navRevealProgress : null)
+              }}
               style={{
                 backgroundColor: `rgba(69, 133, 140, ${languageButtonOpacity})`,
                 color: '#F2F2F2',
