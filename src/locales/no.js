@@ -81,6 +81,16 @@ const no = {
     text1: 'Har du spørsmål om tilgjengelighet, priser eller oppholdet, hører vi gjerne fra deg.',
     text2: 'Send oss en melding, så svarer vi så raskt som mulig med mer informasjon.',
   },
+  footer: {
+    contactTitle: 'Kontakt',
+    emailLabel: 'E-post',
+    phoneLabel: 'Telefon',
+    linksTitle: 'Lenker',
+    homeLink: 'Hjem',
+    aboutLink: 'Om villaen',
+    contactLink: 'Kontakt',
+    location: 'Fuengirola, Málaga',
+  },
 }
 
 export default no

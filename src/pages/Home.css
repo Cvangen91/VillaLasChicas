@@ -24,7 +24,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 3rem 1.5rem 7rem;
+  padding: 7rem 1.5rem 7rem;
   position: relative;
   overflow: hidden;
 }
@@ -84,6 +84,7 @@
   right: 0;
   bottom: 0;
   line-height: 0;
+  pointer-events: none;
 }
 
 .home-hero-wave svg {
@@ -220,6 +221,15 @@
     padding: 3.5rem 1rem;
   }
 
+  .home-hero-content {
+    max-width: 92%;
+    padding-top: 2.25rem;
+  }
+
+  .home-hero-logo {
+    max-width: 320px;
+  }
+
   .home-features-section {
     padding-bottom: 5rem;
   }
@@ -229,8 +239,8 @@
   }
 
   .home-hero {
-    min-height: calc(100vh + 2rem);
-    padding: 2.5rem 1rem 6rem;
+    min-height: calc(100svh + 6rem);
+    padding: 6.5rem 1rem 7rem;
   }
 
   .home-hero-video {
@@ -243,5 +253,24 @@
     right: 1rem;
     bottom: 1rem;
     padding: 0.85rem 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-hero {
+    min-height: calc(100svh + 8rem);
+    padding: 6.5rem 1rem 7.5rem;
+  }
+
+  .home-hero-content {
+    padding-top: 2.75rem;
+  }
+
+  .home-hero-logo {
+    max-width: 280px;
+  }
+
+  .home-hero-wave svg {
+    height: 68px;
   }
 }

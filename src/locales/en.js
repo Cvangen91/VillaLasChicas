@@ -81,6 +81,16 @@ const en = {
     text1: 'If you have questions about availability, pricing, or the stay itself, we would love to hear from you.',
     text2: 'Send us a message and we will get back to you as soon as possible with more details.',
   },
+  footer: {
+    contactTitle: 'Contact',
+    emailLabel: 'Email',
+    phoneLabel: 'Phone',
+    linksTitle: 'Links',
+    homeLink: 'Home',
+    aboutLink: 'About the villa',
+    contactLink: 'Contact',
+    location: 'Fuengirola, Málaga',
+  },
 }
 
 export default en

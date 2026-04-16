@@ -81,6 +81,16 @@ const es = {
     text1: 'Si tienes preguntas sobre disponibilidad, precios o la estancia, estaremos encantados de ayudarte.',
     text2: 'Envíanos un mensaje y te responderemos lo antes posible con más detalles.',
   },
+  footer: {
+    contactTitle: 'Contacto',
+    emailLabel: 'Correo',
+    phoneLabel: 'Teléfono',
+    linksTitle: 'Enlaces',
+    homeLink: 'Inicio',
+    aboutLink: 'Sobre la villa',
+    contactLink: 'Contacto',
+    location: 'Fuengirola, Málaga',
+  },
 }
 
 export default es

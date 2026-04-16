@@ -19,7 +19,7 @@ function PageLayout({ children, texts, setLanguage, language }) {
 
       <main style={{ flex: 1 }}>{children}</main>
 
-      <Footer />
+      <Footer texts={texts} />
     </div>
   )
 }

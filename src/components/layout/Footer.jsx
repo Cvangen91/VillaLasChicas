@@ -1,7 +1,18 @@
 import villaLogoNoText from '../../../bilder/Villalogonulltekst.png'
 import './Footer.css'
 
-function Footer() {
+function Footer({ texts }) {
+  const footerTexts = texts?.footer ?? {
+    contactTitle: 'Kontakt',
+    emailLabel: 'E-post',
+    phoneLabel: 'Telefon',
+    linksTitle: 'Lenker',
+    homeLink: 'Hjem',
+    aboutLink: 'Om villaen',
+    contactLink: 'Kontakt',
+    location: 'Fuengirola, Malaga',
+  }
+
   return (
     <footer className="footer-root">
       <div className="footer-container">
@@ -11,18 +22,18 @@ function Footer() {
         </div>
 
         <div className="footer-contact">
-          <p className="footer-title">Kontakt</p>
-          <p className="footer-line">E-post: kontakt@villalaschicas.no</p>
-          <p className="footer-line">Telefon: +47 99 99 99 99</p>
-          <p className="footer-line footer-line-soft">Fuengirola, Malaga</p>
+          <p className="footer-title">{footerTexts.contactTitle}</p>
+          <p className="footer-line">{footerTexts.emailLabel}: kontakt@villalaschicas.no</p>
+          <p className="footer-line">{footerTexts.phoneLabel}: +47 99 99 99 99</p>
+          <p className="footer-line footer-line-soft">{footerTexts.location}</p>
         </div>
 
         <div className="footer-links-group">
-          <p className="footer-title">Lenker</p>
+          <p className="footer-title">{footerTexts.linksTitle}</p>
           <div className="footer-links">
-            <a href="#!" className="footer-link">Hjem (lenke)</a>
-            <a href="#!" className="footer-link">Om villaen (lenke)</a>
-            <a href="#!" className="footer-link">Facebook (lenke)</a>
+            <a href="#!" className="footer-link">{footerTexts.homeLink}</a>
+            <a href="#!" className="footer-link">{footerTexts.aboutLink}</a>
+            <a href="#!" className="footer-link">{footerTexts.contactLink}</a>
           </div>
         </div>
       </div>
