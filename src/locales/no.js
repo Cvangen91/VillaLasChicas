@@ -75,6 +75,16 @@ const no = {
     servicesText: 'På stedet kan du blant annet bestille tapas- eller paellakveld, massasje, barnevakt, leie av bil/sykkel og ulike utflukter på Costa del Sol.',
     closing: 'Her kan du senke skuldrene, nyte solen og skape fine minner sammen med dem du reiser med.',
   },
+  calendar: {
+      title: 'Kalender',
+      loading: 'Laster kalender...',
+      empty: 'Ingen bookinger eller blokkerte datoer funnet.',
+      from: 'Fra:',
+      to: 'Til:',
+      errorPrefix: 'Feil: ',
+      booked: 'Opptatt', // brukes som fallback-tittel på event
+    },
+
   contact: {
     title: 'Kontakt oss',
     text: 'Ta kontakt for mer informasjon.',

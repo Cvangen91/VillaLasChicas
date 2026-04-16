@@ -75,6 +75,15 @@ const en = {
     servicesText: 'Guests can arrange extras such as tapas or paella evenings, massage treatments, babysitting, car or bike rental, and day experiences around the Costa del Sol.',
     closing: 'This is a place to slow down, enjoy the sunshine, and create memorable moments together.',
   },
+  calendar: {
+    title: 'Calendar',
+    loading: 'Loading calendar...',
+    empty: 'No bookings or blocked dates found.',
+    from: 'From:',
+    to: 'To:',
+    errorPrefix: 'Error: ',
+    booked: 'Booked',
+  },
   contact: {
     title: 'Contact us',
     text: 'Get in touch for more information.',

@@ -1,0 +1,35 @@
+
+
+/* Selve kalender-containeren */
+.booking-calendar .fc {
+  font-family: inherit;          /* bruk samme font som resten av siden */
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  padding: 1rem;
+}
+
+/* Header (måned + navigasjon) */
+.booking-calendar .fc-toolbar {
+  margin-bottom: 1rem;
+}
+
+.booking-calendar .fc-toolbar-title {
+  font-size: 1.1rem;
+}
+
+/* Dager / rutenett */
+.booking-calendar .fc-daygrid-day {
+  cursor: default;
+}
+
+.booking-calendar .fc-daygrid-day-number {
+  font-size: 0.8rem;
+}
+
+/* Event-bobler (opptatte dager) */
+.booking-calendar .fc-daygrid-event {
+  font-size: 0.7rem;
+  border-radius: 999px;
+  padding: 0.1rem 0.4rem;
+}

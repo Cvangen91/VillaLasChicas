@@ -75,6 +75,15 @@ const es = {
     servicesText: 'Los huéspedes pueden organizar extras como noches de tapas o paella, masajes, niñera, alquiler de coche o bicicleta, y excursiones de un día por la Costa del Sol.',
     closing: 'Este es un lugar para desconectar, disfrutar del sol y crear momentos inolvidables juntos.',
   },
+  calendar: {
+    title: 'Calendario',
+    loading: 'Cargando calendario...',
+    empty: 'No se han encontrado reservas ni fechas bloqueadas.',
+    from: 'Desde:',
+    to: 'Hasta:',
+    errorPrefix: 'Error: ',
+    booked: 'Reservado',
+  },
   contact: {
     title: 'Contáctanos',
     text: 'Ponte en contacto para más información.',
