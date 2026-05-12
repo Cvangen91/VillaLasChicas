@@ -2,34 +2,109 @@
 
 /* Selve kalender-containeren */
 .booking-calendar .fc {
-  font-family: inherit;          /* bruk samme font som resten av siden */
+  font-family: inherit;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
   padding: 1rem;
+  font-size: 0.95rem;
 }
 
 /* Header (måned + navigasjon) */
 .booking-calendar .fc-toolbar {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .booking-calendar .fc-toolbar-title {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.booking-calendar .fc-button {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  color: #333;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.booking-calendar .fc-button:hover {
+  background-color: #e8e8e8;
+}
+
+.booking-calendar .fc-button-active {
+  background-color: #333;
+  color: #fff;
+  border-color: #333;
+}
+
+/* Week headers */
+.booking-calendar .fc-col-header-cell {
+  background-color: #f9f9f9;
+  padding: 0.75rem 0;
+  font-weight: 600;
+  border-color: #e8e8e8;
 }
 
 /* Dager / rutenett */
 .booking-calendar .fc-daygrid-day {
   cursor: default;
+  border-color: #e8e8e8;
+  min-height: 80px;
+  vertical-align: top;
+  padding: 0.5rem;
 }
 
 .booking-calendar .fc-daygrid-day-number {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.3rem;
+  display: inline-block;
+}
+
+.booking-calendar .fc-daygrid-day.fc-day-other {
+  background-color: #fafafa;
+  opacity: 0.6;
+}
+
+.booking-calendar .fc-daygrid-day.fc-day-today {
+  background-color: #f0f7ff;
 }
 
 /* Event-bobler (opptatte dager) */
 .booking-calendar .fc-daygrid-event {
-  font-size: 0.7rem;
-  border-radius: 999px;
-  padding: 0.1rem 0.4rem;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  padding: 0.3rem 0.5rem;
+  margin-top: 0.3rem;
+  background-color: #d9534f;
+  border-color: #c9302c;
+  color: white;
+}
+
+.booking-calendar .fc-daygrid-event-dot {
+  display: none;
+}
+
+/* Typo */
+.booking-calendar h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+/* Error/loading messages */
+.booking-calendar > div {
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #666;
 }
