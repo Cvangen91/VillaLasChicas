@@ -101,6 +101,7 @@ function About({ texts, setLanguage, language }) {
               </div>
 
               <p className="page-body-text">{texts.about.text1}</p>
+              <p className="page-body-text">{texts.about.textrooms}</p>
               <p className="page-body-text">{texts.about.text2}</p>
               <p className="page-body-text">{texts.about.extraText}</p>
             </div>
