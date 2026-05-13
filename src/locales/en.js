@@ -29,7 +29,9 @@ const en = {
     bookingEyebrow: 'Booking',
     bookingTitle: 'Booking',
     bookingText: 'A dedicated booking solution will be added here later. This section is reserved for availability, enquiries, and reservations.',
-    bookingPlaceholder: 'Booking module coming soon.'
+    bookingPlaceholder: 'Booking module coming soon.',
+    bookWithAirbnb: 'Book with Airbnb',
+    bookWithBooking: 'Book with Booking.com',
   },
   about: {
     title: 'About Villa Las Chicas',

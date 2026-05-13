@@ -29,7 +29,9 @@ const no = {
     bookingEyebrow: 'Booking',
     bookingTitle: 'Booking',
     bookingText: 'Her kommer det en egen bookingløsning etter hvert. Denne seksjonen er reservert for tilgjengelighet, forespørsler og bestilling.',
-    bookingPlaceholder: 'Bookingmodul kommer snart.'
+    bookingPlaceholder: 'Bookingmodul kommer snart.',
+    bookWithAirbnb: 'Book på Airbnb',
+    bookWithBooking: 'Book på Booking.com',
   },
   about: {
     title: 'Om Villa Las Chicas',

@@ -126,7 +126,27 @@ function Home({ texts, setLanguage, language }) {
             <div className="home-booking-calendar">
               <BookingCalendar texts={texts} language={language}  />
             </div>
+            <div className="home-booking-buttons">
+            <a
+              href="https://www.airbnb.co.uk/rooms/1650685669666600702?source_impression_id=p3_1778664841_P33FPkFP-XCYGhtH"   
+              // Change Url when needed
+              target="_blank"
+              rel="noreferrer"
+              className="home-booking-button airbnb"
+            >
+              {texts.home.bookWithAirbnb}
+            </a>
+
+            <a
+              href="https://admin.booking.com/XXXXXXX"  // change this
+              target="_blank"
+              rel="noreferrer"
+              className="home-booking-button booking"
+            >
+              {texts.home.bookWithBooking}
+            </a>
           </div>
+        </div>
         </section>
       </div>
     </PageLayout>

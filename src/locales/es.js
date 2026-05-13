@@ -30,6 +30,8 @@ const es = {
     bookingTitle: 'Reserva',
     bookingText: 'Aquí se añadirá más adelante una solución de reservas. Esta sección está reservada para disponibilidad, consultas y reservas.',
     bookingPlaceholder: 'Módulo de reservas próximamente.',
+    bookWithAirbnb: 'Reservar con Airbnb',
+    bookWithBooking: 'Reservar con Booking.com',
   },
   about: {
     title: 'Sobre Villa Las Chicas',

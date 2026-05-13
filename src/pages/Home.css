@@ -275,3 +275,29 @@
     height: 68px;
   }
 }
+
+.home-booking-buttons {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center; 
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.home-booking-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.home-booking-button.airbnb {
+  background-color: #ff5a5f;
+}
+
+.home-booking-button.booking {
+  background-color: #003580;
+}
