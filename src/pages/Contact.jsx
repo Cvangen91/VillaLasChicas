@@ -12,7 +12,7 @@ function Contact({ texts, setLanguage, language }) {
       setLanguage={setLanguage}
       language={language}
     >
-      <div className="page-shell">
+      <div className="page-shell contact-shell">
         <section className="page-section page-section--bottom">
           <div className="page-wide">
             <div className="contact-top-grid">

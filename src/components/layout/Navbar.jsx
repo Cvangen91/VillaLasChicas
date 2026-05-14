@@ -4,7 +4,7 @@ import villaLogo from '../../../bilder/villalogo.png'
 import arrowDown from '../../../bilder/arrowdown.png'
 import arrowUp from '../../../bilder/arrowup.png'
 import norwayFlag from '../../../bilder/Norgeflagg.png'
-import englishFlag from '../../../bilder/england.png'
+import usaFlag from '../../../bilder/usaFlag.webp'
 import spainFlag from '../../../bilder/spainflag.png'
 
 function Navbar({ texts, setLanguage, language }) {
@@ -122,7 +122,7 @@ function Navbar({ texts, setLanguage, language }) {
   const languageArrow = isLangDropdownOpen ? arrowUp : arrowDown
   const languageOptions = {
     no: { label: 'Norsk', flag: norwayFlag },
-    en: { label: 'English', flag: englishFlag },
+    en: { label: 'English', flag: usaFlag },
     es: { label: 'Español', flag: spainFlag },
   }
   const activeLanguage = languageOptions[language] ?? languageOptions.en
@@ -264,7 +264,7 @@ function Navbar({ texts, setLanguage, language }) {
                   borderRadius: '8px',
                   minWidth: '110px',
                   overflow: 'hidden',
-                  boxShadow: '0 8px 20px rgba(0, 0, 0, 0.12)',
+                  boxShadow: '0 12px 36px rgba(0, 0, 0, 0.22), 0 2px 8px rgba(0,0,0,0.10)',
                   border: '1px solid rgba(47, 54, 64, 0.08)',
                 }}
               >

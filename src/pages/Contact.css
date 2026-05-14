@@ -1,3 +1,11 @@
+.contact-shell {
+  background:
+    radial-gradient(circle at 10% 8%, rgba(138, 181, 191, 0.16), transparent 44%),
+    radial-gradient(circle at 90% 12%, rgba(191, 216, 223, 0.14), transparent 48%),
+    linear-gradient(180deg, #edf5f7 0%, #f1f5f4 34%, var(--color-sand-light) 64%, var(--color-light) 100%);
+  padding-bottom: 2.5rem;
+}
+
 .contact-intro p {
   font-size: 1.22rem;
   line-height: 1.75;

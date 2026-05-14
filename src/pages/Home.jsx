@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import PageLayout from '../components/layout/PageLayout'
 import ImageGallery from '../components/sections/ImageGallery'
 import villaLogoMain from '../../bilder/Villalogomain.png'
+import villaHeroVideo from '../../bilder/villavid2.mp4'
 import './Home.css'
 import BookingCalendar from '../components/sections/BookingCalendar'
 
@@ -16,20 +17,16 @@ function Home({ texts, setLanguage, language }) {
     {
       title: texts.home.feature1Title,
       text: texts.home.feature1Text,
-      buttonText: 'Se kart',
+      buttonText: texts.home.seeMapButton,
       action: () => navigate('/about#about-map'),
     },
     {
       title: texts.home.feature2Title,
       text: texts.home.feature2Text,
-      buttonText: 'Mer info',
-      action: () => navigate('/about'),
     },
     {
       title: texts.home.feature3Title,
       text: texts.home.feature3Text,
-      buttonText: 'Mer info',
-      action: () => navigate('/about'),
     },
   ]
 
@@ -64,12 +61,15 @@ function Home({ texts, setLanguage, language }) {
       <div className="home-page">
         <section className="home-hero">
           <div className="home-hero-video-wrap" aria-hidden="true">
-            <iframe
+            <video
               className="home-hero-video"
-              src="https://www.youtube.com/embed/AUY3gvKTbxc?autoplay=1&mute=1&controls=0&loop=1&playlist=AUY3gvKTbxc&playsinline=1&rel=0&modestbranding=1"
+              src={villaHeroVideo}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
               title="Villa Las Chicas hero video"
-              allow="autoplay; encrypted-media; picture-in-picture"
-              referrerPolicy="strict-origin-when-cross-origin"
               tabIndex="-1"
             />
           </div>
@@ -112,12 +112,14 @@ function Home({ texts, setLanguage, language }) {
                 <div key={item.title} className="home-feature-card">
                   <h3>{item.title}</h3>
                   <p>{item.text}</p>
-                  <button 
-                    className="home-feature-button"
-                    onClick={item.action}
-                  >
-                    {item.buttonText}
-                  </button>
+                  {item.buttonText ? (
+                    <button
+                      className="home-feature-button"
+                      onClick={item.action}
+                    >
+                      {item.buttonText}
+                    </button>
+                  ) : null}
                 </div>
               ))}
             </div>

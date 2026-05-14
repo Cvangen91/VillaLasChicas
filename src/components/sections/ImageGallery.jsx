@@ -3,6 +3,8 @@ import fullViewImage from '../../../bilder/Fullview.jpg'
 import poolImage from '../../../bilder/Basseng.jpg'
 import balconyImage from '../../../bilder/Balkong.jpg'
 import diningImage from '../../../bilder/Spisestue.jpg'
+import livingImage from '../../../bilder/Sofarod.jpg'
+import birdViewImage from '../../../bilder/Fugleperspektiv.jpg'
 import arrowLeft from '../../../bilder/arrowleft.png'
 import arrowRight from '../../../bilder/arrowright.png'
 import './ImageGallery.css'
@@ -10,7 +12,14 @@ import './ImageGallery.css'
 function ImageGallery({ texts }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const touchStartX = useRef(null)
-  const gallerySlides = [fullViewImage, poolImage, balconyImage, diningImage]
+  const gallerySlides = [
+    fullViewImage,
+    livingImage,
+    poolImage,
+    balconyImage,
+    diningImage,
+    birdViewImage,
+  ]
 
   const title = texts?.galleryTitle ?? 'Gallery'
   const previousLabel = texts?.galleryPrev ?? 'Previous image'

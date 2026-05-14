@@ -42,6 +42,8 @@ import balconyImage from '../../bilder/Balkong.jpg'
 import birdViewImage from '../../bilder/Fugleperspektiv.jpg'
 import nightPoolImage from '../../bilder/Nattbad.jpg'
 import omVillaImage from '../../bilder/Omvillabilde.avif'
+import arrowLeft from '../../bilder/arrowleft.png'
+import arrowRight from '../../bilder/arrowright.png'
 import './pages.css'
 import './About.css'
 
@@ -49,7 +51,9 @@ function About({ texts, setLanguage, language }) {
   const [showAllAmenities, setShowAllAmenities] = useState(false)
   const [showAllPhotos, setShowAllPhotos] = useState(false)
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(null)
+  const [isMapExpanded, setIsMapExpanded] = useState(false)
   const photoTouchStartX = useRef(null)
+  const embeddedMapUrl = 'https://www.google.com/maps?q=Fuengirola%2C%20Andalusia%2C%20Spain&z=11&output=embed'
   
   // Scroll to hash anchor on mount and when hash changes
   useEffect(() => {
@@ -86,20 +90,20 @@ function About({ texts, setLanguage, language }) {
   const amenityIconByKey = {
     kitchen: '🍽',
     wifi: '📶',
-    freeParking: '🚗',
+    freeParking: '🅿️',
     pool: '🏊',
     tv: '📺',
-    washingMachine: '🧺',
+    washingMachine: '👕🫧',
     airConditioning: '❄️',
     indoorFireplace: '🔥',
-    firepit: '🔥',
-    outdoorDining: '🍴',
+    firepit: '🔥🪵',
+    outdoorDining: '🍽️🌿',
     bbq: '🍖',
     smokeAlarm: '🚨',
-    coAlarm: '⚠️',
+    coAlarm: '🚨',
     fireExtinguisher: '🧯',
     firstAid: '⛑️',
-    hostGreets: '🤝',
+    hostGreets: '🙋🤝',
     outdoorShower: '🚿',
   }
 
@@ -113,11 +117,41 @@ function About({ texts, setLanguage, language }) {
   const photoSectionsText = texts.about.photoSections || {}
 
   const collageImages = [
-    { key: 'main', src: fullVillaImage, alt: photoSectionsText.exterior || 'Exterior' },
-    { key: 'entry', src: exteriorEntryImage, alt: photoSectionsText.additional || 'Additional photos' },
-    { key: 'living', src: sofaImage, alt: photoSectionsText.livingRoom || 'Living room' },
-    { key: 'pool', src: poolMainImage, alt: photoSectionsText.pool || 'Pool' },
-    { key: 'dining', src: diningImage, alt: photoSectionsText.diningArea || 'Dining area' },
+    {
+      key: 'main',
+      src: fullVillaImage,
+      alt: photoSectionsText.exterior || 'Exterior',
+      sectionKey: 'exterior',
+      imageIndex: 0,
+    },
+    {
+      key: 'entry',
+      src: exteriorEntryImage,
+      alt: photoSectionsText.additional || 'Additional photos',
+      sectionKey: 'exterior',
+      imageIndex: 2,
+    },
+    {
+      key: 'living',
+      src: sofaImage,
+      alt: photoSectionsText.livingRoom || 'Living room',
+      sectionKey: 'living-room',
+      imageIndex: 0,
+    },
+    {
+      key: 'pool',
+      src: poolMainImage,
+      alt: photoSectionsText.pool || 'Pool',
+      sectionKey: 'pool',
+      imageIndex: 0,
+    },
+    {
+      key: 'dining',
+      src: diningImage,
+      alt: photoSectionsText.diningArea || 'Dining area',
+      sectionKey: 'dining',
+      imageIndex: 0,
+    },
   ]
 
   const photoSections = [
@@ -159,7 +193,7 @@ function About({ texts, setLanguage, language }) {
     {
       key: 'exterior',
       title: photoSectionsText.exterior || 'Exterior',
-      images: [omVillaImage, exteriorEntryImage, exteriorImage1, exteriorImage2, exteriorImage3, exteriorImage4, exteriorImage5, exteriorImage6, exteriorImage7, exteriorImage8, exteriorImage9, exteriorImage10, exteriorImage11, exteriorImage12, exteriorImage13, balconyImage, birdViewImage],
+      images: [fullVillaImage, omVillaImage, exteriorEntryImage, exteriorImage1, exteriorImage2, exteriorImage3, exteriorImage4, exteriorImage5, exteriorImage6, exteriorImage7, exteriorImage8, exteriorImage9, exteriorImage10, exteriorImage11, exteriorImage12, exteriorImage13, balconyImage, birdViewImage],
     },
     {
       key: 'pool',
@@ -243,6 +277,38 @@ function About({ texts, setLanguage, language }) {
     }
   }
 
+  const getLightboxIndexBySection = (sectionKey, sectionImageIndex) => {
+    let runningIndex = 0
+
+    for (const section of photoSections) {
+      if (section.groups) {
+        const groupImageCount = section.groups.reduce((sum, group) => sum + group.images.length, 0)
+
+        if (section.key === sectionKey) {
+          return runningIndex + sectionImageIndex
+        }
+
+        runningIndex += groupImageCount
+      } else {
+        if (section.key === sectionKey) {
+          return runningIndex + sectionImageIndex
+        }
+
+        runningIndex += section.images.length
+      }
+    }
+
+    return null
+  }
+
+  const handleOpenFromCollage = (sectionKey, sectionImageIndex) => {
+    const photoIndex = getLightboxIndexBySection(sectionKey, sectionImageIndex)
+    if (photoIndex === null || photoIndex < 0 || photoIndex >= photoLightboxImages.length) return
+
+    setShowAllPhotos(true)
+    setSelectedPhotoIndex(photoIndex)
+  }
+
   const handleCloseSelectedPhoto = () => setSelectedPhotoIndex(null)
 
   const showPreviousPhoto = () => {
@@ -304,15 +370,6 @@ function About({ texts, setLanguage, language }) {
             <h1 className="page-title highlight-title">{texts.about.title}</h1>
             <p className="page-intro highlight-info">{texts.about.intro}</p>
           </div>
-
-          <div className="about-wave" aria-hidden="true">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-              <path
-                d="M0,54 C170,104 330,10 520,44 C760,88 930,104 1200,56 L1200,120 L0,120 Z"
-                fill="#FFFFFF"
-              />
-            </svg>
-          </div>
         </section>
 
         <section className="page-section page-section--bottom about-section about-section--faq">
@@ -322,13 +379,27 @@ function About({ texts, setLanguage, language }) {
 
               <div className="about-photo-collage">
                 <figure className="about-photo-main">
-                  <img src={collageImages[0].src} alt={collageImages[0].alt} className="about-photo-image" />
+                  <button
+                    type="button"
+                    className="about-photo-collage-button"
+                    onClick={() => handleOpenFromCollage(collageImages[0].sectionKey, collageImages[0].imageIndex)}
+                    aria-label={collageImages[0].alt}
+                  >
+                    <img src={collageImages[0].src} alt={collageImages[0].alt} className="about-photo-image" />
+                  </button>
                 </figure>
 
                 <div className="about-photo-side-grid">
                   {collageImages.slice(1).map((item, index) => (
                     <figure key={item.key} className="about-photo-side-item">
-                      <img src={item.src} alt={item.alt} className="about-photo-image" />
+                      <button
+                        type="button"
+                        className="about-photo-collage-button"
+                        onClick={() => handleOpenFromCollage(item.sectionKey, item.imageIndex)}
+                        aria-label={item.alt}
+                      >
+                        <img src={item.src} alt={item.alt} className="about-photo-image" />
+                      </button>
                       {index === collageImages.slice(1).length - 1 ? (
                         <button type="button" className="about-photo-show-button" onClick={handleShowAllPhotos}>
                           {photoShowAll}
@@ -353,8 +424,8 @@ function About({ texts, setLanguage, language }) {
                       >
                         <header className="about-photo-modal-header">
                           <h4>{photoTourTitle}</h4>
-                          <button type="button" className="about-photo-modal-close" onClick={handleCloseAllPhotos}>
-                            <span aria-hidden="true">x</span> {photoClose}
+                          <button type="button" className="about-photo-modal-close" onClick={handleCloseAllPhotos} aria-label={photoClose}>
+                            ✕
                           </button>
                         </header>
 
@@ -434,8 +505,8 @@ function About({ texts, setLanguage, language }) {
                               <p>{selectedPhoto.label}</p>
                               <span>{selectedPhotoIndex + 1}/{photoLightboxImages.length}</span>
                             </div>
-                            <button type="button" className="about-photo-modal-close" onClick={handleCloseSelectedPhoto}>
-                              <span aria-hidden="true">x</span> {photoClose}
+                            <button type="button" className="about-photo-modal-close" onClick={handleCloseSelectedPhoto} aria-label={photoClose}>
+                              ✕
                             </button>
                           </header>
 
@@ -450,7 +521,7 @@ function About({ texts, setLanguage, language }) {
                               onClick={showPreviousPhoto}
                               aria-label={photoPrevious}
                             >
-                              ‹
+                              <img src={arrowLeft} alt="" className="about-photo-lightbox-arrow-icon" />
                             </button>
 
                             <img src={selectedPhoto.src} alt={selectedPhoto.alt} className="about-photo-lightbox-image" />
@@ -461,7 +532,7 @@ function About({ texts, setLanguage, language }) {
                               onClick={showNextPhoto}
                               aria-label={photoNext}
                             >
-                              ›
+                              <img src={arrowRight} alt="" className="about-photo-lightbox-arrow-icon" />
                             </button>
                           </div>
 
@@ -540,10 +611,18 @@ function About({ texts, setLanguage, language }) {
 
             {/* Google Maps section */}
             <div id="about-map" className="about-map-section">
-              <h3 className="about-map-title">Location</h3>
+              <h3 className="about-map-title">{texts.about.locationTitle ?? 'Location'}</h3>
               <div className="about-map-container">
+                <button
+                  type="button"
+                  className="about-map-expand-button"
+                  onClick={() => setIsMapExpanded(true)}
+                  aria-label={texts.about.mapExpandButton ?? 'Forstørr kart'}
+                >
+                  🔍 {texts.about.mapExpandButton ?? 'Forstørr kart'}
+                </button>
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3197.639321886206!2d-4.641227!3d36.737701!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72e3e6f3e6f3e6f%3A0x1234567890!2sFuengirola%2C%20M%C3%A1laga!5e0!3m2!1sen!2ses!4v1234567890"
+                  src={embeddedMapUrl}
                   width="100%"
                   height="450"
                   style={{ border: 0 }}
@@ -556,9 +635,41 @@ function About({ texts, setLanguage, language }) {
               </div>
             </div>
 
+            {isMapExpanded && createPortal(
+              <div
+                className="about-map-modal-backdrop"
+                onClick={() => setIsMapExpanded(false)}
+              >
+                <div
+                  className="about-map-modal"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    type="button"
+                    className="about-map-modal-close"
+                    onClick={() => setIsMapExpanded(false)}
+                    aria-label={texts.about.mapCloseLabel ?? 'Close map'}
+                  >
+                    ✕
+                  </button>
+                  <iframe
+                    src={embeddedMapUrl}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Villa Las Chicas Location Expanded"
+                  ></iframe>
+                </div>
+              </div>,
+              document.body
+            )}
+
             {/* FAQ section */}
             <div className="page-faq-header">
-              <p className="page-eyebrow">FAQ</p>
+              <p className="page-eyebrow">{texts.about.faqEyebrow ?? 'FAQ'}</p>
               <h2 className="page-faq-title">{texts.about.faqTitle}</h2>
               <p className="page-faq-intro">{texts.about.faqIntro}</p>
             </div>
@@ -572,10 +683,59 @@ function About({ texts, setLanguage, language }) {
               ))}
               <div className="page-faq-item page-faq-item--open page-faq-item--static">
                 <div className="page-faq-summary page-faq-summary--static">{texts.about.moreInfoTitle}</div>
-                <p className="page-faq-answer page-faq-answer--first">{texts.about.text1}</p>
-                <p className="page-faq-answer">{texts.about.textrooms}</p>
-                  <p className="page-faq-answer">{texts.about.text2}</p>
-                  <p className="page-faq-answer">{texts.about.extraText}</p>
+
+                <div className="about-info-block">
+                  <h4 className="about-info-subtitle">{texts.about.overviewTitle ?? 'Om villaen'}</h4>
+                  <ul className="about-info-bullet-list">
+                    {[texts.about.text1, texts.about.textrooms, texts.about.text2, texts.about.extraText]
+                      .filter(Boolean)
+                      .map((line) => (
+                        <li key={line}>{line}</li>
+                      ))}
+                  </ul>
+                </div>
+
+                {texts.about.transportInfoTitle ? (
+                  <div className="about-info-block">
+                    <h4 className="about-info-subtitle">{texts.about.transportInfoTitle}</h4>
+                    <ul className="about-info-bullet-list">
+                      {(texts.about.transportInfo ?? []).map((line) => (
+                        <li key={line}>{line}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+
+                {texts.about.servicesTitle ? (
+                  <div className="about-info-block">
+                    <h4 className="about-info-subtitle">{texts.about.servicesTitle}</h4>
+                    <ul className="about-info-bullet-list">
+                      {(texts.about.serviceHighlights ?? []).map((line) => (
+                        <li key={line}>{line}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+
+                {(texts.about.distances ?? []).length > 0 ? (
+                  <div className="about-distance-wrap">
+                    <h4 className="about-info-subtitle">{texts.about.distancesTitle ?? 'Avstander'}</h4>
+                    <div className="about-distance-grid">
+                      {texts.about.distances.map((item) => (
+                        <div key={item.label} className="about-distance-item">
+                          <span className="about-distance-label">{item.label}</span>
+                          <span className="about-distance-value">{item.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+
+                {texts.about.managementNote ? (
+                  <p className="page-faq-answer page-faq-answer--compact">{texts.about.managementNote}</p>
+                ) : null}
+
+                <h4 className="about-info-subtitle">{texts.about.videoSectionTitle ?? 'Video'}</h4>
                 <p className="page-faq-answer page-faq-answer--video">{texts.about.videoInfoText}</p>
                 <div className="about-video-action">
                   <a
