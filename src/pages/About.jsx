@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import PageLayout from '../components/layout/PageLayout'
 import fullVillaImage from '../../bilder/fullvilla.avif'
@@ -48,7 +48,8 @@ import './About.css'
 function About({ texts, setLanguage, language }) {
   const [showAllAmenities, setShowAllAmenities] = useState(false)
   const [showAllPhotos, setShowAllPhotos] = useState(false)
-  const [selectedPhoto, setSelectedPhoto] = useState(null)
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(null)
+  const photoTouchStartX = useRef(null)
   
   // Scroll to hash anchor on mount and when hash changes
   useEffect(() => {
@@ -69,30 +70,6 @@ function About({ texts, setLanguage, language }) {
     return () => window.removeEventListener('hashchange', scrollToElement)
   }, [])
 
-  useEffect(() => {
-    if (!showAllPhotos) return undefined
-
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        if (selectedPhoto) {
-          setSelectedPhoto(null)
-        } else {
-          setShowAllPhotos(false)
-        }
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-
-    return () => {
-      document.body.style.overflow = previousOverflow
-      window.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [showAllPhotos, selectedPhoto])
-  
   const faqItems = [
     ...(texts.about.faqs ?? [])
   ]
@@ -131,6 +108,8 @@ function About({ texts, setLanguage, language }) {
   const photoTourTitle = texts.about.photoTourTitle || 'Photo tour'
   const photoShowAll = texts.about.photoShowAll || 'Show all photos'
   const photoClose = texts.about.photoClose || 'Close'
+  const photoPrevious = texts.about.photoPrevious || 'Previous image'
+  const photoNext = texts.about.photoNext || 'Next image'
   const photoSectionsText = texts.about.photoSections || {}
 
   const collageImages = [
@@ -194,20 +173,116 @@ function About({ texts, setLanguage, language }) {
     },
   ]
 
+  const photoLightboxImages = photoSections.flatMap((section) => {
+    if (section.groups) {
+      return section.groups.flatMap((group) =>
+        group.images.map((image, imageIndex) => ({
+          src: image,
+          alt: `${group.title} ${imageIndex + 1}`,
+          label: group.title,
+        }))
+      )
+    }
+
+    return section.images.map((image, imageIndex) => ({
+      src: image,
+      alt: `${section.title} ${imageIndex + 1}`,
+      label: section.title,
+    }))
+  })
+
+  const selectedPhoto = selectedPhotoIndex !== null ? photoLightboxImages[selectedPhotoIndex] : null
+
+  useEffect(() => {
+    if (!showAllPhotos) return undefined
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        if (selectedPhotoIndex !== null) {
+          setSelectedPhotoIndex(null)
+        } else {
+          setShowAllPhotos(false)
+        }
+      } else if (selectedPhotoIndex !== null && event.key === 'ArrowLeft') {
+        setSelectedPhotoIndex((previousIndex) => {
+          if (previousIndex === null) return previousIndex
+          return (previousIndex - 1 + photoLightboxImages.length) % photoLightboxImages.length
+        })
+      } else if (selectedPhotoIndex !== null && event.key === 'ArrowRight') {
+        setSelectedPhotoIndex((previousIndex) => {
+          if (previousIndex === null) return previousIndex
+          return (previousIndex + 1) % photoLightboxImages.length
+        })
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [photoLightboxImages.length, selectedPhotoIndex, showAllPhotos])
+
   const handleShowAllPhotos = () => {
     setShowAllPhotos(true)
   }
 
   const handleCloseAllPhotos = () => {
     setShowAllPhotos(false)
-    setSelectedPhoto(null)
+    setSelectedPhotoIndex(null)
   }
 
   const handleOpenPhoto = (src, alt) => {
-    setSelectedPhoto({ src, alt })
+    const photoIndex = photoLightboxImages.findIndex((photo) => photo.src === src && photo.alt === alt)
+    if (photoIndex >= 0) {
+      setSelectedPhotoIndex(photoIndex)
+    }
   }
 
-  const handleCloseSelectedPhoto = () => setSelectedPhoto(null)
+  const handleCloseSelectedPhoto = () => setSelectedPhotoIndex(null)
+
+  const showPreviousPhoto = () => {
+    setSelectedPhotoIndex((previousIndex) => {
+      if (previousIndex === null) return previousIndex
+      return (previousIndex - 1 + photoLightboxImages.length) % photoLightboxImages.length
+    })
+  }
+
+  const showNextPhoto = () => {
+    setSelectedPhotoIndex((previousIndex) => {
+      if (previousIndex === null) return previousIndex
+      return (previousIndex + 1) % photoLightboxImages.length
+    })
+  }
+
+  const handlePhotoTouchStart = (event) => {
+    photoTouchStartX.current = event.changedTouches[0]?.clientX ?? null
+  }
+
+  const handlePhotoTouchEnd = (event) => {
+    if (photoTouchStartX.current === null) return
+
+    const touchEndX = event.changedTouches[0]?.clientX
+    if (typeof touchEndX !== 'number') {
+      photoTouchStartX.current = null
+      return
+    }
+
+    const deltaX = touchEndX - photoTouchStartX.current
+    const swipeThreshold = 40
+
+    if (deltaX <= -swipeThreshold) {
+      showNextPhoto()
+    } else if (deltaX >= swipeThreshold) {
+      showPreviousPhoto()
+    }
+
+    photoTouchStartX.current = null
+  }
 
   const handlePhotoSectionJump = (sectionKey) => {
     const target = document.getElementById(`modal-photo-${sectionKey}`)
@@ -355,14 +430,41 @@ function About({ texts, setLanguage, language }) {
                           onClick={(event) => event.stopPropagation()}
                         >
                           <header className="about-photo-lightbox-header">
-                            <p>{selectedPhoto.alt}</p>
+                            <div className="about-photo-lightbox-meta">
+                              <p>{selectedPhoto.label}</p>
+                              <span>{selectedPhotoIndex + 1}/{photoLightboxImages.length}</span>
+                            </div>
                             <button type="button" className="about-photo-modal-close" onClick={handleCloseSelectedPhoto}>
                               <span aria-hidden="true">x</span> {photoClose}
                             </button>
                           </header>
-                          <div className="about-photo-lightbox-image-wrap">
+
+                          <div
+                            className="about-photo-lightbox-image-wrap"
+                            onTouchStart={handlePhotoTouchStart}
+                            onTouchEnd={handlePhotoTouchEnd}
+                          >
+                            <button
+                              type="button"
+                              className="about-photo-lightbox-arrow about-photo-lightbox-arrow--prev"
+                              onClick={showPreviousPhoto}
+                              aria-label={photoPrevious}
+                            >
+                              ‹
+                            </button>
+
                             <img src={selectedPhoto.src} alt={selectedPhoto.alt} className="about-photo-lightbox-image" />
+
+                            <button
+                              type="button"
+                              className="about-photo-lightbox-arrow about-photo-lightbox-arrow--next"
+                              onClick={showNextPhoto}
+                              aria-label={photoNext}
+                            >
+                              ›
+                            </button>
                           </div>
+
                         </section>
                       </div>
                     ) : null}

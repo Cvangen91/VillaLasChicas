@@ -40,7 +40,7 @@ const en = {
       quickResponseText: 'Please include your preferred dates, number of guests, and any questions in your message.',
         videoLabel: 'Watch the villa video',
       moreInfoTitle: 'More information about the villa',
-        photoTourTitle: 'Photo tour',
+        photoTourTitle: 'Photos from the villa',
         photoShowAll: 'Show all photos',
         photoClose: 'Close',
         photoSections: {

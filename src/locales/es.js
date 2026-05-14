@@ -40,7 +40,7 @@ const es = {
       quickResponseText: 'Por favor, indica las fechas deseadas, número de huéspedes y cualquier pregunta en tu mensaje.',
       videoLabel: 'Ver el vídeo de la villa',
       moreInfoTitle: 'Más información sobre la villa',
-        photoTourTitle: 'Recorrido fotográfico',
+        photoTourTitle: 'Photos from the villa',
         photoShowAll: 'Ver todas las fotos',
         photoClose: 'Cerrar',
         photoSections: {

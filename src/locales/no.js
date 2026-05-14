@@ -40,7 +40,7 @@ const no = {
       quickResponseText: 'Send gjerne ønsket dato, antall gjester og eventuelle spørsmål i meldingen.',
       videoLabel: 'Se video av villaen',
       moreInfoTitle: 'Mer informasjon om villaen',
-        photoTourTitle: 'Bildegalleri',
+        photoTourTitle: 'Photos from the villa',
         photoShowAll: 'Vis alle bilder',
         photoClose: 'Lukk',
         photoSections: {

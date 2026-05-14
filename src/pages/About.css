@@ -363,7 +363,7 @@
   position: fixed;
   inset: 0;
   z-index: 10001;
-  background: rgba(9, 14, 19, 0.8);
+  background: rgba(0, 0, 0, 0.88);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -397,12 +397,24 @@
   font-weight: 600;
 }
 
+.about-photo-lightbox-meta {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.about-photo-lightbox-meta span {
+  color: rgba(245, 247, 248, 0.78);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
 .about-photo-lightbox-image-wrap {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: auto;
+  overflow: hidden;
+  position: relative;
 }
 
 .about-photo-lightbox-image {
@@ -412,6 +424,46 @@
   height: auto;
   object-fit: contain;
   border-radius: 10px;
+}
+
+.about-photo-lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(17, 23, 27, 0.72);
+  color: #ffffff;
+  font-size: 2rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  padding: 0 0 0.12rem;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.about-photo-lightbox-arrow--prev {
+  left: 0.65rem;
+}
+
+.about-photo-lightbox-arrow--next {
+  right: 0.65rem;
+}
+
+.about-photo-lightbox-arrow:hover,
+.about-photo-lightbox-arrow:focus-visible,
+.about-photo-lightbox-arrow:active {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(255, 255, 255, 0.96);
+  color: #11171b;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
 }
 
 .about-amenities-card {
@@ -732,6 +784,12 @@
     width: 98vw;
     height: 92vh;
     padding: 0.7rem;
+  }
+
+  .about-photo-lightbox-arrow {
+    width: 44px;
+    height: 44px;
+    font-size: 1.7rem;
   }
 
   .about-photo-modal-close {
