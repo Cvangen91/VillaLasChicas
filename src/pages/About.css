@@ -601,7 +601,10 @@
   width: 14px;
   height: 14px;
   flex-shrink: 0;
-  background: url('../../bilder/arrowdown.png') center / contain no-repeat;
+  background-image: url('../../bilder/arrowdown.png');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
   opacity: 0.85;
 }
 
