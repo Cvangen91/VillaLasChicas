@@ -149,6 +149,271 @@
   margin-bottom: 1.25rem;
 }
 
+.about-photo-card {
+  background: #f7f8f8;
+  border: 1px solid rgba(47, 54, 64, 0.08);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 14px 28px rgba(47, 54, 64, 0.08);
+  margin-top: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.about-photo-title {
+  margin: 0 0 1.25rem;
+  color: var(--color-navy);
+  font-size: clamp(1.45rem, 2.6vw, 2rem);
+}
+
+.about-photo-collage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+  gap: 0.5rem;
+}
+
+.about-photo-main,
+.about-photo-side-item,
+.about-photo-tour-item {
+  margin: 0;
+  position: relative;
+}
+
+.about-photo-main {
+  min-height: 500px;
+}
+
+.about-photo-side-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.about-photo-side-item {
+  min-height: 246px;
+}
+
+.about-photo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 14px;
+}
+
+.about-photo-show-button {
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.9rem;
+  border: 1px solid rgba(47, 54, 64, 0.22);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--color-navy);
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.62rem 1rem;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(47, 54, 64, 0.12);
+  transition: all 0.2s ease;
+}
+
+.about-photo-show-button:hover {
+  background: var(--color-teal);
+  color: #ffffff;
+  border-color: var(--color-teal);
+}
+
+.about-photo-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(15, 23, 31, 0.66);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem;
+}
+
+.about-photo-modal {
+  width: min(1560px, 99vw);
+  height: min(96vh, 1080px);
+  background: #f5f6f7;
+  border-radius: 18px;
+  border: 1px solid rgba(47, 54, 64, 0.14);
+  box-shadow: 0 28px 52px rgba(0, 0, 0, 0.3);
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-photo-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+  margin-bottom: 0.85rem;
+}
+
+.about-photo-modal-header h4 {
+  margin: 0;
+  color: var(--color-navy);
+  font-size: clamp(1.35rem, 2.5vw, 2rem);
+}
+
+.about-photo-modal-close {
+  border: 2px solid rgba(47, 54, 64, 0.35);
+  background: #ffffff;
+  color: var(--color-navy);
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.56rem 1rem;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+.about-photo-modal-close span {
+  font-size: 1.15rem;
+  margin-right: 0.25rem;
+}
+
+.about-photo-modal-content {
+  overflow: auto;
+  padding-right: 0.25rem;
+}
+
+.about-photo-tour-sections {
+  margin-top: 1.35rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(47, 54, 64, 0.12);
+}
+
+.about-photo-tour-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-bottom: 1.25rem;
+}
+
+.about-photo-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--color-teal);
+  background: #ffffff;
+  border: 1px solid rgba(69, 133, 140, 0.28);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.42rem 0.78rem;
+  cursor: pointer;
+}
+
+.about-photo-tour-section {
+  margin-bottom: 1.5rem;
+}
+
+.about-photo-tour-section h4 {
+  margin: 0 0 0.7rem;
+  color: var(--color-navy);
+  font-size: 1.2rem;
+}
+
+.about-photo-group-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.about-photo-subgroup h5 {
+  margin: 0 0 0.45rem;
+  color: var(--color-navy);
+  font-size: 1rem;
+}
+
+.about-photo-tour-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.about-photo-tour-item {
+  min-height: 158px;
+}
+
+.about-photo-thumb-button {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 14px;
+  cursor: zoom-in;
+  overflow: hidden;
+}
+
+.about-photo-thumb-button .about-photo-image {
+  transition: transform 0.22s ease;
+}
+
+.about-photo-thumb-button:hover .about-photo-image {
+  transform: scale(1.04);
+}
+
+.about-photo-lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  background: rgba(9, 14, 19, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.about-photo-lightbox {
+  width: min(1480px, 96vw);
+  height: min(92vh, 980px);
+  background: #11171b;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 24px 52px rgba(0, 0, 0, 0.5);
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-photo-lightbox-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 0.75rem;
+}
+
+.about-photo-lightbox-header p {
+  margin: 0;
+  color: #f5f7f8;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.about-photo-lightbox-image-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.about-photo-lightbox-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
 .about-amenities-card {
   background: linear-gradient(180deg, #f6f8f8 0%, #f0f4f4 100%);
   border: 1px solid rgba(47, 54, 64, 0.08);
@@ -432,6 +697,44 @@
 @media (max-width: 768px) {
   .page-story-grid {
     grid-template-columns: 1fr;
+  }
+
+  .about-photo-card {
+    padding: 1rem;
+  }
+
+  .about-photo-collage {
+    grid-template-columns: 1fr;
+  }
+
+  .about-photo-main {
+    min-height: 270px;
+  }
+
+  .about-photo-side-item {
+    min-height: 170px;
+  }
+
+  .about-photo-tour-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-photo-modal {
+    width: 99vw;
+    height: 96vh;
+    padding: 0.85rem;
+  }
+
+  .about-photo-lightbox {
+    width: 98vw;
+    height: 92vh;
+    padding: 0.7rem;
+  }
+
+  .about-photo-modal-close {
+    min-width: 98px;
+    padding: 0.52rem 0.75rem;
+    font-size: 0.95rem;
   }
 
   .about-amenities-grid {
