@@ -1,3 +1,11 @@
+/* Universell utforming: tydelig fokus-outline på alle interaktive elementer */
+a:focus, button:focus, input:focus, textarea:focus, summary:focus, select:focus {
+  outline: 2.5px solid #45858C;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #BFD8DF44;
+  z-index: 2;
+}
+
 .page-shell {
   background: linear-gradient(180deg, var(--color-sand-light) 0%, var(--color-light) 100%);
 }

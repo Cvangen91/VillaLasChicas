@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import PageLayout from '../components/layout/PageLayout'
 import ImageGallery from '../components/sections/ImageGallery'
 import villaLogoMain from '../../bilder/Villalogomain.png'
@@ -8,20 +9,27 @@ import BookingCalendar from '../components/sections/BookingCalendar'
 
 function Home({ texts, setLanguage, language }) {
   const [isBookingVisible, setIsBookingVisible] = useState(false)
+  const navigate = useNavigate()
   const bookingSectionRef = useRef(null)
 
   const featureCards = [
     {
       title: texts.home.feature1Title,
       text: texts.home.feature1Text,
+      buttonText: 'Se kart',
+      action: () => navigate('/about#about-map'),
     },
     {
       title: texts.home.feature2Title,
       text: texts.home.feature2Text,
+      buttonText: 'Mer info',
+      action: () => navigate('/about'),
     },
     {
       title: texts.home.feature3Title,
       text: texts.home.feature3Text,
+      buttonText: 'Mer info',
+      action: () => navigate('/about'),
     },
   ]
 
@@ -104,6 +112,12 @@ function Home({ texts, setLanguage, language }) {
                 <div key={item.title} className="home-feature-card">
                   <h3>{item.title}</h3>
                   <p>{item.text}</p>
+                  <button 
+                    className="home-feature-button"
+                    onClick={item.action}
+                  >
+                    {item.buttonText}
+                  </button>
                 </div>
               ))}
             </div>

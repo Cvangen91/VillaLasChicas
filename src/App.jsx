@@ -1,4 +1,5 @@
 import AppRoutes from './routes/AppRoutes'
+import ScrollToTop from './components/layout/ScrollToTop'
 import no from './locales/no'
 import en from './locales/en'
 import es from './locales/es'
@@ -14,12 +15,14 @@ function App() {
   const texts = locales[language] ?? en
 
   return (
+    <>
+      <ScrollToTop />
       <AppRoutes
-      language={language}
-      setLanguage={setLanguage}
-      texts={texts}
-    />
-    
+        language={language}
+        setLanguage={setLanguage}
+        texts={texts}
+      />
+    </>
   )
 }
 

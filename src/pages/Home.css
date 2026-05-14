@@ -169,6 +169,24 @@
   line-height: 1.7;
 }
 
+.home-feature-button {
+  margin-top: 1rem;
+  border: 1px solid var(--color-teal);
+  border-radius: 12px;
+  padding: 0.6rem 1rem;
+  background: transparent;
+  color: var(--color-teal);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.home-feature-button:hover {
+  background: var(--color-teal);
+  color: #ffffff;
+}
+
 .home-booking-section {
   background: #ffffff;
   padding-top: 4.75rem;
@@ -254,6 +272,10 @@
     right: 1rem;
     bottom: 1rem;
     padding: 0.85rem 1.1rem;
+  }
+
+  .home-feature-button {
+    width: 100%;
   }
 }
 
