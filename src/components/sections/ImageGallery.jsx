@@ -1,4 +1,5 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import fullViewImage from '../../../bilder/Fullview.jpg'
 import poolImage from '../../../bilder/Basseng.jpg'
 import balconyImage from '../../../bilder/Balkong.jpg'
@@ -7,11 +8,17 @@ import livingImage from '../../../bilder/Sofarod.jpg'
 import birdViewImage from '../../../bilder/Fugleperspektiv.jpg'
 import arrowLeft from '../../../bilder/arrowleft.png'
 import arrowRight from '../../../bilder/arrowright.png'
+import closeIcon from '../../../bilder/x.svg'
 import './ImageGallery.css'
 
 function ImageGallery({ texts }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
+  const [lightboxZoom, setLightboxZoom] = useState(1)
+  const [zoomOrigin, setZoomOrigin] = useState('center center')
   const touchStartX = useRef(null)
+  const touchStartDistance = useRef(null)
+  const imageWrapRef = useRef(null)
   const gallerySlides = [
     fullViewImage,
     livingImage,
@@ -25,6 +32,16 @@ function ImageGallery({ texts }) {
   const previousLabel = texts?.galleryPrev ?? 'Previous image'
   const nextLabel = texts?.galleryNext ?? 'Next image'
   const showLabel = texts?.galleryShow ?? 'Show gallery image'
+  const swipeHint = texts?.gallerySwipeHint ?? 'Swipe'
+  const galleryDescriptions = texts?.galleryImageDescriptions ?? [
+    'Full view',
+    'Living room',
+    'Pool area',
+    'Balcony',
+    'Dining area',
+    'Bird view',
+  ]
+  const currentDescription = galleryDescriptions[currentImageIndex] ?? `${title} ${currentImageIndex + 1}`
   const previousIndex = (currentImageIndex - 1 + gallerySlides.length) % gallerySlides.length
   const nextIndex = (currentImageIndex + 1) % gallerySlides.length
 
@@ -36,11 +53,75 @@ function ImageGallery({ texts }) {
     setCurrentImageIndex((prev) => (prev - 1 + gallerySlides.length) % gallerySlides.length)
   }
 
+  useEffect(() => {
+    setLightboxZoom(1)
+  }, [currentImageIndex, isLightboxOpen])
+
+  useEffect(() => {
+    if (!isLightboxOpen) return
+
+    const handleWheel = (event) => {
+      if (!event.ctrlKey) return
+      event.preventDefault()
+      
+      // Beregn musepositionen relative til bildecontaineren
+      if (imageWrapRef.current) {
+        const rect = imageWrapRef.current.getBoundingClientRect()
+        const x = event.clientX - rect.left
+        const y = event.clientY - rect.top
+        const xPercent = (x / rect.width) * 100
+        const yPercent = (y / rect.height) * 100
+        setZoomOrigin(`${xPercent}% ${yPercent}%`)
+      }
+      
+      const zoomSpeed = 0.22
+      const delta = event.deltaY > 0 ? -zoomSpeed : zoomSpeed
+      const newZoom = Math.max(1, lightboxZoom + delta)
+      setLightboxZoom(Math.min(newZoom, 3))
+    }
+
+    document.addEventListener('wheel', handleWheel, { passive: false })
+    return () => document.removeEventListener('wheel', handleWheel)
+  }, [isLightboxOpen, lightboxZoom])
+
   const handleTouchStart = (event) => {
+    // Handle swipe
     touchStartX.current = event.changedTouches[0]?.clientX ?? null
+    
+    // Handle pinch-zoom
+    if (event.touches.length === 2) {
+      const touch1 = event.touches[0]
+      const touch2 = event.touches[1]
+      const distance = Math.hypot(
+        touch2.clientX - touch1.clientX,
+        touch2.clientY - touch1.clientY
+      )
+      touchStartDistance.current = distance
+      event.preventDefault()
+    }
   }
 
   const handleTouchEnd = (event) => {
+    // Handle pinch-zoom
+    if (event.touches.length === 2) {
+      const touch1 = event.touches[0]
+      const touch2 = event.touches[1]
+      const distance = Math.hypot(
+        touch2.clientX - touch1.clientX,
+        touch2.clientY - touch1.clientY
+      )
+      
+      if (touchStartDistance.current !== null) {
+        const ratio = distance / touchStartDistance.current
+        const newZoom = Math.max(1, lightboxZoom * ratio)
+        setLightboxZoom(Math.min(newZoom, 3))
+        event.preventDefault()
+      }
+      touchStartDistance.current = null
+      return
+    }
+    
+    // Handle swipe
     if (touchStartX.current === null) return
 
     const touchEndX = event.changedTouches[0]?.clientX
@@ -72,30 +153,43 @@ function ImageGallery({ texts }) {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
-            <div className="image-gallery-preview image-gallery-preview--side" aria-hidden="true">
+            <button
+              type="button"
+              className="image-gallery-preview image-gallery-preview--side image-gallery-preview-button"
+              onClick={() => setCurrentImageIndex(previousIndex)}
+              aria-label={previousLabel}
+            >
               <img
                 src={gallerySlides[previousIndex]}
                 alt=""
                 className="image-gallery-image image-gallery-image--ghost"
               />
-            </div>
+            </button>
 
             <div className="image-gallery-preview image-gallery-preview--active">
               <img
                 src={gallerySlides[currentImageIndex]}
                 alt={`${title} ${currentImageIndex + 1}`}
                 className="image-gallery-image"
+                style={{ cursor: 'zoom-in' }}
+                onClick={() => setIsLightboxOpen(true)}
               />
             </div>
 
-            <div className="image-gallery-preview image-gallery-preview--side" aria-hidden="true">
+            <button
+              type="button"
+              className="image-gallery-preview image-gallery-preview--side image-gallery-preview-button"
+              onClick={() => setCurrentImageIndex(nextIndex)}
+              aria-label={nextLabel}
+            >
               <img
                 src={gallerySlides[nextIndex]}
                 alt=""
                 className="image-gallery-image image-gallery-image--ghost"
               />
-            </div>
+            </button>
           </div>
+
 
           <button
             className="image-gallery-nav image-gallery-nav--prev"
@@ -138,7 +232,71 @@ function ImageGallery({ texts }) {
           />
         </svg>
       </div>
-    </section>
+
+    {isLightboxOpen && createPortal(
+      <div className="about-photo-lightbox-backdrop" onClick={() => setIsLightboxOpen(false)}>
+        <section
+          className="about-photo-lightbox image-gallery-lightbox-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${title} ${currentImageIndex + 1}`}
+          onClick={e => e.stopPropagation()}
+        >
+          <header className="about-photo-lightbox-header">
+            <div className="about-photo-lightbox-meta">
+              <p>{title}</p>
+              <span>{currentImageIndex + 1}/{gallerySlides.length}<span className="about-photo-lightbox-meta-label-inline"> · {currentDescription}</span></span>
+            </div>
+            <button type="button" className="about-photo-modal-close" onClick={() => setIsLightboxOpen(false)} aria-label="Lukk">
+              <img src={closeIcon} alt="" className="image-gallery-close-icon" />
+            </button>
+          </header>
+
+          <div
+            className="about-photo-lightbox-image-wrap"
+            ref={imageWrapRef}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            <button
+              type="button"
+              className="about-photo-lightbox-arrow about-photo-lightbox-arrow--prev"
+              onClick={prevImage}
+              aria-label={previousLabel}
+            >
+              <img src={arrowLeft} alt="" className="about-photo-lightbox-arrow-icon" />
+            </button>
+
+            <img
+              src={gallerySlides[currentImageIndex]}
+              alt={`${title} ${currentImageIndex + 1}`}
+              className="about-photo-lightbox-image"
+              style={{ transform: `scale(${lightboxZoom})`, transformOrigin: zoomOrigin }}
+            />
+
+            <button
+              type="button"
+              className="about-photo-lightbox-arrow about-photo-lightbox-arrow--next"
+              onClick={nextImage}
+              aria-label={nextLabel}
+            >
+              <img src={arrowRight} alt="" className="about-photo-lightbox-arrow-icon" />
+            </button>
+
+            <div className="image-gallery-mobile-pill" aria-hidden="true">
+              <span className="image-gallery-mobile-swipe">
+                <img src={arrowLeft} alt="" className="image-gallery-mobile-swipe-icon" />
+                <span>{swipeHint}</span>
+                <img src={arrowRight} alt="" className="image-gallery-mobile-swipe-icon" />
+              </span>
+              <span className="image-gallery-mobile-zoom">🔍☝️ Zoom</span>
+            </div>
+          </div>
+        </section>
+      </div>,
+      document.body
+    )}
+  </section>
   )
 }
 

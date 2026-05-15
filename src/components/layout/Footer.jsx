@@ -1,7 +1,9 @@
+import { Link, useLocation } from 'react-router-dom'
 import villaLogoNoText from '../../../bilder/Villalogonulltekst.png'
 import './Footer.css'
 
 function Footer({ texts }) {
+  const location = useLocation()
   const footerTexts = texts?.footer ?? {
     contactTitle: 'Kontakt',
     emailLabel: 'E-post',
@@ -12,12 +14,20 @@ function Footer({ texts }) {
     contactLink: 'Kontakt',
     location: 'Fuengirola, Malaga',
   }
+  const handleRouteLinkClick = (path) => (event) => {
+    if (location.pathname === path) {
+      event.preventDefault()
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
 
   return (
     <footer className="footer-root">
       <div className="footer-container">
         <div className="footer-brand">
-          <img src={villaLogoNoText} alt="Villa Las Chicas logo" className="footer-logo" />
+          <Link to="/" className="footer-logo-link" aria-label="Villa Las Chicas home" onClick={handleRouteLinkClick('/')}>
+            <img src={villaLogoNoText} alt="Villa Las Chicas logo" className="footer-logo" />
+          </Link>
           <p className="footer-copyright">© 2026 Villa Las Chicas</p>
         </div>
 
@@ -31,9 +41,9 @@ function Footer({ texts }) {
         <div className="footer-links-group">
           <p className="footer-title">{footerTexts.linksTitle}</p>
           <div className="footer-links">
-            <a href="#!" className="footer-link">{footerTexts.homeLink}</a>
-            <a href="#!" className="footer-link">{footerTexts.aboutLink}</a>
-            <a href="#!" className="footer-link">{footerTexts.contactLink}</a>
+            <Link to="/" className="footer-link" onClick={handleRouteLinkClick('/')}>{footerTexts.homeLink}</Link>
+            <Link to="/about" className="footer-link" onClick={handleRouteLinkClick('/about')}>{footerTexts.aboutLink}</Link>
+            <Link to="/contact" className="footer-link" onClick={handleRouteLinkClick('/contact')}>{footerTexts.contactLink}</Link>
           </div>
         </div>
       </div>

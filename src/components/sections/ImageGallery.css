@@ -38,6 +38,20 @@
   position: relative;
 }
 
+.image-gallery-preview-button {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.image-gallery-preview-button:focus-visible {
+  outline: 2px solid rgba(69, 133, 140, 0.75);
+  outline-offset: 4px;
+  border-radius: 16px;
+}
+
 .image-gallery-preview--side {
   opacity: 0.38;
   transform: scale(0.93);
@@ -47,21 +61,30 @@
   z-index: 1;
 }
 
+
+/* Bruk About-sidens bilde-stil for likhet */
 .image-gallery-image {
   width: 100%;
   height: 380px;
   display: block;
   object-fit: cover;
-  border-radius: 18px;
+  border-radius: 14px;
   border: 1px solid rgba(47, 54, 64, 0.1);
   box-shadow: 0 14px 28px rgba(18, 29, 36, 0.1);
   background-color: rgba(255, 255, 255, 0.9);
+  transition: transform 0.22s, box-shadow 0.22s, filter 0.22s;
 }
 
 .image-gallery-preview--active .image-gallery-image {
   height: 560px;
   border: 2px solid rgba(69, 133, 140, 0.55);
   box-shadow: 0 18px 38px rgba(18, 29, 36, 0.14);
+}
+
+.image-gallery-image:hover {
+  filter: brightness(0.7);
+  transform: scale(1.04);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.32);
 }
 
 .image-gallery-image--ghost {
@@ -154,6 +177,89 @@
   display: block;
 }
 
+.image-gallery-lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10010;
+  background: rgba(0,0,0,0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-gallery-lightbox {
+  position: relative;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  max-width: 96vw;
+  max-height: 96vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-gallery-lightbox-image {
+  max-width: 92vw;
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  border-radius: 14px;
+  box-shadow: 0 18px 38px rgba(18, 29, 36, 0.22);
+  background: #fff;
+}
+
+.image-gallery-lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 28px;
+  background: rgba(255,255,255,0.92);
+  color: #233846;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 2.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: background 0.18s, color 0.18s;
+}
+
+.image-gallery-lightbox-close:hover {
+  background: #233846;
+  color: #fff;
+}
+
+.image-gallery-lightbox-modal .about-photo-modal-close {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1.5px solid rgba(31, 41, 51, 0.2);
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  backdrop-filter: blur(4px);
+}
+
+.image-gallery-close-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: block;
+}
+
+.image-gallery-mobile-pill {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .image-gallery-section {
     padding: 3.5rem 1rem 4.75rem;
@@ -175,5 +281,137 @@
   .image-gallery-nav {
     width: 42px;
     height: 42px;
+  }
+
+  .image-gallery-lightbox-modal {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+    border: none;
+    padding: 0;
+    background: #0b1014;
+  }
+
+  .image-gallery-lightbox-modal .about-photo-lightbox-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 4;
+    margin: 0;
+    padding: 0.75rem 0.9rem;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45), transparent);
+    pointer-events: none;
+  }
+
+  .image-gallery-lightbox-modal .about-photo-lightbox-meta {
+    display: block;
+    pointer-events: none;
+  }
+
+  .image-gallery-lightbox-modal .about-photo-lightbox-meta p {
+    display: none;
+  }
+
+  .image-gallery-lightbox-modal .about-photo-lightbox-meta span {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.55);
+    color: #f5f7f8;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.22rem 0.6rem;
+    border-radius: 999px;
+    backdrop-filter: blur(4px);
+    letter-spacing: 0.03em;
+    max-width: 55vw;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .image-gallery-lightbox-modal .about-photo-lightbox-meta-label-inline {
+    display: inline;
+    font-weight: 400;
+    opacity: 0.85;
+  }
+
+  .image-gallery-lightbox-modal .about-photo-modal-close {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    padding: 0;
+    pointer-events: auto;
+  }
+
+  .image-gallery-lightbox-modal .about-photo-lightbox-image-wrap {
+    padding: 0;
+    touch-action: none;
+    user-select: none;
+  }
+
+  .image-gallery-lightbox-modal .about-photo-lightbox-image {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+    object-fit: contain;
+    background: #0b1014;
+    transform-origin: center;
+    transition: transform 0.1s ease-out;
+  }
+
+  .image-gallery-lightbox-modal .about-photo-lightbox-arrow {
+    display: none;
+  }
+
+  .image-gallery-mobile-pill {
+    position: absolute;
+    left: 50%;
+    bottom: 1.15rem;
+    transform: translateX(-50%);
+    width: min(80vw, 300px);
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.85rem;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.78);
+    color: #f5f7f8;
+    z-index: 3;
+    backdrop-filter: blur(3px);
+  }
+
+  .image-gallery-mobile-swipe {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    opacity: 0.92;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .image-gallery-mobile-swipe-icon {
+    width: 12px;
+    height: 12px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
+
+  .image-gallery-mobile-zoom {
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0.92;
   }
 }

@@ -4,7 +4,7 @@ import villaLogo from '../../../bilder/villalogo.png'
 import arrowDown from '../../../bilder/arrowdown.png'
 import arrowUp from '../../../bilder/arrowup.png'
 import norwayFlag from '../../../bilder/Norgeflagg.png'
-import usaFlag from '../../../bilder/usaFlag.webp'
+import britishFlag from '../../../bilder/English.webp'
 import spainFlag from '../../../bilder/spainflag.png'
 
 function Navbar({ texts, setLanguage, language }) {
@@ -100,12 +100,34 @@ function Navbar({ texts, setLanguage, language }) {
   const languageButtonOpacity = isMenuExpanded ? 1 : 0.7 + visualEase * 0.26
   const languageButtonBorderOpacity = isMenuExpanded ? 0 : overlayStrength * 0.24
   const logoBadgeOpacity = isHomePage ? overlayStrength * 0.18 : 0
+  const hoverToneAmount = Math.min(Math.max(visualEase, 0), 1)
+  const hoverSurfaceRgb = [
+    mixChannel(255, 69, hoverToneAmount),
+    mixChannel(255, 133, hoverToneAmount),
+    mixChannel(255, 140, hoverToneAmount),
+  ]
+  const hoverRingRgb = [
+    mixChannel(255, 55, hoverToneAmount),
+    mixChannel(255, 114, hoverToneAmount),
+    mixChannel(255, 121, hoverToneAmount),
+  ]
+  const desktopHoverSurface = isMobileMenuExpanded
+    ? 'rgba(69, 133, 140, 0.14)'
+    : `rgba(${hoverSurfaceRgb[0]}, ${hoverSurfaceRgb[1]}, ${hoverSurfaceRgb[2]}, ${0.08 + hoverToneAmount * 0.08})`
+  const desktopHoverRing = isMobileMenuExpanded
+    ? 'rgba(69, 133, 140, 0.34)'
+    : `rgba(${hoverRingRgb[0]}, ${hoverRingRgb[1]}, ${hoverRingRgb[2]}, ${0.2 + hoverToneAmount * 0.14})`
 
   const getLinkStyle = (active) => ({
     color: active ? activeLinkColor : navTextColor,
     textDecoration: 'none',
     fontWeight: active ? '700' : '500',
     textShadow: `0 4px 18px rgba(0, 0, 0, ${overlayStrength * 0.28})`,
+    borderRadius: '999px',
+    padding: '0.34rem 0.78rem',
+    opacity: isHomePage ? 0.74 + visualEase * 0.26 : 1,
+    transform: isHomePage ? `translateY(${(1 - visualEase) * 2}px)` : 'translateY(0)',
+    transition: 'color 0.22s ease, background-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease, opacity 0.22s ease',
   })
 
   const mobileLinkStyle = (active) => ({
@@ -122,7 +144,7 @@ function Navbar({ texts, setLanguage, language }) {
   const languageArrow = isLangDropdownOpen ? arrowUp : arrowDown
   const languageOptions = {
     no: { label: 'Norsk', flag: norwayFlag },
-    en: { label: 'English', flag: usaFlag },
+    en: { label: 'English', flag: britishFlag },
     es: { label: 'Español', flag: spainFlag },
   }
   const activeLanguage = languageOptions[language] ?? languageOptions.en
@@ -135,6 +157,14 @@ function Navbar({ texts, setLanguage, language }) {
     verticalAlign: 'middle',
   }
   const logoHeight = '24px'
+  const handleRouteLinkClick = (path, onComplete) => (event) => {
+    if (location.pathname === path) {
+      event.preventDefault()
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+
+    onComplete?.()
+  }
 
   return (
     <nav
@@ -157,6 +187,8 @@ function Navbar({ texts, setLanguage, language }) {
           ? '1px solid rgba(47, 54, 64, 0.08)'
           : `1px solid rgba(47, 54, 64, ${visualEase * 0.08})`,
         backdropFilter: isMobileMenuExpanded ? 'blur(10px)' : `blur(${visualEase * 10}px)`,
+        '--nav-hover-bg': desktopHoverSurface,
+        '--nav-hover-ring': desktopHoverRing,
       }}
     >
       <div
@@ -171,6 +203,7 @@ function Navbar({ texts, setLanguage, language }) {
       >
         <Link
           to="/"
+          onClick={handleRouteLinkClick('/')}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -208,18 +241,19 @@ function Navbar({ texts, setLanguage, language }) {
             gap: '1.5rem',
           }}
         >
-          <Link to="/" style={getLinkStyle(isActive('/'))}>
+          <Link to="/" className="nav-link" style={getLinkStyle(isActive('/'))} onClick={handleRouteLinkClick('/')}>
             {texts.nav.home}
           </Link>
-          <Link to="/about" style={getLinkStyle(isActive('/about'))}>
+          <Link to="/about" className="nav-link" style={getLinkStyle(isActive('/about'))} onClick={handleRouteLinkClick('/about')}>
             {texts.nav.about}
           </Link>
-          <Link to="/contact" style={getLinkStyle(isActive('/contact'))}>
+          <Link to="/contact" className="nav-link" style={getLinkStyle(isActive('/contact'))} onClick={handleRouteLinkClick('/contact')}>
             {texts.nav.contact}
           </Link>
 
           <div style={{ position: 'relative' }}>
             <button
+              className="nav-lang-btn"
               onClick={() => {
                 const nextIsOpen = !isLangDropdownOpen
                 setIsLangDropdownOpen(nextIsOpen)
@@ -238,6 +272,7 @@ function Navbar({ texts, setLanguage, language }) {
                 fontSize: '1.1rem',
                 fontWeight: '600',
                 backdropFilter: 'none',
+                transition: 'transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease',
               }}
             >
               <img src={activeLanguage.flag} alt="" style={flagStyle} />
@@ -370,13 +405,13 @@ function Navbar({ texts, setLanguage, language }) {
             boxShadow: '0 14px 34px rgba(0, 0, 0, 0.10)',
           }}
         >
-          <Link to="/" style={mobileLinkStyle(isActive('/'))} onClick={() => setIsMenuOpen(false)}>
+          <Link to="/" style={mobileLinkStyle(isActive('/'))} onClick={handleRouteLinkClick('/', () => setIsMenuOpen(false))}>
             {texts.nav.home}
           </Link>
-          <Link to="/about" style={mobileLinkStyle(isActive('/about'))} onClick={() => setIsMenuOpen(false)}>
+          <Link to="/about" style={mobileLinkStyle(isActive('/about'))} onClick={handleRouteLinkClick('/about', () => setIsMenuOpen(false))}>
             {texts.nav.about}
           </Link>
-          <Link to="/contact" style={mobileLinkStyle(isActive('/contact'))} onClick={() => setIsMenuOpen(false)}>
+          <Link to="/contact" style={mobileLinkStyle(isActive('/contact'))} onClick={handleRouteLinkClick('/contact', () => setIsMenuOpen(false))}>
             {texts.nav.contact}
           </Link>
 
@@ -443,6 +478,23 @@ function Navbar({ texts, setLanguage, language }) {
       )}
 
       <style>{`
+        .nav-link:hover,
+        .nav-link:focus-visible {
+          background: var(--nav-hover-bg);
+          box-shadow: inset 0 0 0 1px var(--nav-hover-ring);
+          transform: translateY(-1px) scale(1.01);
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          outline: none;
+        }
+
+        .nav-lang-btn:hover,
+        .nav-lang-btn:focus-visible {
+          transform: translateY(-1px) scale(1.01);
+          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.16);
+          filter: saturate(1.04);
+          outline: none;
+        }
+
         @media (max-width: 768px) {
           .desktop-menu {
             display: none !important;

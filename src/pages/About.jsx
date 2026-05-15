@@ -42,8 +42,10 @@ import balconyImage from '../../bilder/Balkong.jpg'
 import birdViewImage from '../../bilder/Fugleperspektiv.jpg'
 import nightPoolImage from '../../bilder/Nattbad.jpg'
 import omVillaImage from '../../bilder/Omvillabilde.avif'
+import youtubeOverlayImage from '../../bilder/Youtubeoverlegg1.png'
 import arrowLeft from '../../bilder/arrowleft.png'
 import arrowRight from '../../bilder/arrowright.png'
+import closeIcon from '../../bilder/x.svg'
 import './pages.css'
 import './About.css'
 
@@ -52,8 +54,14 @@ function About({ texts, setLanguage, language }) {
   const [showAllPhotos, setShowAllPhotos] = useState(false)
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(null)
   const [isMapExpanded, setIsMapExpanded] = useState(false)
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false)
+  const [photoZoom, setPhotoZoom] = useState(1)
+  const [photoZoomOrigin, setPhotoZoomOrigin] = useState('center center')
   const photoTouchStartX = useRef(null)
+  const photoTouchStartDistance = useRef(null)
+  const photoImageWrapRef = useRef(null)
   const embeddedMapUrl = 'https://www.google.com/maps?q=Fuengirola%2C%20Andalusia%2C%20Spain&z=11&output=embed'
+  const embeddedVideoUrl = 'https://www.youtube.com/embed/AUY3gvKTbxc?autoplay=1&rel=0'
   
   // Scroll to hash anchor on mount and when hash changes
   useEffect(() => {
@@ -261,6 +269,37 @@ function About({ texts, setLanguage, language }) {
     }
   }, [photoLightboxImages.length, selectedPhotoIndex, showAllPhotos])
 
+  useEffect(() => {
+    setPhotoZoom(1)
+  }, [selectedPhotoIndex])
+
+  useEffect(() => {
+    if (selectedPhotoIndex === null) return
+
+    const handleWheel = (event) => {
+      if (!event.ctrlKey) return
+      event.preventDefault()
+      
+      // Beregn musepositionen relative til bildecontaineren
+      if (photoImageWrapRef.current) {
+        const rect = photoImageWrapRef.current.getBoundingClientRect()
+        const x = event.clientX - rect.left
+        const y = event.clientY - rect.top
+        const xPercent = (x / rect.width) * 100
+        const yPercent = (y / rect.height) * 100
+        setPhotoZoomOrigin(`${xPercent}% ${yPercent}%`)
+      }
+      
+      const zoomSpeed = 0.22
+      const delta = event.deltaY > 0 ? -zoomSpeed : zoomSpeed
+      const newZoom = Math.max(1, photoZoom + delta)
+      setPhotoZoom(Math.min(newZoom, 3))
+    }
+
+    document.addEventListener('wheel', handleWheel, { passive: false })
+    return () => document.removeEventListener('wheel', handleWheel)
+  }, [selectedPhotoIndex, photoZoom])
+
   const handleShowAllPhotos = () => {
     setShowAllPhotos(true)
   }
@@ -305,7 +344,6 @@ function About({ texts, setLanguage, language }) {
     const photoIndex = getLightboxIndexBySection(sectionKey, sectionImageIndex)
     if (photoIndex === null || photoIndex < 0 || photoIndex >= photoLightboxImages.length) return
 
-    setShowAllPhotos(true)
     setSelectedPhotoIndex(photoIndex)
   }
 
@@ -326,10 +364,43 @@ function About({ texts, setLanguage, language }) {
   }
 
   const handlePhotoTouchStart = (event) => {
+    // Handle swipe
     photoTouchStartX.current = event.changedTouches[0]?.clientX ?? null
+    
+    // Handle pinch-zoom
+    if (event.touches.length === 2) {
+      const touch1 = event.touches[0]
+      const touch2 = event.touches[1]
+      const distance = Math.hypot(
+        touch2.clientX - touch1.clientX,
+        touch2.clientY - touch1.clientY
+      )
+      photoTouchStartDistance.current = distance
+      event.preventDefault()
+    }
   }
 
   const handlePhotoTouchEnd = (event) => {
+    // Handle pinch-zoom
+    if (event.touches.length === 2) {
+      const touch1 = event.touches[0]
+      const touch2 = event.touches[1]
+      const distance = Math.hypot(
+        touch2.clientX - touch1.clientX,
+        touch2.clientY - touch1.clientY
+      )
+      
+      if (photoTouchStartDistance.current !== null) {
+        const ratio = distance / photoTouchStartDistance.current
+        const newZoom = Math.max(1, photoZoom * ratio)
+        setPhotoZoom(Math.min(newZoom, 3))
+        event.preventDefault()
+      }
+      photoTouchStartDistance.current = null
+      return
+    }
+    
+    // Handle swipe
     if (photoTouchStartX.current === null) return
 
     const touchEndX = event.changedTouches[0]?.clientX
@@ -378,6 +449,7 @@ function About({ texts, setLanguage, language }) {
               <h3 className="about-photo-title">{photoTourTitle}</h3>
 
               <div className="about-photo-collage">
+
                 <figure className="about-photo-main">
                   <button
                     type="button"
@@ -411,138 +483,149 @@ function About({ texts, setLanguage, language }) {
               </div>
             </section>
 
-            {showAllPhotos
-              ? createPortal(
-                  <>
-                    <div className="about-photo-modal-backdrop" onClick={handleCloseAllPhotos} role="presentation">
-                      <section
-                        className="about-photo-modal"
-                        role="dialog"
-                        aria-modal="true"
-                        aria-label={photoTourTitle}
-                        onClick={(event) => event.stopPropagation()}
+            {/* Lukk section før showAllPhotos starter */}
+
+
+            {showAllPhotos && createPortal(
+              <div className="about-photo-modal-backdrop" onClick={handleCloseAllPhotos} role="presentation">
+                <section
+                  className="about-photo-modal"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label={photoTourTitle}
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  <header className="about-photo-modal-header">
+                    <h4>{photoTourTitle}</h4>
+                    <button type="button" className="about-photo-modal-close" onClick={handleCloseAllPhotos} aria-label={photoClose}>
+                      <img src={closeIcon} alt="" className="about-photo-modal-close-icon" />
+                    </button>
+                  </header>
+
+                  <div className="about-photo-tour-nav" aria-label={photoTourTitle}>
+                    {photoSections.map((section) => (
+                      <button
+                        type="button"
+                        key={section.key}
+                        className="about-photo-chip"
+                        onClick={() => handlePhotoSectionJump(section.key)}
                       >
-                        <header className="about-photo-modal-header">
-                          <h4>{photoTourTitle}</h4>
-                          <button type="button" className="about-photo-modal-close" onClick={handleCloseAllPhotos} aria-label={photoClose}>
-                            ✕
-                          </button>
-                        </header>
+                        {section.title}
+                      </button>
+                    ))}
+                  </div>
 
-                        <div className="about-photo-tour-nav" aria-label={photoTourTitle}>
-                          {photoSections.map((section) => (
-                            <button
-                              type="button"
-                              key={section.key}
-                              className="about-photo-chip"
-                              onClick={() => handlePhotoSectionJump(section.key)}
-                            >
-                              {section.title}
-                            </button>
-                          ))}
-                        </div>
+                  <div id="about-photo-tour" className="about-photo-modal-content">
+                    {photoSections.map((section) => (
+                      <article key={section.key} id={`modal-photo-${section.key}`} className="about-photo-tour-section">
+                        <h4>{section.title}</h4>
 
-                        <div id="about-photo-tour" className="about-photo-modal-content">
-                          {photoSections.map((section) => (
-                            <article key={section.key} id={`modal-photo-${section.key}`} className="about-photo-tour-section">
-                              <h4>{section.title}</h4>
-
-                              {section.groups ? (
-                                <div className="about-photo-group-stack">
-                                  {section.groups.map((group) => (
-                                    <div key={group.title} className="about-photo-subgroup">
-                                      <h5>{group.title}</h5>
-                                      <div className="about-photo-tour-grid">
-                                        {group.images.map((image, imageIndex) => (
-                                          <figure key={`${group.title}-${imageIndex}`} className="about-photo-tour-item">
-                                            <button
-                                              type="button"
-                                              className="about-photo-thumb-button"
-                                              onClick={() => handleOpenPhoto(image, `${group.title} ${imageIndex + 1}`)}
-                                              aria-label={`${group.title} ${imageIndex + 1}`}
-                                            >
-                                              <img src={image} alt={`${group.title} ${imageIndex + 1}`} className="about-photo-image" />
-                                            </button>
-                                          </figure>
-                                        ))}
-                                      </div>
-                                    </div>
-                                  ))}
-                                </div>
-                              ) : (
+                        {section.groups ? (
+                          <div className="about-photo-group-stack">
+                            {section.groups.map((group) => (
+                              <div key={group.title} className="about-photo-subgroup">
+                                <h5>{group.title}</h5>
                                 <div className="about-photo-tour-grid">
-                                  {section.images.map((image, imageIndex) => (
-                                    <figure key={`${section.key}-${imageIndex}`} className="about-photo-tour-item">
+                                  {group.images.map((image, imageIndex) => (
+                                    <figure key={`${group.title}-${imageIndex}`} className="about-photo-tour-item">
                                       <button
                                         type="button"
                                         className="about-photo-thumb-button"
-                                        onClick={() => handleOpenPhoto(image, `${section.title} ${imageIndex + 1}`)}
-                                        aria-label={`${section.title} ${imageIndex + 1}`}
+                                        onClick={() => handleOpenPhoto(image, `${group.title} ${imageIndex + 1}`)}
+                                        aria-label={`${group.title} ${imageIndex + 1}`}
                                       >
-                                        <img src={image} alt={`${section.title} ${imageIndex + 1}`} className="about-photo-image" />
+                                        <img src={image} alt={`${group.title} ${imageIndex + 1}`} className="about-photo-image" />
                                       </button>
                                     </figure>
                                   ))}
                                 </div>
-                              )}
-                            </article>
-                          ))}
-                        </div>
-                      </section>
-                    </div>
-
-                    {selectedPhoto ? (
-                      <div className="about-photo-lightbox-backdrop" onClick={handleCloseSelectedPhoto} role="presentation">
-                        <section
-                          className="about-photo-lightbox"
-                          role="dialog"
-                          aria-modal="true"
-                          aria-label={selectedPhoto.alt}
-                          onClick={(event) => event.stopPropagation()}
-                        >
-                          <header className="about-photo-lightbox-header">
-                            <div className="about-photo-lightbox-meta">
-                              <p>{selectedPhoto.label}</p>
-                              <span>{selectedPhotoIndex + 1}/{photoLightboxImages.length}</span>
-                            </div>
-                            <button type="button" className="about-photo-modal-close" onClick={handleCloseSelectedPhoto} aria-label={photoClose}>
-                              ✕
-                            </button>
-                          </header>
-
-                          <div
-                            className="about-photo-lightbox-image-wrap"
-                            onTouchStart={handlePhotoTouchStart}
-                            onTouchEnd={handlePhotoTouchEnd}
-                          >
-                            <button
-                              type="button"
-                              className="about-photo-lightbox-arrow about-photo-lightbox-arrow--prev"
-                              onClick={showPreviousPhoto}
-                              aria-label={photoPrevious}
-                            >
-                              <img src={arrowLeft} alt="" className="about-photo-lightbox-arrow-icon" />
-                            </button>
-
-                            <img src={selectedPhoto.src} alt={selectedPhoto.alt} className="about-photo-lightbox-image" />
-
-                            <button
-                              type="button"
-                              className="about-photo-lightbox-arrow about-photo-lightbox-arrow--next"
-                              onClick={showNextPhoto}
-                              aria-label={photoNext}
-                            >
-                              <img src={arrowRight} alt="" className="about-photo-lightbox-arrow-icon" />
-                            </button>
+                              </div>
+                            ))}
                           </div>
+                        ) : (
+                          <div className="about-photo-tour-grid">
+                            {section.images.map((image, imageIndex) => (
+                              <figure key={`${section.key}-${imageIndex}`} className="about-photo-tour-item">
+                                <button
+                                  type="button"
+                                  className="about-photo-thumb-button"
+                                  onClick={() => handleOpenPhoto(image, `${section.title} ${imageIndex + 1}`)}
+                                  aria-label={`${section.title} ${imageIndex + 1}`}
+                                >
+                                  <img src={image} alt={`${section.title} ${imageIndex + 1}`} className="about-photo-image" />
+                                </button>
+                              </figure>
+                            ))}
+                          </div>
+                        )}
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              </div>,
+              document.body
+            )}
 
-                        </section>
-                      </div>
-                    ) : null}
-                  </>,
-                  document.body
-                )
-              : null}
+            {selectedPhoto && createPortal(
+              <div className="about-photo-lightbox-backdrop" onClick={handleCloseSelectedPhoto} role="presentation">
+                <section
+                  className="about-photo-lightbox"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label={selectedPhoto.alt}
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  <header className="about-photo-lightbox-header">
+                    <div className="about-photo-lightbox-meta">
+                      <p>{selectedPhoto.label}</p>
+                      <span>{selectedPhotoIndex + 1}/{photoLightboxImages.length}<span className="about-photo-lightbox-meta-label-inline"> · {selectedPhoto.label}</span></span>
+                    </div>
+                    <button type="button" className="about-photo-modal-close" onClick={handleCloseSelectedPhoto} aria-label={photoClose}>
+                      <img src={closeIcon} alt="" className="about-photo-modal-close-icon" />
+                    </button>
+                  </header>
+
+                  <div
+                    className="about-photo-lightbox-image-wrap"
+                    ref={photoImageWrapRef}
+                    onTouchStart={handlePhotoTouchStart}
+                    onTouchEnd={handlePhotoTouchEnd}
+                  >
+                    <button
+                      type="button"
+                      className="about-photo-lightbox-arrow about-photo-lightbox-arrow--prev"
+                      onClick={showPreviousPhoto}
+                      aria-label={photoPrevious}
+                    >
+                      <img src={arrowLeft} alt="" className="about-photo-lightbox-arrow-icon" />
+                    </button>
+
+
+                    <img src={selectedPhoto.src} alt={selectedPhoto.alt} className="about-photo-lightbox-image" style={{ transform: `scale(${photoZoom})`, transformOrigin: photoZoomOrigin }} />
+
+                    <button
+                      type="button"
+                      className="about-photo-lightbox-arrow about-photo-lightbox-arrow--next"
+                      onClick={showNextPhoto}
+                      aria-label={photoNext}
+                    >
+                      <img src={arrowRight} alt="" className="about-photo-lightbox-arrow-icon" />
+                    </button>
+
+                    <div className="about-photo-mobile-pill" aria-hidden="true">
+                      <span className="about-photo-mobile-swipe">
+                        <img src={arrowLeft} alt="" className="about-photo-mobile-swipe-icon" />
+                        <span>{texts?.gallerySwipeHint ?? 'Swipe'}</span>
+                        <img src={arrowRight} alt="" className="about-photo-mobile-swipe-icon" />
+                      </span>
+                      <span className="about-photo-mobile-zoom">🔍☝️ Zoom</span>
+                    </div>
+                  </div>
+
+                </section>
+              </div>,
+              document.body
+            )}
 
             {/* Amenities section */}
             <div className="about-amenities-card">
@@ -737,15 +820,33 @@ function About({ texts, setLanguage, language }) {
 
                 <h4 className="about-info-subtitle">{texts.about.videoSectionTitle ?? 'Video'}</h4>
                 <p className="page-faq-answer page-faq-answer--video">{texts.about.videoInfoText}</p>
-                <div className="about-video-action">
-                  <a
-                    href="https://youtu.be/MT-3H6jAcFQ"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="page-primary-link"
-                  >
-                    {texts.about.videoLabel}
-                  </a>
+                <div className="about-video-embed-wrap">
+                  {isVideoLoaded ? (
+                    <iframe
+                      className="about-video-embed"
+                      src={embeddedVideoUrl}
+                      title="Villa Las Chicas Video"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  ) : (
+                    <button
+                      type="button"
+                      className="about-video-preview"
+                      onClick={() => setIsVideoLoaded(true)}
+                      aria-label={texts.about.videoSectionTitle ?? 'Play video'}
+                    >
+                      <img
+                        src={youtubeOverlayImage}
+                        alt="Villa Las Chicas video preview"
+                        className="about-video-preview-image"
+                      />
+                      <span className="about-video-preview-play" aria-hidden="true">
+                        <span className="about-video-preview-play-icon"></span>
+                      </span>
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
