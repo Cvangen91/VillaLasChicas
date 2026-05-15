@@ -446,7 +446,7 @@ function About({ texts, setLanguage, language }) {
         <section className="page-section page-section--bottom about-section about-section--faq">
           <div className="page-wide">
             <section className="about-photo-card" aria-label={photoTourTitle}>
-              <h3 className="about-photo-title">{photoTourTitle}</h3>
+              <h2 className="about-photo-title">{photoTourTitle}</h2>
 
               <div className="about-photo-collage">
 
@@ -496,7 +496,7 @@ function About({ texts, setLanguage, language }) {
                   onClick={(event) => event.stopPropagation()}
                 >
                   <header className="about-photo-modal-header">
-                    <h4>{photoTourTitle}</h4>
+                    <h3>{photoTourTitle}</h3>
                     <button type="button" className="about-photo-modal-close" onClick={handleCloseAllPhotos} aria-label={photoClose}>
                       <img src={closeIcon} alt="" className="about-photo-modal-close-icon" />
                     </button>
@@ -768,7 +768,7 @@ function About({ texts, setLanguage, language }) {
                 <div className="page-faq-summary page-faq-summary--static">{texts.about.moreInfoTitle}</div>
 
                 <div className="about-info-block">
-                  <h4 className="about-info-subtitle">{texts.about.overviewTitle ?? 'Om villaen'}</h4>
+                  <h3 className="about-info-subtitle">{texts.about.overviewTitle ?? 'Om villaen'}</h3>
                   <ul className="about-info-bullet-list">
                     {[texts.about.text1, texts.about.textrooms, texts.about.text2, texts.about.extraText]
                       .filter(Boolean)
@@ -780,7 +780,7 @@ function About({ texts, setLanguage, language }) {
 
                 {texts.about.transportInfoTitle ? (
                   <div className="about-info-block">
-                    <h4 className="about-info-subtitle">{texts.about.transportInfoTitle}</h4>
+                    <h3 className="about-info-subtitle">{texts.about.transportInfoTitle}</h3>
                     <ul className="about-info-bullet-list">
                       {(texts.about.transportInfo ?? []).map((line) => (
                         <li key={line}>{line}</li>
@@ -791,7 +791,7 @@ function About({ texts, setLanguage, language }) {
 
                 {texts.about.servicesTitle ? (
                   <div className="about-info-block">
-                    <h4 className="about-info-subtitle">{texts.about.servicesTitle}</h4>
+                    <h3 className="about-info-subtitle">{texts.about.servicesTitle}</h3>
                     <ul className="about-info-bullet-list">
                       {(texts.about.serviceHighlights ?? []).map((line) => (
                         <li key={line}>{line}</li>
@@ -802,7 +802,7 @@ function About({ texts, setLanguage, language }) {
 
                 {(texts.about.distances ?? []).length > 0 ? (
                   <div className="about-distance-wrap">
-                    <h4 className="about-info-subtitle">{texts.about.distancesTitle ?? 'Avstander'}</h4>
+                    <h3 className="about-info-subtitle">{texts.about.distancesTitle ?? 'Avstander'}</h3>
                     <div className="about-distance-grid">
                       {texts.about.distances.map((item) => (
                         <div key={item.label} className="about-distance-item">
@@ -818,7 +818,7 @@ function About({ texts, setLanguage, language }) {
                   <p className="page-faq-answer page-faq-answer--compact">{texts.about.managementNote}</p>
                 ) : null}
 
-                <h4 className="about-info-subtitle">{texts.about.videoSectionTitle ?? 'Video'}</h4>
+                <h3 className="about-info-subtitle">{texts.about.videoSectionTitle ?? 'Video'}</h3>
                 <p className="page-faq-answer page-faq-answer--video">{texts.about.videoInfoText}</p>
                 <div className="about-video-embed-wrap">
                   {isVideoLoaded ? (

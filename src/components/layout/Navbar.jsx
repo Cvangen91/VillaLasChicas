@@ -125,7 +125,10 @@ function Navbar({ texts, setLanguage, language }) {
     textShadow: `0 4px 18px rgba(0, 0, 0, ${overlayStrength * 0.28})`,
     borderRadius: '999px',
     padding: '0.34rem 0.78rem',
-    opacity: isHomePage ? 0.74 + visualEase * 0.26 : 1,
+    backgroundColor: active
+      ? 'rgba(69, 133, 140, 0.14)'
+      : 'rgba(47, 54, 64, 0.06)',
+    opacity: 1,
     transform: isHomePage ? `translateY(${(1 - visualEase) * 2}px)` : 'translateY(0)',
     transition: 'color 0.22s ease, background-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease, opacity 0.22s ease',
   })

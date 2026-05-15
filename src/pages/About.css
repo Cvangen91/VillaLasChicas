@@ -467,7 +467,7 @@
   margin-bottom: 0.85rem;
 }
 
-.about-photo-modal-header h4 {
+.about-photo-modal-header h3 {
   margin: 0;
   color: var(--color-navy);
   font-size: clamp(1.35rem, 2.5vw, 2rem);

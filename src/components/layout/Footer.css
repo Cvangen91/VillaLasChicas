@@ -46,7 +46,8 @@
 
 .footer-copyright {
   margin: 0;
-  opacity: 0.68;
+  color: #374151;
+  opacity: 1;
   font-size: 0.76rem;
   line-height: 1.2;
 }
@@ -58,20 +59,22 @@
 
 .footer-title {
   margin: 0;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.79rem;
-  color: #2f3640;
+  color: #1f2933;
 }
 
 .footer-line {
   margin: 0.16rem 0 0;
-  opacity: 0.82;
+  color: #374151;
+  opacity: 1;
   font-size: 0.83rem;
   line-height: 1.25;
 }
 
 .footer-line-soft {
-  opacity: 0.72;
+  color: #4b5563;
+  opacity: 1;
   font-size: 0.79rem;
 }
 
@@ -83,9 +86,9 @@
 }
 
 .footer-link {
-  color: #2f3640;
+  color: #1f2933;
   text-decoration: none;
-  opacity: 0.82;
+  opacity: 1;
   font-size: 0.83rem;
   line-height: 1.2;
   padding: 0.34rem 0.78rem;

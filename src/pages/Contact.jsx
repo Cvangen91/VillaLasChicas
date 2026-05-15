@@ -17,7 +17,7 @@ function Contact({ texts, setLanguage, language }) {
           <div className="page-wide">
             <div className="contact-top-grid">
               <div className="contact-intro contact-intro--inside">
-                <h2 className="contact-intro-title">{texts.contact.title}</h2>
+                <h1 className="contact-intro-title">{texts.contact.title}</h1>
                 <p>{texts.contact.text1}</p>
                 <p>{texts.contact.text2}</p>
               </div>
