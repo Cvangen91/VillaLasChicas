@@ -8,6 +8,9 @@
   --color-sky-soft: #BFD8DF;
   --color-sand-light: #F7F4EF;
   --color-text-soft: #5B6670;
+  --color-white: #ffffff;
+  --color-navy-dark: #1F2933;
+  --color-sky-tint: #EEF3F5;
 
   --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.06);
   --shadow-card: 0 16px 36px rgba(0, 0, 0, 0.06);

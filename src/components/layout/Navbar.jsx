@@ -93,7 +93,7 @@ function Navbar({ texts, setLanguage, language }) {
     return `rgb(${mixChannel(from[0], to[0], clamped)}, ${mixChannel(from[1], to[1], clamped)}, ${mixChannel(from[2], to[2], clamped)})`
   }
   const navTextColor = isMobileMenuExpanded
-    ? '#1F2933'
+    ? 'var(--color-navy-dark)'
     : blendColor([248, 251, 251], [31, 41, 51], visualEase)
   const activeLinkColor = blendColor([168, 214, 221], [69, 133, 140], Math.min(0.12 + visualEase * 0.88, 1))
   const menuButtonColor = blendColor([248, 251, 251], [138, 181, 191], Math.min(visualEase * 1.05, 1))
@@ -135,7 +135,7 @@ function Navbar({ texts, setLanguage, language }) {
 
   const mobileLinkStyle = (active) => ({
     display: 'block',
-    color: active ? '#2B7C84' : '#1F2933',
+    color: active ? '#2B7C84' : 'var(--color-navy-dark)',
     textDecoration: 'none',
     fontSize: '1.05rem',
     padding: '0.8rem 0.9rem',
@@ -214,7 +214,7 @@ function Navbar({ texts, setLanguage, language }) {
             gap: '0.75rem',
             fontSize: '1.4rem',
             fontWeight: '700',
-            color: '#8AB5BF',
+            color: 'var(--color-sky)',
             textDecoration: 'none',
             minWidth: 'auto',
             padding: '0.45rem 0.75rem',
@@ -264,7 +264,7 @@ function Navbar({ texts, setLanguage, language }) {
               }}
               style={{
                 backgroundColor: `rgba(69, 133, 140, ${languageButtonOpacity})`,
-                color: '#F2F2F2',
+                color: 'var(--color-light)',
                 border: `1px solid rgba(255, 255, 255, ${languageButtonBorderOpacity})`,
                 padding: '0.75rem 1.15rem',
                 borderRadius: '999px',
@@ -298,7 +298,7 @@ function Navbar({ texts, setLanguage, language }) {
                   position: 'absolute',
                   top: 'calc(100% + 0.5rem)',
                   right: 0,
-                  backgroundColor: '#FFFFFF',
+                  backgroundColor: 'var(--color-white)',
                   borderRadius: '8px',
                   minWidth: '110px',
                   overflow: 'hidden',
@@ -316,8 +316,8 @@ function Navbar({ texts, setLanguage, language }) {
                     border: 'none',
                     padding: '0.7rem 1rem',
                     textAlign: 'left',
-                    backgroundColor: language === 'no' ? '#45858C' : 'transparent',
-                    color: language === 'no' ? '#F2F2F2' : '#1F2933',
+                    backgroundColor: language === 'no' ? 'var(--color-teal)' : 'transparent',
+                    color: language === 'no' ? 'var(--color-light)' : 'var(--color-navy-dark)',
                     cursor: 'pointer',
                   }}
                 >
@@ -336,8 +336,8 @@ function Navbar({ texts, setLanguage, language }) {
                     border: 'none',
                     padding: '0.7rem 1rem',
                     textAlign: 'left',
-                    backgroundColor: language === 'en' ? '#45858C' : 'transparent',
-                    color: language === 'en' ? '#F2F2F2' : '#1F2933',
+                    backgroundColor: language === 'en' ? 'var(--color-teal)' : 'transparent',
+                    color: language === 'en' ? 'var(--color-light)' : 'var(--color-navy-dark)',
                     cursor: 'pointer',
                   }}
                 >
@@ -356,8 +356,8 @@ function Navbar({ texts, setLanguage, language }) {
                     border: 'none',
                     padding: '0.7rem 1rem',
                     textAlign: 'left',
-                    backgroundColor: language === 'es' ? '#45858C' : 'transparent',
-                    color: language === 'es' ? '#F2F2F2' : '#1F2933',
+                    backgroundColor: language === 'es' ? 'var(--color-teal)' : 'transparent',
+                    color: language === 'es' ? 'var(--color-light)' : 'var(--color-navy-dark)',
                     cursor: 'pointer',
                   }}
                 >
@@ -428,8 +428,8 @@ function Navbar({ texts, setLanguage, language }) {
                 flex: 1,
                 border: 'none',
                 borderRadius: '8px',
-                backgroundColor: language === 'no' ? '#45858C' : '#EEF3F5',
-                color: language === 'no' ? '#F2F2F2' : '#1F2933',
+                backgroundColor: language === 'no' ? 'var(--color-teal)' : 'var(--color-sky-tint)',
+                color: language === 'no' ? 'var(--color-light)' : 'var(--color-navy-dark)',
                 padding: '0.65rem 0.9rem',
               }}
             >
@@ -447,8 +447,8 @@ function Navbar({ texts, setLanguage, language }) {
                 flex: 1,
                 border: 'none',
                 borderRadius: '8px',
-                backgroundColor: language === 'en' ? '#45858C' : '#EEF3F5',
-                color: language === 'en' ? '#F2F2F2' : '#1F2933',
+                backgroundColor: language === 'en' ? 'var(--color-teal)' : 'var(--color-sky-tint)',
+                color: language === 'en' ? 'var(--color-light)' : 'var(--color-navy-dark)',
                 padding: '0.65rem 0.9rem',
               }}
             >
@@ -466,8 +466,8 @@ function Navbar({ texts, setLanguage, language }) {
                 flex: 1,
                 border: 'none',
                 borderRadius: '8px',
-                backgroundColor: language === 'es' ? '#45858C' : '#EEF3F5',
-                color: language === 'es' ? '#F2F2F2' : '#1F2933',
+                backgroundColor: language === 'es' ? 'var(--color-teal)' : 'var(--color-sky-tint)',
+                color: language === 'es' ? 'var(--color-light)' : 'var(--color-navy-dark)',
                 padding: '0.65rem 0.9rem',
               }}
             >

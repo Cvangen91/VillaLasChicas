@@ -1,6 +1,6 @@
 /* Universell utforming: tydelig fokus-outline på alle interaktive elementer */
 a:focus, button:focus, input:focus, textarea:focus, summary:focus, select:focus {
-  outline: 2.5px solid #45858C;
+  outline: 2.5px solid var(--color-teal);
   outline-offset: 2px;
   box-shadow: 0 0 0 2px #BFD8DF44;
   z-index: 2;
@@ -82,7 +82,7 @@ a:focus, button:focus, input:focus, textarea:focus, summary:focus, select:focus 
 
 .page-pill {
   display: inline-block;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   color: var(--color-navy);
   padding: 0.85rem 1.2rem;
   border-radius: 999px;
@@ -90,7 +90,7 @@ a:focus, button:focus, input:focus, textarea:focus, summary:focus, select:focus 
 }
 
 .page-card {
-  background-color: #ffffff;
+  background-color: var(--color-white);
   border-radius: 24px;
   padding: 2rem;
   box-shadow: var(--shadow-card);
