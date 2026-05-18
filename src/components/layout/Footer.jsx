@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import villaLogoNoText from '../../../bilder/Villalogonulltekst.png'
+import villaLogoNoText from '../../../pictures/Villalogonulltekst.png'
 import './Footer.css'
 
 function Footer({ texts }) {

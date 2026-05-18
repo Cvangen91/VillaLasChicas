@@ -942,7 +942,7 @@
   width: 14px;
   height: 14px;
   flex-shrink: 0;
-  background-image: url('../../bilder/arrowdown.png');
+  background-image: url('../../pictures/arrowdown.png');
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
@@ -950,7 +950,7 @@
 }
 
 .page-faq-item[open] .page-faq-summary::after {
-  background-image: url('../../bilder/arrowup.png');
+  background-image: url('../../pictures/arrowup.png');
 }
 
 .page-faq-item[open] {

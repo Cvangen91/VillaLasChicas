@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import villaLogo from '../../../bilder/villalogo.png'
-import arrowDown from '../../../bilder/arrowdown.png'
-import arrowUp from '../../../bilder/arrowup.png'
-import norwayFlag from '../../../bilder/Norgeflagg.png'
-import britishFlag from '../../../bilder/English.webp'
-import spainFlag from '../../../bilder/spainflag.png'
+import villaLogo from '../../../pictures/villalogo.png'
+import arrowDown from '../../../pictures/arrowdown.png'
+import arrowUp from '../../../pictures/arrowup.png'
+import norwayFlag from '../../../pictures/Norgeflagg.png'
+import britishFlag from '../../../pictures/English.webp'
+import spainFlag from '../../../pictures/spainflag.png'
 
 function Navbar({ texts, setLanguage, language }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
