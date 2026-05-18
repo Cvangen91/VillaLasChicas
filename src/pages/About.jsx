@@ -85,6 +85,11 @@ function About({ texts, setLanguage, language }) {
   const faqItems = [
     ...(texts.about.faqs ?? [])
   ]
+  const houseRules = texts.about.houseRules ?? {}
+  const safetyAndProperty = texts.about.safetyAndProperty ?? {}
+  const hasImportantBookingInfo = Boolean(
+    houseRules.title || safetyAndProperty.title || texts.about.cancellationPolicyNote
+  )
   const amenities = texts.about.amenities ?? []
   const unavailableAmenities = texts.about.unavailableAmenities ?? []
 
@@ -764,6 +769,82 @@ function About({ texts, setLanguage, language }) {
                   <p className="page-faq-answer">{item.a}</p>
                 </details>
               ))}
+
+              {hasImportantBookingInfo ? (
+                <>
+                  <div className="page-faq-header page-faq-header--booking-info">
+                    <h3 className="page-faq-subtitle">
+                      {texts.about.importantBeforeBookingTitle ?? 'Important information before booking'}
+                    </h3>
+                  </div>
+
+                  <div className="page-faq-list page-faq-list--booking-info">
+                    {houseRules.title ? (
+                      <details className="page-faq-item">
+                        <summary className="page-faq-summary">{houseRules.title}</summary>
+                        {texts.about.thingsToKnowTitle ? (
+                          <h3 className="about-info-subtitle">{texts.about.thingsToKnowTitle}</h3>
+                        ) : null}
+                        {houseRules.intro ? (
+                          <p className="page-faq-answer page-faq-answer--compact">{houseRules.intro}</p>
+                        ) : null}
+
+                        {houseRules.checkingInOutTitle ? (
+                          <h4 className="about-info-subtitle">{houseRules.checkingInOutTitle}</h4>
+                        ) : null}
+                        <ul className="about-info-bullet-list">
+                          {(houseRules.checkingInOutItems ?? []).map((line) => (
+                            <li key={line}>{line}</li>
+                          ))}
+                        </ul>
+
+                        {houseRules.duringStayTitle ? (
+                          <h4 className="about-info-subtitle">{houseRules.duringStayTitle}</h4>
+                        ) : null}
+                        <ul className="about-info-bullet-list">
+                          {(houseRules.duringStayItems ?? []).map((line) => (
+                            <li key={line}>{line}</li>
+                          ))}
+                        </ul>
+
+                        {houseRules.beforeLeaveTitle ? (
+                          <h4 className="about-info-subtitle">{houseRules.beforeLeaveTitle}</h4>
+                        ) : null}
+                        <ul className="about-info-bullet-list">
+                          {(houseRules.beforeLeaveItems ?? []).map((line) => (
+                            <li key={line}>{line}</li>
+                          ))}
+                        </ul>
+                      </details>
+                    ) : null}
+
+                    {safetyAndProperty.title ? (
+                      <details className="page-faq-item">
+                        <summary className="page-faq-summary">{safetyAndProperty.title}</summary>
+                        {safetyAndProperty.intro ? (
+                          <p className="page-faq-answer page-faq-answer--compact">{safetyAndProperty.intro}</p>
+                        ) : null}
+                        {safetyAndProperty.safetyDevicesTitle ? (
+                          <h4 className="about-info-subtitle">{safetyAndProperty.safetyDevicesTitle}</h4>
+                        ) : null}
+                        <ul className="about-info-bullet-list">
+                          {(safetyAndProperty.safetyDevices ?? []).map((line) => (
+                            <li key={line}>{line}</li>
+                          ))}
+                        </ul>
+                      </details>
+                    ) : null}
+
+                    {texts.about.cancellationPolicyNote ? (
+                      <details className="page-faq-item">
+                        <summary className="page-faq-summary">{texts.about.cancellationPolicyTitle ?? 'Cancellation policy'}</summary>
+                        <p className="page-faq-answer page-faq-answer--compact">{texts.about.cancellationPolicyNote}</p>
+                      </details>
+                    ) : null}
+                  </div>
+                </>
+              ) : null}
+
               <div className="page-faq-item page-faq-item--open page-faq-item--static">
                 <div className="page-faq-summary page-faq-summary--static">{texts.about.moreInfoTitle}</div>
 
@@ -849,6 +930,7 @@ function About({ texts, setLanguage, language }) {
                   )}
                 </div>
               </div>
+
             </div>
 
           </div>

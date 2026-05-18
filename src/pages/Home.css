@@ -281,6 +281,13 @@
   color: var(--color-navy);
 }
 
+.home-booking-min-stay {
+  margin: 1rem auto 0;
+  max-width: 760px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
 @media (max-width: 768px) {
   .home-page {
     position: relative;

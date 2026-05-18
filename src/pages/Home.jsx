@@ -162,6 +162,9 @@ function Home({ texts, setLanguage, language }) {
               {texts.home.bookWithBooking}
             </a>
           </div>
+          {texts.home.minStayNotice ? (
+            <p className="home-booking-min-stay">{texts.home.minStayNotice}</p>
+          ) : null}
         </div>
         </section>
       </div>

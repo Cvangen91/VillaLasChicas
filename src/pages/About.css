@@ -877,6 +877,21 @@
   gap: 1rem;
 }
 
+.page-faq-header--booking-info {
+  margin-top: 2.4rem;
+  margin-bottom: 1rem;
+}
+
+.page-faq-subtitle {
+  margin: 0;
+  font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+  color: var(--color-navy);
+}
+
+.page-faq-list--booking-info {
+  margin-top: 0;
+}
+
 
 .page-faq-item {
   background: var(--surface-card-universal);
