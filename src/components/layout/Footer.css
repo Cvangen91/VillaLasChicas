@@ -1,6 +1,6 @@
 .footer-root {
-  background-color: #ffffff;
-  color: #1f2933;
+  background-color: var(--color-white);
+  color: var(--color-navy-dark);
   padding: 0.9rem 1.5rem 0.75rem;
   box-shadow: 0 -8px 22px rgba(0, 0, 0, 0.09);
 }
@@ -61,7 +61,7 @@
   margin: 0;
   font-weight: 700;
   font-size: 0.79rem;
-  color: #1f2933;
+  color: var(--color-navy-dark);
 }
 
 .footer-line {
@@ -86,7 +86,7 @@
 }
 
 .footer-link {
-  color: #1f2933;
+  color: var(--color-navy-dark);
   text-decoration: none;
   opacity: 1;
   font-size: 0.83rem;

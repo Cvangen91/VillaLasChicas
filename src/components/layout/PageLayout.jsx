@@ -8,7 +8,7 @@ function PageLayout({ children, texts, setLanguage, language }) {
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#F2F2F2',
+        backgroundColor: 'var(--color-light)',
       }}
     >
       <Navbar
