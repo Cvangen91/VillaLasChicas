@@ -5,6 +5,32 @@ import './Contact.css'
 function Contact({ texts, setLanguage, language }) {
   const contactEmail = 'kontakt@villalaschicas.no'
   const contactPhone = '+47 99 99 99 99'
+  const validation = texts.contact.validation || {}
+  const formLanguage = language === 'no' ? 'nb' : language
+
+  const getValidationMessage = (field) => {
+    if (field.validity.valueMissing) {
+      return validation.required || 'Please fill out this field.'
+    }
+
+    if (field.validity.typeMismatch && field.type === 'email') {
+      return validation.email || 'Please enter a valid email address.'
+    }
+
+    return ''
+  }
+
+  const handleInvalid = (event) => {
+    const field = event.target
+    if (typeof field.setCustomValidity !== 'function') return
+    field.setCustomValidity(getValidationMessage(field))
+  }
+
+  const handleInput = (event) => {
+    const field = event.target
+    if (typeof field.setCustomValidity !== 'function') return
+    field.setCustomValidity('')
+  }
 
   return (
     <PageLayout
@@ -50,6 +76,7 @@ function Contact({ texts, setLanguage, language }) {
                 className="contact-form"
                 action={`https://formsubmit.co/${contactEmail}`}
                 method="POST"
+                lang={formLanguage}
               >
                 <input type="hidden" name="_captcha" value="false" />
                 <input type="hidden" name="_subject" value="Ny henvendelse fra Villa Las Chicas" />
@@ -57,13 +84,13 @@ function Contact({ texts, setLanguage, language }) {
                 <input type="text" name="_honey" className="contact-hidden" tabIndex="-1" autoComplete="off" />
 
                 <label className="contact-form-label" htmlFor="name">{texts.contact.nameLabel || 'Navn'}</label>
-                <input id="name" name="name" className="contact-form-input" type="text" required />
+                <input id="name" name="name" className="contact-form-input" type="text" required onInvalid={handleInvalid} onInput={handleInput} />
 
                 <label className="contact-form-label" htmlFor="email">{texts.contact.emailLabel || 'E-post'}</label>
-                <input id="email" name="email" className="contact-form-input" type="email" required />
+                <input id="email" name="email" className="contact-form-input" type="email" required onInvalid={handleInvalid} onInput={handleInput} />
 
                 <label className="contact-form-label" htmlFor="message">{texts.contact.messageLabel || 'Melding'}</label>
-                <textarea id="message" name="message" className="contact-form-textarea" rows="5" required />
+                <textarea id="message" name="message" className="contact-form-textarea" rows="5" required onInvalid={handleInvalid} onInput={handleInput} />
 
                 <button type="submit" className="contact-form-button">{texts.contact.sendButton || 'Send melding'}</button>
               </form>

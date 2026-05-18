@@ -222,6 +222,10 @@ const no = {
     nameLabel: 'Navn',
     emailLabel: 'E-post',
     messageLabel: 'Melding',
+    validation: {
+      required: 'Vennligst fyll ut dette feltet.',
+      email: 'Vennligst skriv inn en gyldig e-postadresse.',
+    },
     sendButton: 'Send melding',
   },
   footer: {

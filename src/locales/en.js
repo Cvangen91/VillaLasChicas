@@ -221,6 +221,10 @@ const en = {
     nameLabel: 'Name',
     emailLabel: 'Email',
     messageLabel: 'Message',
+    validation: {
+      required: 'Please fill out this field.',
+      email: 'Please enter a valid email address.',
+    },
     sendButton: 'Send message',
   },
   footer: {

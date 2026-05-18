@@ -60,6 +60,13 @@ function About({ texts, setLanguage, language }) {
   const photoTouchStartX = useRef(null)
   const photoTouchStartDistance = useRef(null)
   const photoImageWrapRef = useRef(null)
+  const showAllPhotosModalRef = useRef(null)
+  const showAllPhotosCloseButtonRef = useRef(null)
+  const selectedPhotoModalRef = useRef(null)
+  const selectedPhotoCloseButtonRef = useRef(null)
+  const mapModalRef = useRef(null)
+  const mapCloseButtonRef = useRef(null)
+  const lastModalFocusedElementRef = useRef(null)
   const embeddedMapUrl = 'https://www.google.com/maps?q=Fuengirola%2C%20Andalusia%2C%20Spain&z=11&output=embed'
   const embeddedVideoUrl = 'https://www.youtube.com/embed/AUY3gvKTbxc?autoplay=1&rel=0'
   
@@ -243,9 +250,6 @@ function About({ texts, setLanguage, language }) {
   useEffect(() => {
     if (!showAllPhotos) return undefined
 
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
         if (selectedPhotoIndex !== null) {
@@ -269,10 +273,100 @@ function About({ texts, setLanguage, language }) {
     window.addEventListener('keydown', handleKeyDown)
 
     return () => {
-      document.body.style.overflow = previousOverflow
       window.removeEventListener('keydown', handleKeyDown)
     }
   }, [photoLightboxImages.length, selectedPhotoIndex, showAllPhotos])
+
+  useEffect(() => {
+    const activeModalType = selectedPhoto
+      ? 'selectedPhoto'
+      : showAllPhotos
+        ? 'showAllPhotos'
+        : isMapExpanded
+          ? 'map'
+          : null
+
+    if (!activeModalType) return undefined
+
+    const modalRef =
+      activeModalType === 'selectedPhoto'
+        ? selectedPhotoModalRef
+        : activeModalType === 'showAllPhotos'
+          ? showAllPhotosModalRef
+          : mapModalRef
+
+    const closeButtonRef =
+      activeModalType === 'selectedPhoto'
+        ? selectedPhotoCloseButtonRef
+        : activeModalType === 'showAllPhotos'
+          ? showAllPhotosCloseButtonRef
+          : mapCloseButtonRef
+
+    lastModalFocusedElementRef.current = document.activeElement
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    const getFocusableElements = () => {
+      if (!modalRef.current) return []
+      return Array.from(
+        modalRef.current.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((element) => !element.hasAttribute('disabled'))
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        if (activeModalType === 'selectedPhoto') {
+          setSelectedPhotoIndex(null)
+        } else if (activeModalType === 'showAllPhotos') {
+          setShowAllPhotos(false)
+          setSelectedPhotoIndex(null)
+        } else {
+          setIsMapExpanded(false)
+        }
+        return
+      }
+
+      if (event.key !== 'Tab') return
+
+      const focusableElements = getFocusableElements()
+      if (!focusableElements.length) {
+        event.preventDefault()
+        return
+      }
+
+      const firstElement = focusableElements[0]
+      const lastElement = focusableElements[focusableElements.length - 1]
+      const activeElement = document.activeElement
+
+      if (event.shiftKey) {
+        if (activeElement === firstElement || !modalRef.current?.contains(activeElement)) {
+          event.preventDefault()
+          lastElement.focus()
+        }
+      } else if (activeElement === lastElement || !modalRef.current?.contains(activeElement)) {
+        event.preventDefault()
+        firstElement.focus()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    requestAnimationFrame(() => {
+      if (closeButtonRef.current) {
+        closeButtonRef.current.focus()
+      }
+    })
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+
+      if (lastModalFocusedElementRef.current instanceof HTMLElement) {
+        lastModalFocusedElementRef.current.focus()
+      }
+    }
+  }, [isMapExpanded, selectedPhoto, showAllPhotos])
 
   useEffect(() => {
     setPhotoZoom(1)
@@ -498,11 +592,12 @@ function About({ texts, setLanguage, language }) {
                   role="dialog"
                   aria-modal="true"
                   aria-label={photoTourTitle}
+                  ref={showAllPhotosModalRef}
                   onClick={(event) => event.stopPropagation()}
                 >
                   <header className="about-photo-modal-header">
                     <h3>{photoTourTitle}</h3>
-                    <button type="button" className="about-photo-modal-close" onClick={handleCloseAllPhotos} aria-label={photoClose}>
+                    <button type="button" className="about-photo-modal-close" onClick={handleCloseAllPhotos} aria-label={photoClose} ref={showAllPhotosCloseButtonRef}>
                       <img src={closeIcon} alt="" className="about-photo-modal-close-icon" />
                     </button>
                   </header>
@@ -578,6 +673,7 @@ function About({ texts, setLanguage, language }) {
                   role="dialog"
                   aria-modal="true"
                   aria-label={selectedPhoto.alt}
+                  ref={selectedPhotoModalRef}
                   onClick={(event) => event.stopPropagation()}
                 >
                   <header className="about-photo-lightbox-header">
@@ -585,7 +681,7 @@ function About({ texts, setLanguage, language }) {
                       <p>{selectedPhoto.label}</p>
                       <span>{selectedPhotoIndex + 1}/{photoLightboxImages.length}<span className="about-photo-lightbox-meta-label-inline"> · {selectedPhoto.label}</span></span>
                     </div>
-                    <button type="button" className="about-photo-modal-close" onClick={handleCloseSelectedPhoto} aria-label={photoClose}>
+                    <button type="button" className="about-photo-modal-close" onClick={handleCloseSelectedPhoto} aria-label={photoClose} ref={selectedPhotoCloseButtonRef}>
                       <img src={closeIcon} alt="" className="about-photo-modal-close-icon" />
                     </button>
                   </header>
@@ -730,6 +826,7 @@ function About({ texts, setLanguage, language }) {
               >
                 <div
                   className="about-map-modal"
+                  ref={mapModalRef}
                   onClick={(e) => e.stopPropagation()}
                 >
                   <button
@@ -737,6 +834,7 @@ function About({ texts, setLanguage, language }) {
                     className="about-map-modal-close"
                     onClick={() => setIsMapExpanded(false)}
                     aria-label={texts.about.mapCloseLabel ?? 'Close map'}
+                    ref={mapCloseButtonRef}
                   >
                     ✕
                   </button>
@@ -749,6 +847,7 @@ function About({ texts, setLanguage, language }) {
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                     title="Villa Las Chicas Location Expanded"
+                    tabIndex="-1"
                   ></iframe>
                 </div>
               </div>,
@@ -846,9 +945,9 @@ function About({ texts, setLanguage, language }) {
               ) : null}
 
               <div className="page-faq-item page-faq-item--open page-faq-item--static">
-                <div className="page-faq-summary page-faq-summary--static">{texts.about.moreInfoTitle}</div>
+                <div className="page-faq-summary page-faq-summary--static" tabIndex="0">{texts.about.moreInfoTitle}</div>
 
-                <div className="about-info-block">
+                <div className="about-info-block" tabIndex="0">
                   <h3 className="about-info-subtitle">{texts.about.overviewTitle ?? 'Om villaen'}</h3>
                   <ul className="about-info-bullet-list">
                     {[texts.about.text1, texts.about.textrooms, texts.about.text2, texts.about.extraText]
@@ -860,7 +959,7 @@ function About({ texts, setLanguage, language }) {
                 </div>
 
                 {texts.about.transportInfoTitle ? (
-                  <div className="about-info-block">
+                  <div className="about-info-block" tabIndex="0">
                     <h3 className="about-info-subtitle">{texts.about.transportInfoTitle}</h3>
                     <ul className="about-info-bullet-list">
                       {(texts.about.transportInfo ?? []).map((line) => (
@@ -871,7 +970,7 @@ function About({ texts, setLanguage, language }) {
                 ) : null}
 
                 {texts.about.servicesTitle ? (
-                  <div className="about-info-block">
+                  <div className="about-info-block" tabIndex="0">
                     <h3 className="about-info-subtitle">{texts.about.servicesTitle}</h3>
                     <ul className="about-info-bullet-list">
                       {(texts.about.serviceHighlights ?? []).map((line) => (
@@ -882,7 +981,7 @@ function About({ texts, setLanguage, language }) {
                 ) : null}
 
                 {(texts.about.distances ?? []).length > 0 ? (
-                  <div className="about-distance-wrap">
+                  <div className="about-distance-wrap" tabIndex="0">
                     <h3 className="about-info-subtitle">{texts.about.distancesTitle ?? 'Avstander'}</h3>
                     <div className="about-distance-grid">
                       {texts.about.distances.map((item) => (
@@ -896,11 +995,11 @@ function About({ texts, setLanguage, language }) {
                 ) : null}
 
                 {texts.about.managementNote ? (
-                  <p className="page-faq-answer page-faq-answer--compact">{texts.about.managementNote}</p>
+                  <p className="page-faq-answer page-faq-answer--compact" tabIndex="0">{texts.about.managementNote}</p>
                 ) : null}
 
                 <h3 className="about-info-subtitle">{texts.about.videoSectionTitle ?? 'Video'}</h3>
-                <p className="page-faq-answer page-faq-answer--video">{texts.about.videoInfoText}</p>
+                <p className="page-faq-answer page-faq-answer--video" tabIndex="0">{texts.about.videoInfoText}</p>
                 <div className="about-video-embed-wrap">
                   {isVideoLoaded ? (
                     <iframe

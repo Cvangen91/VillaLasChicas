@@ -19,6 +19,9 @@ function ImageGallery({ texts }) {
   const touchStartX = useRef(null)
   const touchStartDistance = useRef(null)
   const imageWrapRef = useRef(null)
+  const lightboxModalRef = useRef(null)
+  const lightboxCloseButtonRef = useRef(null)
+  const lastFocusedElementRef = useRef(null)
   const gallerySlides = [
     fullViewImage,
     livingImage,
@@ -83,6 +86,70 @@ function ImageGallery({ texts }) {
     document.addEventListener('wheel', handleWheel, { passive: false })
     return () => document.removeEventListener('wheel', handleWheel)
   }, [isLightboxOpen, lightboxZoom])
+
+  useEffect(() => {
+    if (!isLightboxOpen) return undefined
+
+    lastFocusedElementRef.current = document.activeElement
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    const getFocusableElements = () => {
+      if (!lightboxModalRef.current) return []
+      return Array.from(
+        lightboxModalRef.current.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((element) => !element.hasAttribute('disabled'))
+    }
+
+    const focusCloseButton = () => {
+      if (lightboxCloseButtonRef.current) {
+        lightboxCloseButtonRef.current.focus()
+      }
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsLightboxOpen(false)
+        return
+      }
+
+      if (event.key !== 'Tab') return
+
+      const focusableElements = getFocusableElements()
+      if (!focusableElements.length) {
+        event.preventDefault()
+        return
+      }
+
+      const firstElement = focusableElements[0]
+      const lastElement = focusableElements[focusableElements.length - 1]
+      const activeElement = document.activeElement
+
+      if (event.shiftKey) {
+        if (activeElement === firstElement || !lightboxModalRef.current?.contains(activeElement)) {
+          event.preventDefault()
+          lastElement.focus()
+        }
+      } else if (activeElement === lastElement || !lightboxModalRef.current?.contains(activeElement)) {
+        event.preventDefault()
+        firstElement.focus()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    requestAnimationFrame(focusCloseButton)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+
+      if (lastFocusedElementRef.current instanceof HTMLElement) {
+        lastFocusedElementRef.current.focus()
+      }
+    }
+  }, [isLightboxOpen])
 
   const handleTouchStart = (event) => {
     // Handle swipe
@@ -166,15 +233,19 @@ function ImageGallery({ texts }) {
               />
             </button>
 
-            <div className="image-gallery-preview image-gallery-preview--active">
+            <button
+              type="button"
+              className="image-gallery-preview image-gallery-preview--active image-gallery-preview-button"
+              onClick={() => setIsLightboxOpen(true)}
+              aria-label={`${showLabel} ${currentImageIndex + 1}: ${currentDescription}`}
+            >
               <img
                 src={gallerySlides[currentImageIndex]}
                 alt={`${title} ${currentImageIndex + 1}`}
                 className="image-gallery-image"
                 style={{ cursor: 'zoom-in' }}
-                onClick={() => setIsLightboxOpen(true)}
               />
-            </div>
+            </button>
 
             <button
               type="button"
@@ -240,6 +311,7 @@ function ImageGallery({ texts }) {
           role="dialog"
           aria-modal="true"
           aria-label={`${title} ${currentImageIndex + 1}`}
+          ref={lightboxModalRef}
           onClick={e => e.stopPropagation()}
         >
           <header className="about-photo-lightbox-header">
@@ -247,7 +319,7 @@ function ImageGallery({ texts }) {
               <p>{title}</p>
               <span>{currentImageIndex + 1}/{gallerySlides.length}<span className="about-photo-lightbox-meta-label-inline"> · {currentDescription}</span></span>
             </div>
-            <button type="button" className="about-photo-modal-close" onClick={() => setIsLightboxOpen(false)} aria-label="Lukk">
+            <button type="button" className="about-photo-modal-close" onClick={() => setIsLightboxOpen(false)} aria-label="Lukk" ref={lightboxCloseButtonRef}>
               <img src={closeIcon} alt="" className="image-gallery-close-icon" />
             </button>
           </header>
