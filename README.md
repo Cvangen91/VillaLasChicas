@@ -15,7 +15,7 @@ Prosjektet er utviklet som bacheloroppgave ved Universitetet i Sør-Øst Norge.
 - [Filstruktur](#filstruktur)
 - [Routing og sider](#routing-og-sider)
 - [Flerspråklig støtte](#flerspråklig-støtte)
-- [Backend – Supabase](#backend--supabase)
+- [Backend](#backend)
 - [Must knows](#must-knows)
 
 ---
@@ -28,7 +28,7 @@ Prosjektet er utviklet som bacheloroppgave ved Universitetet i Sør-Øst Norge.
 | [Vite](https://vite.dev/) | v7 | Byggeverktøy og utviklingsserver |
 | [React Router](https://reactrouter.com/) | v7 | Klient-side routing |
 | [FullCalendar](https://fullcalendar.io/) | v6 | Kalenderkomponent for bookingstatus |
-| [Supabase](https://supabase.com/) | – | Backend: database og API for bookingkalender |
+| [Express](https://expressjs.com/) | v5 | Backend-server for iCal-integrasjon |
 
 ---
 
@@ -36,7 +36,7 @@ Prosjektet er utviklet som bacheloroppgave ved Universitetet i Sør-Øst Norge.
 
 - **Node.js** v18 eller nyere
 - **npm** (følger med Node.js)
-- Tilgang til prosjektets Supabase-prosjekt (se [Miljøvariabler](#miljøvariabler))
+- Starter opp backend med riktige miljøvariabler (se [Miljøvariabler](#miljøvariabler))
 
 ---
 
@@ -58,6 +58,8 @@ npm run dev
 
 Åpne [http://localhost:5173](http://localhost:5173) i nettleseren.
 
+
+
 ### Tilgjengelige skript
 
 | Kommando | Beskrivelse |
@@ -71,12 +73,15 @@ npm run dev
 
 ## Miljøvariabler
 
-Opprett en `.env`-fil i prosjektrotens mappe med følgende variabler:
+### Backend (`.env` i `villalaschicas/backend/`)
+
+Opprett en `.env`-fil i `backend/`-mappen med følgende variabler:
 
 ```env
-VITE_SUPABASE_URL=https://<ditt-prosjekt>.supabase.co
-VITE_SUPABASE_ANON_KEY=<din-anon-nøkkel>
+AIRBNB_ICAL_URL=<iCal-URL fra Airbnb>
+BOOKING_COM_ICAL_URL=<iCal-URL fra Booking.com>
 ```
+
 
 ---
 
@@ -84,6 +89,10 @@ VITE_SUPABASE_ANON_KEY=<din-anon-nøkkel>
 
 ```
 villalaschicas/
+├── backend/                 # Express-backend for iCal-integrasjon
+│   ├── index.js             # Serverlogikk – henter og eksponerer iCal-data
+│   ├── .env                 # iCal-URLer (ikke i git)
+│   └── package.json
 ├── pictures/                # Bilder og videoer brukt på nettsiden
 ├── public/                  # Statiske filer som serveres direkte
 ├── src/
@@ -94,7 +103,7 @@ villalaschicas/
 │   │   │   ├── PageLayout.jsx     # Felles wrapper rundt sideinnhold
 │   │   │   └── ScrollToTop.jsx    # Scroller til toppen ved rutebytte
 │   │   └── sections/        # Gjenbrukbare innholdsseksjoner
-│   │       ├── BookingCalendar.jsx  # Kalender med bookingstatus fra Supabase
+│   │       ├── BookingCalendar.jsx  # Kalender med bookingstatus fra iCal via backend
 │   │       ├── CalendarEvents.jsx   # Henter og formaterer bookingdata
 │   │       └── ImageGallery.jsx     # Bildekarusell med forstørring
 │   ├── locales/             # Oversettelsesstrenger for alle språk
@@ -111,7 +120,6 @@ villalaschicas/
 │   ├── App.css              # Globale CSS-stiler
 │   ├── index.css            # CSS-variabler og reset
 │   └── main.jsx             # Inngangspunkt – renderer App til DOM
-├── .env                     # Miljøvariabler (ikke i git)
 ├── Index.html               # HTML-mal som Vite bruker
 ├── vite.config.js           # Vite-konfigurasjon
 └── package.json
@@ -147,19 +155,32 @@ Brukeren bytter språk via en velger i Navbar. Standard språk er engelsk.
 
 ---
 
-## Backend – Supabase
+## Backend - Express
 
-Supabase brukes til å hente bookingdata for kalendervisningen. Klienten initialiseres via miljøvariablene i `.env`-filen.
+Prosjektet har en egen Express-server som henter bookingdata fra Airbnb og Booking.com via iCal og eksponerer det til frontend via `/api/calendar` på port 4000.
 
-### Databasetabeller
+**Backenden må kjøres i en egen terminal** ved siden av frontend-serveren for at kalendervisningen skal fungere.
 
-| Tabell | Beskrivelse |
-|---|---|
-| `bookings` | Bookede perioder med start- og sluttdato som vises i bookingkalenderen |
+```bash
+# I en egen terminal – naviger til backend-mappen
+cd villalaschicas/backend
 
-Resterende tabeller og informasjon finnes i rapporten.
+# Installer avhengigheter (kun første gang)
+npm install
 
----
+# Start backenden
+node index.js
+```
+
+Backenden kjører på [http://localhost:4000](http://localhost:4000). Husk å opprette `.env`-filen i `backend/`-mappen med riktige iCal-URLer (se [Miljøvariabler](#miljøvariabler)).
+
+### Starte prosjektet (totalt to terminaler)
+
+| Terminal | Kommando | Hva den gjør |
+|---|---|---|
+| Terminal 1 | `cd villalaschicas && npm run dev` | Starter frontend på port 5173 |
+| Terminal 2 | `cd villalaschicas/backend && node index.js` | Starter backend på port 4000 |
+
 
 ## Must knows
 
