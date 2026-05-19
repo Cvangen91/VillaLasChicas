@@ -1,3 +1,4 @@
+// About-side som viser info om villaen, fasiliteter, bilder, kart og FAQ.
 import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import PageLayout from '../components/layout/PageLayout'

@@ -1,3 +1,4 @@
+// Inngangspunktet som monterer React-appen i root-elementet.
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'

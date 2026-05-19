@@ -1,3 +1,4 @@
+// Norske språkstrenger for norsk versjon av siden.
 const no = {
   nav: {
     home: 'Hjem',

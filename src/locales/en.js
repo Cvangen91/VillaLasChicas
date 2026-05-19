@@ -1,3 +1,4 @@
+// Engelske språkstrenger for engelsk versjon av siden.
 const en = {
   nav: {
     home: 'Home',

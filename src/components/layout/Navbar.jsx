@@ -1,3 +1,4 @@
+// Navbar som håndterer meny, språkvalg, mobilmeny og topp-animasjon.
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import villaLogo from '../../../pictures/villalogo.png'

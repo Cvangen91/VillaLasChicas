@@ -1,3 +1,4 @@
+// Setter opp appens språkvalg og rendrer rutene i applikasjonen.
 import AppRoutes from './routes/AppRoutes'
 import ScrollToTop from './components/layout/ScrollToTop'
 import no from './locales/no'

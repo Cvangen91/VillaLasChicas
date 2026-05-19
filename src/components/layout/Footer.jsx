@@ -1,3 +1,4 @@
+// Footer som viser kontaktinformasjon, lenker og logo nederst på siden.
 import { Link, useLocation } from 'react-router-dom'
 import villaLogoNoText from '../../../pictures/Villalogonulltekst.png'
 import './Footer.css'

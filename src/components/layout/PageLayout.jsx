@@ -1,3 +1,4 @@
+// Layout som setter opp navbar, sideinnhold og footer.
 import Navbar from './Navbar'
 import Footer from './Footer'
 

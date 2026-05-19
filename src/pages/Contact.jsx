@@ -1,3 +1,4 @@
+// Contact-side med kontaktinfo og kontaktskjema for henvendelser.
 import PageLayout from '../components/layout/PageLayout'
 import './pages.css'
 import './Contact.css'

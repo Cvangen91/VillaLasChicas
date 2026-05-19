@@ -1,3 +1,4 @@
+// Definerer rutene i appen og kobler URL-er til riktig sidekomponent.
 import { Routes, Route } from 'react-router-dom'
 import Home from '../pages/Home'
 import About from '../pages/About'

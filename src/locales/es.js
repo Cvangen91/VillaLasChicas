@@ -1,3 +1,4 @@
+// Spanske språkstrenger for spansk versjon av siden.
 const es = {
   nav: {
     home: 'Inicio',

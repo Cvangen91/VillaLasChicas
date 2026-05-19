@@ -1,3 +1,4 @@
+// Home-side som viser hero, høydepunkter og innganger til galleri, booking og kontakt.
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PageLayout from '../components/layout/PageLayout'

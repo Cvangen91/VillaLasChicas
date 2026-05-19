@@ -1,3 +1,4 @@
+// Bildegalleri med lysboks, navigasjon og støtte for mobil-interaksjon.
 import { useRef, useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import fullViewImage from '../../../pictures/Fullview.jpg'

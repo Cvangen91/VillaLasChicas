@@ -1,3 +1,4 @@
+// Hjelpekomponent som scroller til toppen når ruten endres.
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
